@@ -1,0 +1,132 @@
+.newFooterWrapUp {
+  padding-left: 5% !important;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.newFooterLi {
+  float: left;
+  padding: 16px 28px;
+  font-weight: bold;
+}
+
+.newFooterLi>ul {
+  padding-top: 15px;
+}
+
+.newFooterLi>ul>li {
+  font-weight: 100;
+  padding-top: 10px;
+  color: #9b9b9b !important;
+}
+
+/* .v-line {
+  display: inline-block;
+  border-left : thin solid #BABABA;
+  height : 100px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+} */
+
+.newFooterWrapDown {
+  background-color: white;
+  padding-left: 13%;
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+ol,
+ul {
+  list-style: none;
+  padding-left: 0px;
+
+}
+
+
+.newFooter {
+  background-color: #F7F7F7;
+  font-weight: bold;
+  position: relative;
+
+}
+
+.newFooterWrapRight {
+  text-align: right;
+  padding-right: 2% !important;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.newFooterinWrap {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.mobile_li {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .newFooterWrapUp {
+    display: none;
+  }
+
+  .newFooterWrapRight {
+    width: 328px;
+    height: 100%;
+    margin: 28px 5px 0 5px;
+    font-family: NotoSansCJKKR;
+    font-size: 11px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.36;
+    letter-spacing: -0.44px;
+    color: #a8acaf;
+    text-align: left;
+    padding-right: 0% !important;
+    margin-bottom: 10px;
+  }
+
+  .newFooterWrapRight>p {
+    margin-top: 0px;
+  }
+
+  .newFooterinWrap {
+    padding-top: 0px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+  }
+
+  .newFooter {
+    background-color: white;
+  }
+
+  .mobile_li {
+    display: flex;
+    list-style: none;
+  }
+
+  .mobile_li>li {
+    float: left;
+    font-family: NotoSansCJKKR;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.15;
+    letter-spacing: -0.52px;
+    color: #57636f;
+    margin-bottom: 10px;
+
+  }
+
+  .mobile_li>li:last-child {
+    margin-left: 20px;
+  }
+}
