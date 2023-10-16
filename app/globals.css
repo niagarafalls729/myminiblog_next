@@ -6,7 +6,6 @@ body {
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-
 }
 
 :root {
@@ -21,4 +20,12 @@ body {
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+}
+
+.wrap {
+  padding: 10px;
+}
+
+p {
+  font-size: 16px;
 }

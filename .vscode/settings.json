@@ -1,0 +1,17 @@
+{
+    "eslint.validate": [
+        "jsx",
+        "js",
+        "tsx",
+        "html",
+        "javascript"
+    ],
+    "eslint.alwaysShowStatus": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "files.exclude": {
+        "/.next/**": true,
+        "/node_modules/**": true
+    },
+}

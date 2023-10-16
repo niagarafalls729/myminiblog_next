@@ -1,0 +1,14 @@
+.title {
+  font-weight: bold;
+  font-size: 3.8rem;
+}
+.sub_title {
+  font-weight: bold;
+  font-size: 3rem;
+}
+.pin_point {
+  margin-left: -10px;
+  font-size: 90px;
+  line-height: 0px;
+  color: hotpink;
+}

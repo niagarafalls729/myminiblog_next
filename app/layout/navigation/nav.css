@@ -96,6 +96,7 @@ body {
   }
 
   .menu-icon {
+    position: sticky;
     display: flex;
     cursor: pointer;
     z-index: 10;

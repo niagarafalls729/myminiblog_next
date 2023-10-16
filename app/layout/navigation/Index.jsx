@@ -90,7 +90,7 @@ const Mo = () => {
 
           </Link>
         </div>
-        <div className="menu-icon" onClick={handleShowNavbar}>
+        <div className="menu-icon" onClick={()=>setShowNavbar(!showNavbar)}>
           {!showNavbar ? <MenuIcon /> : <CloseIcon />}
 
         </div>
@@ -108,13 +108,13 @@ const Mo = () => {
             >
 
               <ListItemButton>
-                <Link href="/" onClick={handleShowNavbar}>
+                <Link href="/"onClick={()=>setShowNavbar(!showNavbar)}>
                   <ListItemText primary="블로그 주인" />
                 </Link>
               </ListItemButton>
 
               <ListItemButton >
-                <Link href="/myStudy" onClick={handleShowNavbar}>
+                <Link href="/myStudy" onClick={()=>setShowNavbar(!showNavbar)}>
                   <ListItemText primary="공부일지" />
                 </Link>
               </ListItemButton>
@@ -124,29 +124,26 @@ const Mo = () => {
                 <ListItemText primary="방명록" />
                 {expanded === 2 ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
-
               <Collapse in={expanded === 2 ? true : false} unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }}>
-                    <Link href="/guestBook/[id]" as='guestBook/1' onClick={handleShowNavbar}>
+                    <Link href="/guestBook/[id]" as='guestBook/1' onClick={()=>setShowNavbar(!showNavbar)}>
                       <ListItemText primary="방명록" />
                     </Link>
                   </ListItemButton>
                   <ListItemButton sx={{ pl: 4 }}>
-                    <Link href="/guestBook/[id]" as='guestBook/2' onClick={handleShowNavbar}>
+                    <Link href="/guestBook/[id]" as='guestBook/2' onClick={()=>setShowNavbar(!showNavbar)}>
                       <ListItemText primary="주인장에게 비밀글쓰기!" />
                     </Link>
                   </ListItemButton>
-
                 </List>
               </Collapse>
+
               <ListItemButton >
-                <Link href="/myGit" as='/myGit' onClick={handleShowNavbar}>
-                  <ListItemText primary="공부일지" />
+                <Link href="/myGit" as='/myGit' onClick={()=>setShowNavbar(!showNavbar)}>
+                  <ListItemText primary="깃허브" />
                 </Link>
               </ListItemButton>
-
-
             </List>
           </div>
         </div>
