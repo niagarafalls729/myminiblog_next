@@ -2,16 +2,15 @@
 // const nextConfig = {}
 
 // module.exports = nextConfig
-const path = require('path')
+const path = require("path");
 
 module.exports = {
-
-    compiler: {
-        styledComponents: {
-            displayName: false,
-        },
+  compiler: {
+    styledComponents: {
+      displayName: false,
     },
-    reactStrictMode: true,
-    swcMinify: true,
-
-} 
+  },
+  reactStrictMode: true,
+  swcMinify: true,
+  reactStrictMode: false,
+};

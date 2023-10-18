@@ -1,7 +1,7 @@
 html,
 body {
   height: 100%;
-  font-family: NotoSansCJKKR;
+  font-family: NanumSqure;
   font-size: 15px;
   font-weight: normal;
   font-stretch: normal;
@@ -28,4 +28,17 @@ body {
 
 p {
   font-size: 16px;
+}
+@font-face {
+  font-family: "NanumSquare";
+  font-weight: 400;
+  font-style: normal;
+  src: url("/public/fonts/NanumSquareB.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "NanumSquare";
+  font-weight: 700;
+  font-style: normal;
+  src: url("/public/fonts/NanumSquareEB.ttf") format("ttf");
 }
