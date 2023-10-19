@@ -1,19 +1,65 @@
-html,
-body {
-  height: 100%;
-  font-family: NanumSqure;
-  font-size: 15px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --color-primary-accent: #2614c7;
+  --color-primary: #000;
+  --color-button: #3d486c;
+  --color-paragraph: #797979;
+  --color-button-text: rgb(255, 255, 255);
+  --color-background: #fff;
+  --color-anchor: #000aff;
+  --color-span: rgb(255, 255, 255);
 }
 
+[data-theme="dark"] {
+  --color-primary-accent: #00ff4c;
+  --color-primary: #fff;
+  --color-button: #00ff4c;
+  --color-paragraph: #8a8a8a;
+  --color-button-text: rgb(0, 0, 0);
+  --color-background: #000;
+  --color-span: #000;
+}
+[data-theme="dark"] span {
+  /* span 태그에 대한 추가 스타일을 지정하세요 */
+  color: #ffffff; /* 예시: 텍스트 색상을 흰색으로 설정 */
+}
+* {
+  box-sizing: border-box;
+}
+/* 버튼과 바디 등 필요한 변수들을 설정해줌으로써 값 지정해주기  */
+button {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  transition: background 0.3s ease;
+}
+
+h1,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+h3 {
+  font-size: 2rem;
+  margin-top: 10px;
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -27,7 +73,7 @@ body {
 }
 
 p {
-  font-size: 16px;
+  font-size: 18px;
 }
 @font-face {
   font-family: "NanumSquare";

@@ -1,6 +1,6 @@
 "use client";
 import Button from "@mui/material/Button";
-import { axiosGet } from "@/api/main";
+import { axiosGet } from "@/api/baseGet";
 import axios from "axios";
 export default function page() {
   // const inputData = [

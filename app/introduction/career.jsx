@@ -1,5 +1,5 @@
 "use client";
-
+import styles from "./career.module.css";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import { axiosGet } from "@/api/baseGet";
 import { useState, useEffect, forwardRef } from "react";
@@ -88,51 +88,53 @@ const mapData = [
   },
 ];
 export default function Career() {
-  const [mounted, setMounted] = useState(false);
-  const [career, setCareer] = useState([]);
+  // const [mounted, setMounted] = useState(false);
+  // const [career, setCareer] = useState([]);
 
-  useEffect(() => {
-    setMounted(true);
-    myAPI();
-  }, []);
+  // useEffect(() => {
+  //   setMounted(true);
+  //   myAPI();
+  // }, []);
 
-  const myAPI = async () => {
-    try {
-      const res = await axiosGet("main");
-      setCareer(res);
-      console.log("DDD");
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
-  console.log("career", career);
+  // const myAPI = async () => {
+  //   try {
+  //     const res = await axiosGet("main");
+  //     setCareer(res);
+  //     console.log("DDD");
+  //   } catch (error) {
+  //     console.error("Error fetching data: ", error);
+  //   }
+  // };
+  // console.log("career", career);
 
-  // const [career, setCareer] = useState(mapData);
+  const [career, setCareer] = useState(mapData);
 
   const RightGrid = ({ project, innerIndex }) => {
     return (
-      <Grid xs={12} md={8} key={innerIndex}>
-        <h1>{project.project}</h1>
-        <p>{project.project_from_to}</p>
+      <Grid xs={12} md={6} key={innerIndex} className="p-2">
+        <h2 className={styles["project_h1"]}>{project.project}</h2>
+        <p className={styles["project_from_to_p"]}>{project.project_from_to}</p>
         <h3>Description</h3>
-        {project.desc} <br />
+        {project.desc}
         <h3>Key development achievements</h3>
         {project.work}
         <h3>Tech</h3>
-        {project.stack} <br />
+        {project.stack}
       </Grid>
     );
   };
   return (
     <>
-      <h1>Career</h1>
-      <hr />
       <Grid container>
         {career.map((item, index) => (
           <React.Fragment key={index}>
-            <Grid xs={12} md={4} key={index}>
+            <Grid xs={12} md={6} key={index}>
+              <Grid xs={12} md={0} key={index}>
+                <hr />
+              </Grid>
+
               <h1>{item.company}</h1>
-              <h3>{item.company_from_to}</h3>
+              <p>{item.company_from_to}</p>
             </Grid>
             {item.projects.map((project, innerIndex) =>
               innerIndex === 0 ? (
@@ -143,7 +145,7 @@ export default function Career() {
                 />
               ) : (
                 <React.Fragment key={innerIndex}>
-                  <Grid xs={12} md={4}></Grid>
+                  <Grid xs={12} md={6}></Grid>
                   <RightGrid
                     key={innerIndex}
                     project={project}
