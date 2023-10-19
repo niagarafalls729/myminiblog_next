@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -42,14 +43,17 @@ function MyApp() {
 }
 
 export default function guestBook() {
+  const darkV = useAppSelector((state) => state.darkAndLight.value);
+
   const [mode, setMode] = React.useState("light");
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
       },
     }),
-    []
+    [darkV]
   );
 
   const theme = React.useMemo(
@@ -59,9 +63,12 @@ export default function guestBook() {
           mode,
         },
       }),
-    [mode]
+    [darkV]
   );
-
+  React.useEffect(() => {
+    // Call toggleColorMode from colorMode
+    colorMode.toggleColorMode();
+  }, [darkV]);
   return (
     <>
       <h1>guestBook</h1>

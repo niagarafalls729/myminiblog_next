@@ -207,7 +207,7 @@ function Navigation() {
     <>
       {" "}
       <ThemeProvider theme={darkTheme}>
-        {darkV && <CssBaseline />}
+        {!darkV && <CssBaseline />}
         <Pc></Pc>
         <Mo darkV={darkV}></Mo>
       </ThemeProvider>
