@@ -2,7 +2,7 @@
 
 // 클라이언트 사이드로 마킹
 import Link from "next/link";
-import { useState } from "react";
+import { useState,useMemo,useEffect ,createContext,useContext} from "react";
 import "./nav.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,6 +20,11 @@ import dayjs from "dayjs";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+
+const ColorModeContext = createContext({ toggleColorMode: () => {} });
+
+
+
 const Pc = () => {
   const dispatch = useAppDispatch();
 
@@ -196,17 +201,11 @@ function Navigation() {
       mode: "dark",
     },
   });
-
   const darkV = useAppSelector((state) => state.darkAndLight.value);
-  if (darkV) {
-    document.body.setAttribute("data-theme", "light");
-  } else {
-    document.body.setAttribute("data-theme", "dark");
-  }
+ 
   return (
-    <>
-      {" "}
-      <ThemeProvider theme={darkTheme}>
+    <>   
+        <ThemeProvider theme={darkTheme}>
         {!darkV && <CssBaseline />}
         <Pc></Pc>
         <Mo darkV={darkV}></Mo>

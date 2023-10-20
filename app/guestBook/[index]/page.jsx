@@ -7,77 +7,14 @@ import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
-
-function MyApp() {
-  const theme = useTheme();
-  const colorMode = React.useContext(ColorModeContext);
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "background.default",
-        color: "text.primary",
-        borderRadius: 1,
-        p: 3,
-      }}
-    >
-      {theme.palette.mode} mode
-      <IconButton
-        sx={{ ml: 1 }}
-        onClick={colorMode.toggleColorMode}
-        color="inherit"
-      >
-        {theme.palette.mode === "dark" ? (
-          <Brightness7Icon />
-        ) : (
-          <Brightness4Icon />
-        )}
-      </IconButton>
-    </Box>
-  );
-}
+ 
 
 export default function guestBook() {
-  const darkV = useAppSelector((state) => state.darkAndLight.value);
-
-  const [mode, setMode] = React.useState("light");
-
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    [darkV]
-  );
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [darkV]
-  );
-  React.useEffect(() => {
-    // Call toggleColorMode from colorMode
-    colorMode.toggleColorMode();
-  }, [darkV]);
+ 
   return (
     <>
-      <h1>guestBook</h1>
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <MyApp></MyApp>
-          <CollapsibleTable></CollapsibleTable>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
+      <h1>guestBook</h1> 
+          <CollapsibleTable></CollapsibleTable> 
     </>
   );
 }
