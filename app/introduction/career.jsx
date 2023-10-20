@@ -88,26 +88,26 @@ const mapData = [
   },
 ];
 export default function Career() {
-  // const [mounted, setMounted] = useState(false);
-  // const [career, setCareer] = useState([]);
+  const [mounted, setMounted] = useState(false);
+  const [career, setCareer] = useState([]);
 
-  // useEffect(() => {
-  //   setMounted(true);
-  //   myAPI();
-  // }, []);
+  useEffect(() => {
+    setMounted(true);
+    myAPI();
+  }, []);
 
-  // const myAPI = async () => {
-  //   try {
-  //     const res = await axiosGet("main");
-  //     setCareer(res);
-  //     console.log("DDD");
-  //   } catch (error) {
-  //     console.error("Error fetching data: ", error);
-  //   }
-  // };
-  // console.log("career", career);
+  const myAPI = async () => {
+    try {
+      const res = await axiosGet("main");
+      setCareer(res);
+      console.log("DDD");
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+  console.log("career", career);
 
-  const [career, setCareer] = useState(mapData);
+  // const [career, setCareer] = useState(mapData);
 
   const RightGrid = ({ project, innerIndex }) => {
     return (
@@ -130,7 +130,7 @@ export default function Career() {
           <React.Fragment key={index}>
             <Grid xs={12} md={6} key={index}>
               <Grid xs={12} md={0} key={index}>
-                <hr />
+                <hr className={styles["companyHR"]}/>
               </Grid>
 
               <h1>{item.company}</h1>

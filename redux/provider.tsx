@@ -25,12 +25,16 @@ export function Test({ children }: { children: React.ReactNode }) {
     }),
     [darkV]
   );
-
+  const darkTheme = createTheme({
+    palette: {
+      mode: darkV?'dark':'light',
+    },
+  });
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
-          mode,
+          mode : darkV?'dark':'light',
         },
       }),
     [darkV]

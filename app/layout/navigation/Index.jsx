@@ -112,6 +112,9 @@ const Mo = (props) => {
         </div>
         <div
           className={`nav-elements main  ${showNavbar && "active"}`}
+          // style={{
+          //   backgroundColor: props.darkV ? "#eff2f5" : "black",
+          // }}
           style={{
             backgroundColor: props.darkV ? "#eff2f5" : "black",
           }}
@@ -132,7 +135,7 @@ const Mo = (props) => {
                 width: "100%",
               }}
               style={{
-                backgroundColor: props.darkV ? "hotpink" : "black",
+                backgroundColor: "hotpink" 
               }}
               component="nav"
               aria-labelledby="nested-list-subheader"
@@ -202,7 +205,11 @@ function Navigation() {
     },
   });
   const darkV = useAppSelector((state) => state.darkAndLight.value);
- 
+  if (darkV) {
+    document.body.setAttribute("data-theme", "light");
+  } else {
+    document.body.setAttribute("data-theme", "dark");
+  }  
   return (
     <>   
         <ThemeProvider theme={darkTheme}>
