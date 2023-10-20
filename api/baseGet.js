@@ -50,3 +50,17 @@ export async function axiosGet(restUrl, payload = {}) {
     throw error;
   }
 }
+export async function savePost(restUrl, payload = {}) {
+  const url = "http://localhost:4000/" + restUrl;
+
+  try {
+    const response = await axios.post(url, JSON.stringify(payload), {
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log("Response data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("API Request Error:", error);
+    throw new Error("Failed to make the API request");
+  }
+}

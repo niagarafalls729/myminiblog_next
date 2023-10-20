@@ -10,20 +10,13 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 const columns = [
-  { id: "index", label: "index", minWidth: 170 },
-  { id: "title", label: "title", minWidth: 100 },
+  { id: "index", label: " ", minWidth: 5, align: "left" },
+  { id: "title", label: "제목", align: "center", minWidth: 170 },
 
   {
-    id: "name",
-    label: "name",
-    minWidth: 170,
-    align: "right",
-    // format: (value) => value.toLocaleString("en-US"),
-  },
-  {
     id: "created",
-    label: "created",
-    minWidth: 170,
+    label: "작성일",
+    minWidth: 100,
     align: "right",
     // format: (value) => value.toFixed(2),
   },
@@ -34,10 +27,10 @@ function createData(index, title, name, created) {
 }
 
 const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
+  createData("1", "IN", "김지수", "2023 - 10 - 23"),
+  createData("2", "CN", 1403500365, 9596961),
+  createData("3", "IT", 60483973, 301340),
+  createData("4", "US", 327167434, 9833520),
 ];
 
 export function StickyHeadTable() {
@@ -66,7 +59,10 @@ export function StickyHeadTable() {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{
+                      minWidth: column.minWidth,
+                      width: column.minWidth,
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -118,12 +114,6 @@ export function StickyHeadTable() {
 export default function myStudy() {
   return (
     <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <StickyHeadTable></StickyHeadTable>
     </>
   );

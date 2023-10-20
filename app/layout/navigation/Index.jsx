@@ -2,7 +2,7 @@
 
 // 클라이언트 사이드로 마킹
 import Link from "next/link";
-import { useState,useMemo,useEffect ,createContext,useContext} from "react";
+import { useState } from "react";
 import "./nav.css";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,13 +17,9 @@ import { dark, light, toggleDarkAndLight } from "@/redux/features/darkSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Typed from "@/components/typed/index";
 import dayjs from "dayjs";
-
+import HomeIcon from "@mui/icons-material/Home";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-
-const ColorModeContext = createContext({ toggleColorMode: () => {} });
-
-
 
 const Pc = () => {
   const dispatch = useAppDispatch();
@@ -48,9 +44,9 @@ const Pc = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/myGit" as="/myGit">
+                  <Link href="/login" as="/login">
                     {" "}
-                    깃허브
+                    로그인/회원가입
                   </Link>
                 </li>
               </ul>
@@ -102,11 +98,17 @@ const Mo = (props) => {
             id="dark"
             onClick={() => dispatch(toggleDarkAndLight())}
           ></button>
-          <label htmlFor="dark">
+          <label htmlFor="dark" style={{ zIndex: 10 }}>
             <SettingsBrightnessIcon></SettingsBrightnessIcon>
           </label>
         </div>
-
+        <div>
+          <Link href="/">
+            <label htmlFor="home" style={{ zIndex: 10 }}>
+              <HomeIcon></HomeIcon>
+            </label>
+          </Link>
+        </div>
         <div className="menu-icon" onClick={() => setShowNavbar(!showNavbar)}>
           {!showNavbar ? <MenuIcon /> : <CloseIcon />}
         </div>
@@ -116,7 +118,7 @@ const Mo = (props) => {
           //   backgroundColor: props.darkV ? "#eff2f5" : "black",
           // }}
           style={{
-            backgroundColor: props.darkV ? "#eff2f5" : "black",
+            backgroundColor: !props.darkV ? "#eff2f5" : "black",
           }}
         >
           <div className={"navUp"}>
@@ -124,7 +126,7 @@ const Mo = (props) => {
               <Typed
                 setText={[
                   "안녕하세요!<br/> <strong> 지수 </strong>의 블로그입니다.",
-                  "오늘(" + formattedDate + ")도 좋은 하루 보내세여>__@",
+                  "오늘(" + formattedDate + ")도 <br/>좋은 하루 보내세여>__@",
                 ]}
               ></Typed>
             </ul>
@@ -135,7 +137,7 @@ const Mo = (props) => {
                 width: "100%",
               }}
               style={{
-                backgroundColor: "hotpink" 
+                backgroundColor: "hotpink",
               }}
               component="nav"
               aria-labelledby="nested-list-subheader"
@@ -184,11 +186,11 @@ const Mo = (props) => {
 
               <ListItemButton>
                 <Link
-                  href="/myGit"
-                  as="/myGit"
+                  href="/login"
+                  as="/login"
                   onClick={() => setShowNavbar(!showNavbar)}
                 >
-                  <ListItemText primary="깃허브" />
+                  <ListItemText primary="로그인/회원가입" />
                 </Link>
               </ListItemButton>
             </List>
@@ -206,14 +208,14 @@ function Navigation() {
   });
   const darkV = useAppSelector((state) => state.darkAndLight.value);
   if (darkV) {
-    document.body.setAttribute("data-theme", "light");
-  } else {
     document.body.setAttribute("data-theme", "dark");
-  }  
+  } else {
+    document.body.setAttribute("data-theme", "light");
+  }
   return (
-    <>   
-        <ThemeProvider theme={darkTheme}>
-        {!darkV && <CssBaseline />}
+    <>
+      <ThemeProvider theme={darkTheme}>
+        {darkV && <CssBaseline />}
         <Pc></Pc>
         <Mo darkV={darkV}></Mo>
       </ThemeProvider>

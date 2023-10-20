@@ -1,0 +1,11 @@
+.mo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  object-fit: cover;
+  height: 100vh;
+  width: 100vh;
+}
+.pc {
+}

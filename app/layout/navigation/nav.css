@@ -79,8 +79,11 @@ body {
 @media (max-width: 768px) {
   .mo_display {
     margin-top: 10px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
+    z-index: 10;
+    position: sticky;
   }
 
   .underLine {
@@ -116,7 +119,10 @@ body {
   }
 
   .nav-elements.active {
-    width: 100%;
+    width: 100vh;
+    top: -20px;
+    left: -10px;
+    position: absolute;
   }
 
   .nav-elements ul {
