@@ -1,0 +1,9 @@
+.tablePagination_left{
+    transform: translateY(15px);
+    margin-left: 15px;
+}
+
+.tablePagination_right{
+    display: inline-block;
+    float:right;
+}

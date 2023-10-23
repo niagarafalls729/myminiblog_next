@@ -39,7 +39,7 @@ const Pc = () => {
                   <Link href="/myStudy">공부일지</Link>
                 </li>
                 <li>
-                  <Link href="/guestBook/[id]" as="guestBook/1">
+                  <Link href="/guestBook" as="/guestBook">
                     방명록
                   </Link>
                 </li>
@@ -92,19 +92,19 @@ const Mo = (props) => {
   return (
     <>
       <div className="mo_display">
-        <div className="logo">
+        <div className="logo" style={{ zIndex: 25 }}>
           <button
             style={{ display: "none" }}
             id="dark"
             onClick={() => dispatch(toggleDarkAndLight())}
           ></button>
-          <label htmlFor="dark" style={{ zIndex: 10 }}>
+          <label htmlFor="dark" style={{ zIndex: 25 }}>
             <SettingsBrightnessIcon></SettingsBrightnessIcon>
           </label>
         </div>
-        <div>
+        <div  style={{ zIndex: 25 }}>
           <Link href="/">
-            <label htmlFor="home" style={{ zIndex: 10 }}>
+            <label htmlFor="home" >
               <HomeIcon></HomeIcon>
             </label>
           </Link>
@@ -165,8 +165,7 @@ const Mo = (props) => {
                 <List component="div" disablePadding>
                   <ListItemButton sx={{ pl: 4 }}>
                     <Link
-                      href="/guestBook/[id]"
-                      as="guestBook/1"
+                      href="/guestBook"
                       onClick={() => setShowNavbar(!showNavbar)}
                     >
                       <ListItemText primary="방명록" />
@@ -174,8 +173,7 @@ const Mo = (props) => {
                   </ListItemButton>
                   <ListItemButton sx={{ pl: 4 }}>
                     <Link
-                      href="/guestBook/[id]"
-                      as="guestBook/2"
+                      href="/guestBook/shit"
                       onClick={() => setShowNavbar(!showNavbar)}
                     >
                       <ListItemText primary="주인장에게 비밀글쓰기!" />

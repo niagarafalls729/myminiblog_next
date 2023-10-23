@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow"; 
-import styles from "./myStudy.module.css";
+import styles from "./guestBook.module.css";
 import CreateIcon from '@mui/icons-material/Create';
 import Link from "@/node_modules/next/link";
 const columns = [
@@ -35,7 +35,7 @@ const rows = [
   createData("4", "US", 327167434, 9833520),
 ];
 
-export function StickyHeadTable() {
+function StickyHeadTable() {
   const [selectedRow, setSelectedRow] = React.useState({});
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -109,7 +109,7 @@ export function StickyHeadTable() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-        <Link href='myStudy/created'>
+        <Link href='guestBook/create'>
          <CreateIcon color="primary" className={styles["tablePagination_left"]}/>
         </Link>
       </Paper>
@@ -117,7 +117,7 @@ export function StickyHeadTable() {
   );
 }
 
-export default function myStudy() {
+export default function guestBook() {
   return (
     <>
       <StickyHeadTable></StickyHeadTable>
