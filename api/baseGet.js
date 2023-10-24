@@ -1,15 +1,15 @@
-import qs from "qs";
-import axios from "axios";
+import qs from 'qs';
+import axios from 'axios';
 
 export async function axiosGet(restUrl, payload = {}) {
   const params = new URLSearchParams(qs.stringify(payload));
   const cleaned = String(params);
   const url =
-    "http://localhost:4000/" + restUrl + "?" + encodeURIComponent(cleaned);
+    'http://localhost:4000/' + restUrl + '?' + encodeURIComponent(cleaned);
 
   try {
     const response = await axios.get(url);
-    console.log("re", JSON.stringify(response.data));
+    console.log('re', JSON.stringify(response.data));
     const inputData = response.data;
 
     // 그룹화된 결과를 저장할 빈 배열
@@ -51,16 +51,48 @@ export async function axiosGet(restUrl, payload = {}) {
   }
 }
 export async function savePost(restUrl, payload = {}) {
-  const url = "http://localhost:4000/" + restUrl;
+  const url = 'http://localhost:4000/' + restUrl;
 
   try {
     const response = await axios.post(url, JSON.stringify(payload), {
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     });
-    console.log("Response data:", response.data);
+    console.log('Response data:', response.data);
     return response.data;
   } catch (error) {
-    console.error("API Request Error:", error);
-    throw new Error("Failed to make the API request");
+    console.error('API Request Error:', error);
+    throw new Error('Failed to make the API request');
+  }
+}
+export async function getPost(restUrl, payload = {}) {
+  const url = 'http://localhost:4000/' + restUrl;
+
+  try {
+    const response = await axios.post(url, JSON.stringify(payload), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    console.log('Response data:', JSON.stringify(response.data));
+    return response.data[0];
+  } catch (error) {
+    console.error('API Request Error:', error);
+    throw new Error('Failed to make the API request');
+  }
+}
+
+export async function saveBlob(restUrl, formData) {
+  const url = 'http://localhost:4000/' + restUrl;
+
+  try {
+    const response = await axios.post(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // 이미지 업로드를 위한 Content-Type
+      },
+    });
+
+    console.log('Response data:', JSON.stringify(response.data));
+    return response.data; // 이미지 업로드 후 서버에서 받은 데이터를 반환
+  } catch (error) {
+    console.error('API Request Error:', error);
+    throw new Error('Failed to make the API request');
   }
 }

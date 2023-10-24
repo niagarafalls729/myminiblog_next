@@ -1,0 +1,7 @@
+.input_title {
+  height: 10vh;
+}
+.create_wrap {
+  display: flex;
+  flex-direction: column;
+}

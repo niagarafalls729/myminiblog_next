@@ -2,27 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   id: '',
-  status: '',
-  userName: '',
-  phone_number: '01012341234',
-  birth_day: '19920729',
-  email: 'jisu.kim@mdstech.co.kr'
+  status: false,
+  email: '',
 };
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser: (state, action) => {
-      console.log("setUser::action:;", action)
-      state.status = action.payload.data;
-      state.userName = action.payload.username;
-      state.id = action.payload.id;
-      state.phone_number = action.payload.phone_number;
-      state.birth_day = action.payload.birth_day;
+      console.log('setUser::action:;', action);
+      console.log('setUser::action:;', action.payload.id);
+      state.status = true;
       state.email = action.payload.email;
+      state.id = action.payload.id;
     },
-    logout: (state) => initialState
-
+    logout: state => initialState,
   },
 });
 

@@ -12,10 +12,11 @@
   --color-anchor: #000aff;
   --color-span: rgb(255, 255, 255);
 }
- 
+
 * {
   box-sizing: border-box;
 }
+
 /* 버튼과 바디 등 필요한 변수들을 설정해줌으로써 값 지정해주기  */
 button {
   /* background-color: var(--color-background); */
@@ -63,15 +64,15 @@ p {
   font-size: 18px;
 }
 @font-face {
-  font-family: "NanumSquare";
+  font-family: 'NanumSquare';
   font-weight: 400;
   font-style: normal;
-  src: url("/public/fonts/NanumSquareB.ttf") format("ttf");
+  src: url('/public/fonts/NanumSquareB.ttf') format('ttf');
 }
 
 @font-face {
-  font-family: "NanumSquare";
+  font-family: 'NanumSquare';
   font-weight: 700;
   font-style: normal;
-  src: url("/public/fonts/NanumSquareEB.ttf") format("ttf");
+  src: url('/public/fonts/NanumSquareEB.ttf') format('ttf');
 }

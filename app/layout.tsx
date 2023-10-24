@@ -4,6 +4,7 @@ import UseFooter from './layout/footer/Index';
 import Navigation from './layout/navigation/Index';
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Providers } from "@/redux/provider";
+import "react-quill/dist/quill.snow.css";
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata = {

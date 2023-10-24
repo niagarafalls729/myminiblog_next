@@ -8,4 +8,12 @@
   width: 100vh;
 }
 .pc {
+  position: absolute;
+  top: 71px;
+  left: 0;
+  z-index: 5;
+  -o-object-fit: cover;
+  object-fit: cover;
+  height: 80%;
+  width: 100%;
 }

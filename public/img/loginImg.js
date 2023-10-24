@@ -1,9 +1,12 @@
-const loginImg = [
+const loginImgMo = [
   {
-    label: "Image 1",
-    alt: "image1",
-    url: "https://picsum.photos/1200/2400",
+    url: 'https://picsum.photos/500/1000',
   },
 ];
 
-export default loginImg;
+const loginImgPc = [
+  {
+    url: 'https://picsum.photos/1800/2800',
+  },
+];
+export { loginImgPc, loginImgMo };

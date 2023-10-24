@@ -7,9 +7,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow"; 
+import TableRow from "@mui/material/TableRow";
 import styles from "./myStudy.module.css";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from "@mui/icons-material/Create";
 import Link from "@/node_modules/next/link";
 const columns = [
   { id: "index", label: " ", minWidth: 5, align: "left" },
@@ -100,7 +100,7 @@ export function StickyHeadTable() {
           </Table>
         </TableContainer>
         <TablePagination
-        className={styles["tablePagination_right"]}
+          className={styles["tablePagination_right"]}
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={rows.length}
@@ -109,8 +109,11 @@ export function StickyHeadTable() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-        <Link href='myStudy/created'>
-         <CreateIcon color="primary" className={styles["tablePagination_left"]}/>
+        <Link href="myStudy/created">
+          <CreateIcon
+            color="primary"
+            className={styles["tablePagination_left"]}
+          />
         </Link>
       </Paper>
     </>
