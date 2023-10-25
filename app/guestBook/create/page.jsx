@@ -5,14 +5,16 @@ import styles from './create.module.css';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import TextField from '@mui/material/TextField';
 import BasicEditor from '@/components/editor/index';
+// import BasicEditor from '@/components/editor/copy';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { useAppSelector } from '@/redux/hooks';
-import { saveBlob } from '@/api/baseGet';
-
+import { savePost } from '@/api/baseGet';
+import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
+
 const stylesCSS = {
   input: {
     '& input[type=number]': {
@@ -28,6 +30,7 @@ const stylesCSS = {
 };
 
 export default function page() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const userStatus = useAppSelector(state => state.user.status);
   const userId = useAppSelector(state => state.user.id);
@@ -75,11 +78,12 @@ export default function page() {
       id: userStatus ? userId : '익명' + dayjs().format('MMDDHHmmss'),
     };
     console.log('cc', createGuestBook);
-    const rtn = await saveBlob('guestBook/Create', createGuestBook);
+
+    const rtn = await savePost('guestBook/Create', createGuestBook);
     alert(rtn.message);
 
     // 페이지를 이동합니다.
-    location.reload();
+    router.push('/guestBook');
   };
 
   return !mounted ? (
@@ -103,10 +107,10 @@ export default function page() {
             />
           </Grid>
           <Grid xs={12} md={12} lg={12} className="mb-8">
+            {/* <BasicEditor></BasicEditor> */}
             <BasicEditor
               ref={isContents}
               style={{ height: '300px', marginBottom: '20px' }} // 스타일 속성을 객체로 설정
-              onTextChange={e => console.log('Text changed:', e)}
             />
           </Grid>
           <Grid xs={12} md={12} lg={12} className="mb-8">

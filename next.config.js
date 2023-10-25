@@ -2,7 +2,7 @@
 // const nextConfig = {}
 
 // module.exports = nextConfig
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   compiler: {
@@ -19,5 +19,15 @@ module.exports = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '4000',
+        pathname: '/uploads/**',
+      },
+    ],
   },
 };

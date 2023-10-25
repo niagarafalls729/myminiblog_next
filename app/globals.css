@@ -55,7 +55,19 @@ h3 {
     --background-end-rgb: 0, 0, 0;
   }
 }
+[data-theme='dark'] .ql-editor.ql-blank[data-placeholder]:before {
+  color: gray;
+}
 
+[data-theme='dark'] .ql-formats * {
+  stroke: white !important;
+  /* 공통 스타일을 여기에 정의합니다. */
+}
+
+/* 라이트 모드에 대한 스타일 */
+[data-theme='light'] .ql-editor.ql-blank[data-placeholder]:before {
+  color: black;
+}
 .wrap {
   padding: 10px;
 }

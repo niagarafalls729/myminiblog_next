@@ -1,7 +1,7 @@
 import qs from 'qs';
 import axios from 'axios';
 
-export async function axiosGet(restUrl, payload = {}) {
+export async function axiosGetMain(restUrl, payload = {}) {
   const params = new URLSearchParams(qs.stringify(payload));
   const cleaned = String(params);
   const url =
@@ -46,6 +46,29 @@ export async function axiosGet(restUrl, payload = {}) {
     console.log(groupedData);
 
     return groupedData;
+  } catch (error) {
+    throw error;
+  }
+}
+export async function axiosGet(restUrl, payload = {}) {
+  console.log('payload', payload);
+  const params = new URLSearchParams(qs.stringify(payload));
+  [...params.entries()].forEach(([key, value]) => {
+    if (!value) {
+      params.delete(key);
+    }
+  });
+  console.log('params', params.getAll);
+
+  const cleaned = String(params);
+  const url = 'http://localhost:4000/' + restUrl + '?' + params.toString();
+
+  try {
+    console.log('url', url);
+    const response = await axios.get(url);
+    console.log('re', JSON.stringify(response.data));
+
+    return response.data;
   } catch (error) {
     throw error;
   }

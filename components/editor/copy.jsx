@@ -1,30 +1,18 @@
 'use client';
-
-import { useState, useMemo, useRef, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import { forwardRef, useImperativeHandle } from 'react'; // forwardRef와 useImperativeHandle를 한 번만 import
-import axios from 'axios';
+// Quill 에디터 가져오기
 import ReactQuill from 'react-quill';
-const BasicEditor = forwardRef(({ style }, parent_ref) => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+// axios
+import axios from 'axios';
+import { useMemo, useRef, useState } from 'react';
 
-  const [text, setText] = useState('');
+function App() {
+  const [value, setValue] = useState('');
   const quillRef = useRef();
-  const handleChange = value => {
-    setText(value);
-  };
-  // useImperativeHandle을 사용하여 외부에서 호출 가능한 메서드를 정의
-  useImperativeHandle(parent_ref, () => ({
-    text,
-  }));
-  const containerStyle = {
-    ...style,
-  };
+
   // 이미지 처리를 하는 핸들러
   const imageHandler = () => {
+    console.log('에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!');
+
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
     const input = document.createElement('input');
     // 속성 써주기
@@ -37,7 +25,6 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
     input.addEventListener('change', async () => {
       console.log('온체인지');
       const file = input.files[0];
-      console.log('ddd', file);
       // multer에 맞는 형식으로 데이터 만들어준다.
       const formData = new FormData();
       formData.append('img', file); // formData는 키-밸류 구조
@@ -46,7 +33,6 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
         const result = await axios.post('http://localhost:4000/img', formData);
         console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
         const IMG_URL = result.data.url;
-
         // 이 URL을 img 태그의 src에 넣은 요소를 현재 에디터의 커서에 넣어주면 에디터 내에서 이미지가 나타난다
         // src가 base64가 아닌 짧은 URL이기 때문에 데이터베이스에 에디터의 전체 글 내용을 저장할 수있게된다
         // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
@@ -99,21 +85,31 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
     'image',
   ];
 
-  return !mounted ? (
-    'loading....'
-  ) : (
+  // 이벤트 핸들러
+  const onClickContents = () => {
+    const editor = quillRef.current.getEditor();
+    // console.log(quillRef.current);
+    console.log(editor.root); // 에디터 안의 내용 HTML 태그
+
+    // 현재 에디터 안에 어떤 데이터가 들어있는지 확인해 보자
+    console.log('안의 내용물 전부', quillRef.current.getEditorContents());
+  };
+
+  return (
     <div>
+      <h1>Quill 에디터 입니다.</h1>
+      <button onClick={onClickContents}>에디터 안의 내용들</button>
       <ReactQuill
         ref={quillRef}
-        style={containerStyle}
         theme="snow"
-        placeholder="내용을 입력해주세여!"
-        value={text}
-        onChange={handleChange}
+        placeholder="플레이스 홀더"
+        value={value}
+        onChange={setValue}
         modules={modules}
         formats={formats}
       />
     </div>
   );
-});
-export default BasicEditor;
+}
+
+export default App;
