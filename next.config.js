@@ -52,6 +52,10 @@ module.exports = {
         source: "/:path*",
         destination: "http://138.2.119.188:4000/:path*",
       },
+      {
+        source: "/:path*",
+        destination: "http://localhost:4000/:path*",
+      },
     ];
   },
 };
