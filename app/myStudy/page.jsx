@@ -13,7 +13,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import Link from '@/node_modules/next/link';
 const columns = [
   { id: 'index', label: ' ', minWidth: 5, align: 'left' },
-  { id: 'title', label: '제목', align: 'center', minWidth: 170 },
+  { id: 'title', label: '제목입니다', align: 'center', minWidth: 170 },
 
   {
     id: 'created',
