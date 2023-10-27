@@ -5,7 +5,7 @@ export async function axiosGetMain(restUrl, payload = {}) {
   const params = new URLSearchParams(qs.stringify(payload));
   const cleaned = String(params);
   const url =
-    'http://localhost:4000/' + restUrl + '?' + encodeURIComponent(cleaned);
+    'http://127.0.0.1:4000/' + restUrl + '?' + encodeURIComponent(cleaned);
 
   try {
     const response = await axios.get(url);
@@ -61,7 +61,7 @@ export async function axiosGet(restUrl, payload = {}) {
   console.log('params', params.getAll);
 
   const cleaned = String(params);
-  const url = 'http://localhost:4000/' + restUrl + '?' + params.toString();
+  const url = 'http://127.0.0.1:4000/' + restUrl + '?' + params.toString();
 
   try {
     console.log('url', url);
@@ -74,7 +74,7 @@ export async function axiosGet(restUrl, payload = {}) {
   }
 }
 export async function savePost(restUrl, payload = {}) {
-  const url = 'http://localhost:4000/' + restUrl;
+  const url = 'http://127.0.0.1:4000/' + restUrl;
 
   try {
     const response = await axios.post(url, JSON.stringify(payload), {
@@ -88,7 +88,7 @@ export async function savePost(restUrl, payload = {}) {
   }
 }
 export async function getPost(restUrl, payload = {}) {
-  const url = 'http://localhost:4000/' + restUrl;
+  const url = 'http://127.0.0.1:4000/' + restUrl;
 
   try {
     const response = await axios.post(url, JSON.stringify(payload), {
@@ -103,7 +103,7 @@ export async function getPost(restUrl, payload = {}) {
 }
 
 export async function saveBlob(restUrl, formData) {
-  const url = 'http://localhost:4000/' + restUrl;
+  const url = 'http://127.0.0.1:4000/' + restUrl;
 
   try {
     const response = await axios.post(url, formData, {
