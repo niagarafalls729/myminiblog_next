@@ -43,7 +43,7 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
       formData.append('img', file); // formData는 키-밸류 구조
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
-        const result = await axios.post('http://localhost:4000/img', formData);
+        const result = await axios.post('http://127.0.0.1:4000/img', formData);
         console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
         const IMG_URL = result.data.url;
 
