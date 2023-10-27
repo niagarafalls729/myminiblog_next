@@ -1,13 +1,9 @@
 import styles from "./introduction.module.css";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-
-import Career from "@/app/introduction/career";
-
-import Test from "@/app/introduction/test";
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 
+import Career from "@/app/introduction/career"; 
 export default function Introduction() {
   return (
-    <>
-    <Test></Test>
+    <> 
       <Grid container className="total_wrap">
         <Grid xs={0} md={4}></Grid>
         <Grid xs={12} md={6}>
