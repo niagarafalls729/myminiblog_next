@@ -4,7 +4,17 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { forwardRef, useImperativeHandle } from 'react'; // forwardRef와 useImperativeHandle를 한 번만 import
 import axios from 'axios';
-import ReactQuill from 'react-quill';
+const ReactQuill = dynamic(
+  async () => {
+    const { default: RQ } = await import('react-quill');
+    return function comp({ forwardedRef, ...props }) {
+      return <RQ ref={forwardedRef} {...props} />;
+    };
+  },
+  { ssr: false }
+);
+import 'react-quill/dist/quill.snow.css';
+
 const BasicEditor = forwardRef(({ style }, parent_ref) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -12,7 +22,7 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
   }, []);
 
   const [text, setText] = useState('');
-  const quillRef = useRef();
+  const quillRef = useRef('');
   const handleChange = value => {
     setText(value);
   };
@@ -102,9 +112,9 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
   return !mounted ? (
     'loading....'
   ) : (
-    <div>
+    <>
       <ReactQuill
-        ref={quillRef}
+        forwardedRef={quillRef}
         style={containerStyle}
         theme="snow"
         placeholder="내용을 입력해주세여!"
@@ -113,7 +123,7 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
         modules={modules}
         formats={formats}
       />
-    </div>
+    </>
   );
 });
 export default BasicEditor;

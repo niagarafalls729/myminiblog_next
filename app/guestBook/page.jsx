@@ -18,7 +18,7 @@ export default function guestBook() {
   const router = useRouter();
   const [rows, setRows] = useState([]);
   const columns = [
-    { id: 'index', label: ' ', minWidth: 5, align: 'left' },
+    { id: 'index', label: '', minWidth: 5, align: 'left' },
     { id: 'title', label: '제목', align: 'center' },
     { id: 'id', label: '작성자', align: 'center' },
     {
@@ -134,7 +134,7 @@ export default function guestBook() {
           page={page}
           onPageChange={handleChangePage}
         />
-        <Link href="guestBook/create">
+        <Link href="components/create/guestBook">
           <CreateIcon
             color="primary"
             className={styles['tablePagination_left']}

@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { useAppSelector } from '@/redux/hooks';
 import { savePost } from '@/api/baseGet';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import dayjs from 'dayjs';
 
 const stylesCSS = {
@@ -40,6 +40,10 @@ export default function page() {
   const [titlelErr, settitlelErr] = useState(false);
   const [helperText, setHelperText] = useState('');
   const [captcha, setCaptcha] = useState('');
+  const params = useParams();
+
+  console.log('params', params.index);
+
   const generateRandomNumber = () =>
     Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
@@ -83,7 +87,7 @@ export default function page() {
     alert(rtn.message);
 
     // 페이지를 이동합니다.
-    router.push('/guestBook');
+    router.push(params.index === 'guestBook' ? '/guestBook' : '/myStudy');
   };
 
   return !mounted ? (
