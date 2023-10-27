@@ -3,9 +3,11 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 import Career from "@/app/introduction/career";
 
+import Test from "@/app/introduction/test";
 export default function Introduction() {
   return (
     <>
+    <Test></Test>
       <Grid container className="total_wrap">
         <Grid xs={0} md={4}></Grid>
         <Grid xs={12} md={6}>
