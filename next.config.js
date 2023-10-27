@@ -42,20 +42,14 @@ module.exports = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/:path*",
-        destination: "http://127.0.0.1:4000/:path*",
-      },
-      {
-        source: "/:path*",
-        destination: "http://138.2.119.188:4000/:path*",
-      },
-      {
-        source: "/:path*",
-        destination: "http://localhost:4000/:path*",
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+ 
+  //     {
+  //       source: "/:path*",
+  //       destination: "http://138.2.119.188:4000/:path*",
+  //     },
+ 
+  //   ];
+  // },
 };
