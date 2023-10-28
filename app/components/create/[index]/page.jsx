@@ -98,53 +98,55 @@ export default function page() {
         <Grid xs={0} md={4} lg={4}></Grid>
         <Grid xs={12} md={6} lg={4} className={styles['create_wrap']}>
           <Grid xs={12} md={12} lg={12} className={styles['input_title']}>
-            <TextField
-              id="outlined-basic"
-              label="제목"
-              variant="outlined"
-              helperText={helperText}
-              fullWidth
-              color={!titlelErr ? 'primary' : 'warning'}
-              onBlur={errCHK}
-              onChange={errCHK}
-              inputProps={{ ref: isTitle }}
-            />
-          </Grid>
-          <Grid xs={12} md={12} lg={12} className="mb-8">
-            {/* <BasicEditor></BasicEditor> */}
-            <BasicEditor
-              ref={isContents}
-              style={{ height: '300px', marginBottom: '20px' }} // 스타일 속성을 객체로 설정
-            />
-          </Grid>
-          <Grid xs={12} md={12} lg={12} className="mb-8">
-            <div style={{ display: 'flex' }}>
-              <Grid xs={6} md={6} lg={6}>
-                <FormControl style={{ width: '100%' }}>
-                  <InputLabel color="error"> {captcha}</InputLabel>
-                  <OutlinedInput
-                    onClick={handleClickShowPassword}
-                    disabled
-                    type={'number'}
-                    endAdornment={<RefreshIcon color="primary" />}
+            <Grid container>
+              <TextField
+                id="outlined-basic"
+                label="제목"
+                variant="outlined"
+                helperText={helperText}
+                fullWidth
+                color={!titlelErr ? 'primary' : 'warning'}
+                onBlur={errCHK}
+                onChange={errCHK}
+                inputProps={{ ref: isTitle }}
+              />
+            </Grid>
+            <Grid xs={12} md={12} lg={12} className="!w-full mb-8 inline-block">
+              {/* <BasicEditor></BasicEditor> */}
+              <BasicEditor
+                ref={isContents}
+                style={{ height: '300px', marginBottom: '20px' }} // 스타일 속성을 객체로 설정
+              />
+            </Grid>
+            <Grid xs={12} md={12} lg={12} className="mb-8">
+              <div style={{ display: 'flex' }}>
+                <Grid xs={6} md={6} lg={6}>
+                  <FormControl style={{ width: '100%' }}>
+                    <InputLabel color="error"> {captcha}</InputLabel>
+                    <OutlinedInput
+                      onClick={handleClickShowPassword}
+                      disabled
+                      type={'number'}
+                      endAdornment={<RefreshIcon color="primary" />}
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid xs={6} md={6} lg={6}>
+                  <TextField
+                    label="captcha 번호 입력"
+                    variant="outlined"
+                    type="number"
+                    fullWidth
+                    sx={{ ...stylesCSS.input }}
+                    inputProps={{ ref: isCaptcha }}
                   />
-                </FormControl>
-              </Grid>
-              <Grid xs={6} md={6} lg={6}>
-                <TextField
-                  label="captcha 번호 입력"
-                  variant="outlined"
-                  type="number"
-                  fullWidth
-                  sx={{ ...stylesCSS.input }}
-                  inputProps={{ ref: isCaptcha }}
-                />
-              </Grid>
-            </div>
+                </Grid>
+              </div>
+            </Grid>
+            <Button fullWidth variant="contained" onClick={fn_save}>
+              저장
+            </Button>
           </Grid>
-          <Button fullWidth variant="contained" onClick={fn_save}>
-            저장
-          </Button>
         </Grid>
       </Grid>
     </div>

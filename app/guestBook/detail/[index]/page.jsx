@@ -1,28 +1,27 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { axiosGet } from '@/api/baseGet';
 import { useParams } from 'next/navigation';
 
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
 import styles from './detail.module.css';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import TextField from '@mui/material/TextField';
-import BasicEditor from '@/components/editor/index';
-// import BasicEditor from '@/components/editor/copy';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 export default function detail() {
   const params = useParams();
 
   console.log('params', params.index);
 
-  const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState({});
   useEffect(() => {
-    setMounted(true);
     myAPI();
   }, []);
 
@@ -39,19 +38,104 @@ export default function detail() {
 
   return (
     <>
-      <div className="p-8" style={{ zIndex: 10, position: 'sticky' }}>
+      <div className="p-1" style={{ zIndex: 10, position: 'sticky' }}>
         <Grid container>
-          <Grid xs={0} md={4} lg={4}></Grid>
-          <Grid xs={12} md={6} lg={4} className={styles['create_wrap']}>
-            <Grid xs={12} md={12} lg={12}>
+          <Grid xs={0} lg={4}></Grid>
+          <Grid xs={12} lg={4} className={styles['create_wrap']}>
+            <Grid xs={12} lg={12}>
               제목 : {form.title}
             </Grid>
-            <Grid xs={12} md={12} lg={12}>
+            <Grid container>
+              <Grid xs={4} lg={4}>
+                작성자 : {form.id}
+              </Grid>
+              <Grid xs={4} lg={4} xsOffset="auto">
+                작성일 : {form.creation_timestamp}
+              </Grid>
+            </Grid>
+            <hr />
+
+            <hr />
+            <Grid xs={12} lg={12}>
               <div dangerouslySetInnerHTML={{ __html: form.contents }} />
             </Grid>
+            <Grid xs={12} lg={12}>
+              <Reply index={params.index}></Reply>
+            </Grid>
           </Grid>
+          <Grid xs={0} lg={4}></Grid>
         </Grid>
       </div>
     </>
   );
 }
+
+const Reply = props => {
+  console.log('props.params', props.index);
+  const isTitle = useRef('');
+  const [openReply, setOpenReply] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const handleClick = () => {
+    console.log('handleClick');
+    setOpenReply(!openReply);
+  };
+
+  const [form, setForm] = useState({});
+  useEffect(() => {
+    console.log('useEffect');
+    setMounted(true);
+    myAPI();
+  }, [props.index]);
+
+  const myAPI = async () => {
+    try {
+      const res = await axiosGet('guestBook_reply', { index: props.params });
+      // API 호출에서 데이터를 가져온 후 rows 배열에 추가
+      setForm(res[0]);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+  const fn_save = () => {};
+  return !mounted ? (
+    'loading....'
+  ) : (
+    <List sx={{ width: '100%' }}>
+      <ListItemButton onClick={handleClick} style={{ background: 'gray' }}>
+        <ListItemText primary="댓글" />
+        {openReply ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={openReply} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItemButton disabled>
+            <Grid container sx={{ width: '100%' }}>
+              <Grid xs={12} lg={12}>
+                내용요용ㅇ용
+              </Grid>
+              <Grid xsOffset="auto">idasdfsadf</Grid>
+            </Grid>
+          </ListItemButton>
+          <ListItemButton>
+            <Grid container rowSpacing={4} sx={{ width: '100%' }}>
+              <Grid xs={12} lg={12}>
+                <TextField
+                  variant="outlined"
+                  inputProps={{ ref: isTitle }}
+                  className="!w-full"
+                  multiline
+                  rows={4}
+                  placeholder="비회원도 입력가눙!"
+                />
+              </Grid>
+              <Grid xs={12} lg={12}>
+                <Button fullWidth variant="contained" onClick={fn_save}>
+                  저장
+                </Button>
+              </Grid>
+            </Grid>
+          </ListItemButton>
+        </List>
+      </Collapse>
+    </List>
+  );
+};

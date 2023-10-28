@@ -1,22 +1,22 @@
-import styles from "./introduction.module.css";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2 
-import Career from "@/app/introduction/career"; 
+import styles from './introduction.module.css';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Career from '@/app/introduction/career';
 export default function Introduction() {
   return (
-    <> 
+    <>
       <Grid container className="total_wrap">
         <Grid xs={0} md={4}></Grid>
         <Grid xs={12} md={6}>
           <div className="animate__animated animate__flash">
-            <p className={styles["title"]}>
+            <p className={styles['title']}>
               안녕하세요!
               <br />
-              김지수입니다 <span className={styles["pin_point"]}>.</span>
+              김지수입니다 <span className={styles['pin_point']}>.</span>
             </p>
           </div>
           <div>
-            <p style={{ fontWeight: "bold" }}></p>
-            <p style={{ fontWeight: "bold" }} className={styles["about_me"]}>
+            <p style={{ fontWeight: 'bold' }}></p>
+            <p style={{ fontWeight: 'bold' }} className={styles['about_me']}>
               저는 4년 이상의 웹 애플리케이션 및 웹사이트 개발 경험을 가진
               프론트엔드 개발자입니다.
               <br /> 제 목표는 혁신적인 프론트엔드 솔루션을 개발하여 사용자와
@@ -36,7 +36,7 @@ export default function Introduction() {
               활력소입니다! 돈이최고!
             </p> */}
             <br />
-            <p className={styles["sub_title"]}>경력사항</p>
+            <p className={styles['sub_title']}>경력사항</p>
             <Career></Career>
             <br />제 포트폴리오를 확인해 주셔서 감사합니다. 어떠한 질문이나
             제안이 있으시면 언제든지 연락 주시기 바랍니다.

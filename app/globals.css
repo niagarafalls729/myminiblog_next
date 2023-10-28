@@ -75,6 +75,9 @@ h3 {
 p {
   font-size: 18px;
 }
+div {
+  word-break: break-al;
+}
 @font-face {
   font-family: 'NanumSquare';
   font-weight: 400;

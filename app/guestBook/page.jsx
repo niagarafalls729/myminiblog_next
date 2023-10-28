@@ -18,9 +18,9 @@ export default function guestBook() {
   const router = useRouter();
   const [rows, setRows] = useState([]);
   const columns = [
-    { id: 'index', label: '', minWidth: 5, align: 'left' },
+    { id: 'index', label: 'No.', minWidth: 5, align: 'left' },
     { id: 'title', label: '제목', align: 'center' },
-    { id: 'id', label: '작성자', align: 'center' },
+    { id: 'id', label: '작성자', align: 'right' },
     {
       id: 'created',
       label: '작성일',
@@ -93,7 +93,7 @@ export default function guestBook() {
                   <TableCell component="th" scope="row">
                     {row.index}
                   </TableCell>
-                  <TableCell align="right">{row.title}</TableCell>
+                  <TableCell align="center">{row.title}</TableCell>
                   <TableCell align="right">{row.id}</TableCell>
                   <TableCell align="right">{row.created}</TableCell>
                 </TableRow>

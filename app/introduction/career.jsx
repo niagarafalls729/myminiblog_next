@@ -100,7 +100,6 @@ export default function Career() {
     try {
       const res = await axiosGetMain('main');
       setCareer(res);
-      console.log('DDD');
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
