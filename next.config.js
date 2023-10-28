@@ -10,6 +10,9 @@ module.exports = {
       displayName: false,
     },
   },
+  env: {
+    BASE_URL: process.env.BASE_URL,
+  },
   reactStrictMode: true,
   swcMinify: true,
   reactStrictMode: false,
@@ -44,12 +47,12 @@ module.exports = {
   },
   // async rewrites() {
   //   return [
- 
+
   //     {
   //       source: "/:path*",
   //       destination: "http://138.2.119.188:4000/:path*",
   //     },
- 
+
   //   ];
   // },
 };

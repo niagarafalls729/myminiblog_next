@@ -1,12 +1,13 @@
 import qs from 'qs';
 import axios from 'axios';
 
+const BASE_API_URL = `${process.env.NEXT_PUBLIC_API_KEY}`;
+
 export async function axiosGetMain(restUrl, payload = {}) {
   const params = new URLSearchParams(qs.stringify(payload));
   const cleaned = String(params);
-  const url =
-    'http://138.2.119.188:4000/' + restUrl + '?' + encodeURIComponent(cleaned);
-
+  const url = BASE_API_URL + restUrl + '?' + encodeURIComponent(cleaned);
+  console.log('url', url);
   try {
     const response = await axios.get(url);
     console.log('re', JSON.stringify(response.data));
@@ -61,7 +62,7 @@ export async function axiosGet(restUrl, payload = {}) {
   console.log('params', params.getAll);
 
   const cleaned = String(params);
-  const url = 'http://138.2.119.188:4000/' + restUrl + '?' + params.toString();
+  const url = BASE_API_URL + restUrl + '?' + params.toString();
 
   try {
     console.log('url', url);
@@ -74,7 +75,7 @@ export async function axiosGet(restUrl, payload = {}) {
   }
 }
 export async function savePost(restUrl, payload = {}) {
-  const url = 'http://138.2.119.188:4000/' + restUrl;
+  const url = BASE_API_URL + restUrl;
 
   try {
     const response = await axios.post(url, JSON.stringify(payload), {
@@ -88,7 +89,7 @@ export async function savePost(restUrl, payload = {}) {
   }
 }
 export async function getPost(restUrl, payload = {}) {
-  const url = 'http://138.2.119.188:4000/' + restUrl;
+  const url = BASE_API_URL + restUrl;
 
   try {
     const response = await axios.post(url, JSON.stringify(payload), {
@@ -103,7 +104,7 @@ export async function getPost(restUrl, payload = {}) {
 }
 
 export async function saveBlob(restUrl, formData) {
-  const url = 'http://138.2.119.188:4000/' + restUrl;
+  const url = BASE_API_URL + restUrl;
 
   try {
     const response = await axios.post(url, formData, {
