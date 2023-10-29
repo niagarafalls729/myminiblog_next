@@ -157,23 +157,17 @@ const Mo = props => {
               aria-labelledby="nested-list-subheader"
             >
               <ListItemButton>
-                <Link href="/" onClick={() => setShowNavbar(!showNavbar)}>
+                <Link href="/" onClick={handleShowNavbar}>
                   <ListItemText primary="블로그 주인" />
                 </Link>
               </ListItemButton>
               <ListItemButton>
-                <Link
-                  href="/myStudy"
-                  onClick={() => setShowNavbar(!showNavbar)}
-                >
+                <Link href="/myStudy" onClick={handleShowNavbar}>
                   <ListItemText primary="공부일지" />
                 </Link>
               </ListItemButton>
               <ListItemButton>
-                <Link
-                  href="/guestBook"
-                  onClick={() => setShowNavbar(!showNavbar)}
-                >
+                <Link href="/guestBook" onClick={handleShowNavbar}>
                   <ListItemText primary="방명록" />
                 </Link>
               </ListItemButton>
@@ -192,10 +186,7 @@ const Mo = props => {
                         </Link>
                       </ListItemButton>
                       <ListItemButton sx={{ pl: 4 }}>
-                        <Link
-                          href="/userModi"
-                          onClick={() => setShowNavbar(!showNavbar)}
-                        >
+                        <Link href="/userModi" onClick={handleShowNavbar}>
                           <ListItemText primary={userId + ' 비밀번호 변경'} />
                         </Link>
                       </ListItemButton>
@@ -204,11 +195,7 @@ const Mo = props => {
                 </>
               ) : (
                 <ListItemButton>
-                  <Link
-                    href="/login"
-                    as="/login"
-                    onClick={() => setShowNavbar(!showNavbar)}
-                  >
+                  <Link href="/login" as="/login" onClick={handleShowNavbar}>
                     <ListItemText primary="로그인/회원가입" />
                   </Link>
                 </ListItemButton>

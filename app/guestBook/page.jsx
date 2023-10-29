@@ -18,7 +18,7 @@ export default function guestBook() {
   const router = useRouter();
   const [rows, setRows] = useState([]);
   const columns = [
-    { id: 'index', label: 'No.', minWidth: 5, align: 'left' },
+    // { id: 'index', label: 'No.', minWidth: 5, align: 'left' },
     { id: 'title', label: '제목', align: 'center' },
     { id: 'id', label: '작성자', align: 'right' },
     {
@@ -90,9 +90,9 @@ export default function guestBook() {
             <TableBody>
               {rows.map(row => (
                 <TableRow key={row.index} hover onClick={() => rowClick(row)}>
-                  <TableCell component="th" scope="row">
+                  {/* <TableCell component="th" scope="row">
                     {row.index}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="center">{row.title}</TableCell>
                   <TableCell align="right">{row.id}</TableCell>
                   <TableCell align="right">{row.created}</TableCell>
