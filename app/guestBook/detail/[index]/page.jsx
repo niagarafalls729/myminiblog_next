@@ -19,7 +19,7 @@ import { useAppSelector } from '@/redux/hooks';
 import Link from 'next/link';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import dayjs from 'dayjs';
 export default function detail() {
   const params = useParams();
   const userStatus = useAppSelector(state => state.user.status);
