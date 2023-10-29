@@ -156,21 +156,21 @@ const Mo = props => {
               component="nav"
               aria-labelledby="nested-list-subheader"
             >
-              <ListItemButton>
-                <Link href="/" onClick={handleShowNavbar}>
+              <Link href="/" onClick={handleShowNavbar}>
+                <ListItemButton>
                   <ListItemText primary="블로그 주인" />
-                </Link>
-              </ListItemButton>
-              <ListItemButton>
-                <Link href="/myStudy" onClick={handleShowNavbar}>
+                </ListItemButton>
+              </Link>
+              <Link href="/myStudy" onClick={handleShowNavbar}>
+                <ListItemButton>
                   <ListItemText primary="공부일지" />
-                </Link>
-              </ListItemButton>
-              <ListItemButton>
-                <Link href="/guestBook" onClick={handleShowNavbar}>
+                </ListItemButton>
+              </Link>
+              <Link href="/guestBook" onClick={handleShowNavbar}>
+                <ListItemButton>
                   <ListItemText primary="방명록" />
-                </Link>
-              </ListItemButton>
+                </ListItemButton>
+              </Link>
 
               {userStatus ? (
                 <>
@@ -180,25 +180,25 @@ const Mo = props => {
                   </ListItemButton>
                   <Collapse in={expanded === 2 ? true : false} unmountOnExit>
                     <List component="div" disablePadding>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link href="/" onClick={() => dispatch(logout())}>
+                      <Link href="/" onClick={() => dispatch(logout())}>
+                        <ListItemButton sx={{ pl: 4 }}>
                           <ListItemText primary={userId + ' 로그아웃'} />
-                        </Link>
-                      </ListItemButton>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <Link href="/userModi" onClick={handleShowNavbar}>
+                        </ListItemButton>
+                      </Link>
+                      <Link href="/userModi" onClick={handleShowNavbar}>
+                        <ListItemButton sx={{ pl: 4 }}>
                           <ListItemText primary={userId + ' 비밀번호 변경'} />
-                        </Link>
-                      </ListItemButton>
+                        </ListItemButton>
+                      </Link>
                     </List>
                   </Collapse>
                 </>
               ) : (
-                <ListItemButton>
-                  <Link href="/login" as="/login" onClick={handleShowNavbar}>
+                <Link href="/login" as="/login" onClick={handleShowNavbar}>
+                  <ListItemButton>
                     <ListItemText primary="로그인/회원가입" />
-                  </Link>
-                </ListItemButton>
+                  </ListItemButton>
+                </Link>
               )}
             </List>
           </div>

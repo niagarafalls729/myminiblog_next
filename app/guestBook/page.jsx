@@ -59,6 +59,11 @@ export default function guestBook() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   const rowClick = e => {
     console.log('e', e);
     router.push('/guestBook/detail/' + e.index);
@@ -69,7 +74,7 @@ export default function guestBook() {
   ) : (
     <>
       <Paper sx={{ width: '100%', overflow: 'hidden' }} className="myTable">
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer sx={{ maxHeight: 700 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -88,17 +93,7 @@ export default function guestBook() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(row => (
-                <TableRow key={row.index} hover onClick={() => rowClick(row)}>
-                  {/* <TableCell component="th" scope="row">
-                    {row.index}
-                  </TableCell> */}
-                  <TableCell align="center">{row.title}</TableCell>
-                  <TableCell align="right">{row.id}</TableCell>
-                  <TableCell align="right">{row.created}</TableCell>
-                </TableRow>
-              ))}
-              {/* {rows
+              {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, idx) => {
                   return (
@@ -106,7 +101,7 @@ export default function guestBook() {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.code + idx}
+                      key={row.id + idx}
                       onClick={() => rowClick(row)}
                     >
                       {columns.map(column => {
@@ -121,7 +116,7 @@ export default function guestBook() {
                       })}
                     </TableRow>
                   );
-                })} */}
+                })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -132,6 +127,7 @@ export default function guestBook() {
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
+          onRowsPerPageChange={handleChangeRowsPerPage}
           onPageChange={handleChangePage}
         />
         <Link href="components/create/guestBook">

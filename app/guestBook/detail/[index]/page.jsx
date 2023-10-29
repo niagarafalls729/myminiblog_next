@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { axiosGet } from '@/api/baseGet';
-import { useParams } from 'next/navigation';
+import { axiosGet, savePost } from '@/api/baseGet';
+import { usePathname, useParams } from 'next/navigation';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -62,7 +62,7 @@ export default function detail() {
         <Grid container>
           <Grid xs={0} lg={2}></Grid>
           <Grid xs={12} lg={8} className={styles['create_wrap']}>
-            <Grid container sx={{ bgcolor: 'secondary.main' }}>
+            <Grid container sx={{ bgcolor: 'grey.500' }}>
               <Grid xs={11} lg={11}>
                 제목 : {form.title}
               </Grid>
@@ -75,7 +75,7 @@ export default function detail() {
                 </Grid>
               )}
             </Grid>
-            <Grid container sx={{ bgcolor: 'secondary.main' }}>
+            <Grid container sx={{ bgcolor: 'grey.500' }}>
               <Grid xs={4} lg={4}>
                 작성자 : {form.id}
               </Grid>
@@ -100,86 +100,96 @@ export default function detail() {
 }
 
 const Reply = props => {
-  console.log('props.params', props.index);
-  const isTitle = useRef('');
+  const router = usePathname();
+  const userStatus = useAppSelector(state => state.user.status);
+  const userId = useAppSelector(state => state.user.id);
+
   const [openReply, setOpenReply] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [form, setForm] = useState([]);
+  const isContents = useRef('');
+
   const handleClick = () => {
-    console.log('handleClick');
     setOpenReply(!openReply);
   };
 
-  const [form, setForm] = useState({});
   useEffect(() => {
-    console.log('useEffect');
-    setMounted(true);
     myAPI();
   }, [props.index]);
 
   const myAPI = async () => {
     try {
-      const res = await axiosGet('guestBook_reply', { index: props.params });
-      // API 호출에서 데이터를 가져온 후 rows 배열에 추가
-      setForm(res[0]);
+      const res = await axiosGet('guestBook/Reply', { index: props.index });
+      setForm(res);
+
+      console.log('form', form);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
-  const fn_save = () => {};
-  return !mounted ? (
-    'loading....'
-  ) : (
+
+  const save_reply = async () => {
+    const createForm = {
+      contents: isContents.current.value,
+      id: userStatus ? userId : '익명' + dayjs().format('mmss'),
+      member_create: userStatus ? 'Y' : 'N',
+      guestbook_fk: props.index,
+    };
+
+    const rtn = await savePost(
+      router.split('/')[1] === 'guestBook'
+        ? 'guestBook/Reply'
+        : 'myStudy/Reply',
+      createForm
+    );
+    alert(rtn.message);
+
+    // 페이지를 이동합니다.
+    location.reload();
+  };
+
+  return (
     <List sx={{ width: '100%' }}>
       <ListItemButton onClick={handleClick} style={{ background: 'gray' }}>
-        <ListItemText primary="댓글 갯수추가" />
+        <ListItemText primary={`댓글 ${form.length}`} />
+
         {openReply ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openReply} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton disabled>
-            <Grid container sx={{ width: '100%' }}>
-              <Grid xs={12} lg={12}>
-                내용요용ㅇ용
+          {form.map((e, index) => (
+            <ListItemButton key={index} aria-readonly>
+              <Grid container sx={{ width: '100%', color: 'black' }}>
+                <Grid xs={12} lg={12}>
+                  {e.contents}
+                </Grid>
+                <Grid xsOffset="auto">
+                  {e.id}/ {e.creation_timestamp}
+                </Grid>
               </Grid>
-              <Grid xsOffset="auto">idasdfsadf/2023-10-30</Grid>
-            </Grid>
-          </ListItemButton>
-          {/* <ListItem>
-            <Grid container rowSpacing={4} sx={{ width: '100%' }}>
-              <Grid xs={12} lg={12}>
-                <TextField
-                  variant="outlined"
-                  inputProps={{ ref: isTitle }}
-                  className="!w-full"
-                  multiline
-                  rows={4}
-                  placeholder="비회원도 입력가눙!"
-                />
-              </Grid>
-              <Grid xs={12} lg={12}>
-                <Button fullWidth variant="contained" onClick={fn_save}>
-                  저장
-                </Button>
-              </Grid>
-            </Grid>
-          </ListItem> */}
+            </ListItemButton>
+          ))}
         </List>
       </Collapse>
       <Grid container rowSpacing={4} sx={{ width: '100%' }}>
         <Grid xs={12} lg={12}>
           <TextField
             variant="outlined"
-            inputProps={{ ref: isTitle }}
+            inputProps={{ ref: isContents }}
             className="!w-full"
             multiline
             rows={4}
-            placeholder="비회원도 입력가눙!"
+            placeholder="비회원도 입력 가능! 단 댓글 삭제 및 수정 불가능합니다."
           />
-        </Grid>
-        <Grid xs={12} lg={12}>
-          <Button fullWidth variant="contained" onClick={fn_save}>
+          <Button fullWidth variant="contained" onClick={save_reply}>
             저장
           </Button>
+        </Grid>
+        <Grid xs={12} lg={12}>
+          <Link href={`/guestBook`}>
+            <Button fullWidth variant="contained" color="error">
+              목록으로!
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </List>
