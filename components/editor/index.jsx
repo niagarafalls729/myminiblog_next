@@ -15,7 +15,7 @@ const ReactQuill = dynamic(
 );
 import 'react-quill/dist/quill.snow.css';
 
-const BasicEditor = forwardRef(({ style,value }, parent_ref) => {
+const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
   const [mounted, setMounted] = useState(false);
 
   const [text, setText] = useState('');
@@ -38,8 +38,6 @@ const BasicEditor = forwardRef(({ style,value }, parent_ref) => {
   }, [value]);
   useEffect(() => {
     setMounted(true);
-  console.log("pppp",value)
-    setText(value);
   }, []);
   // 이미지 처리를 하는 핸들러
   const imageHandler = () => {

@@ -123,7 +123,7 @@ const Mo = props => {
             </label>
           </Link>
         </div>
-        <div className="menu-icon" onClick={() => setShowNavbar(!showNavbar)}>
+        <div className="menu-icon" onClick={handleShowNavbar}>
           {!showNavbar ? <MenuIcon /> : <CloseIcon />}
         </div>
         <div
