@@ -11,9 +11,15 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+ 
+import Link from 'next/link';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export default function detail() {
   const params = useParams();
@@ -30,20 +36,31 @@ export default function detail() {
       const res = await axiosGet('guestBook', params);
       // API 호출에서 데이터를 가져온 후 rows 배열에 추가
       setForm(res[0]);
-      console.log(res);
+      console.log('res',res);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
 
+  const deleteApi = () =>{
+      console.log("DDDKDKDKDK")
+  }
   return (
     <>
       <div className="p-1" style={{ zIndex: 10, position: 'sticky' }}>
         <Grid container>
-          <Grid xs={0} lg={4}></Grid>
-          <Grid xs={12} lg={4} className={styles['create_wrap']}>
-            <Grid xs={12} lg={12}>
-              제목 : {form.title}
+          <Grid xs={0} lg={2}></Grid>
+          <Grid xs={12} lg={8} className={styles['create_wrap']}>
+            <Grid container>
+              <Grid xs={11} lg={11}>
+                제목 : {form.title}
+              </Grid>
+              <Grid xs={1} lg={1} xsOffset="auto">
+            <Link  href={`/components/create/guestBook/${params.index}`}>
+              <EditIcon  />
+            </Link>
+              <DeleteIcon onClick={deleteApi}/>
+              </Grid>
             </Grid>
             <Grid container>
               <Grid xs={4} lg={4}>
@@ -63,7 +80,7 @@ export default function detail() {
               <Reply index={params.index}></Reply>
             </Grid>
           </Grid>
-          <Grid xs={0} lg={4}></Grid>
+          <Grid xs={0} lg={2}></Grid>
         </Grid>
       </div>
     </>
@@ -102,7 +119,7 @@ const Reply = props => {
   ) : (
     <List sx={{ width: '100%' }}>
       <ListItemButton onClick={handleClick} style={{ background: 'gray' }}>
-        <ListItemText primary="댓글" />
+        <ListItemText primary="댓글 갯수추가" />
         {openReply ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openReply} timeout="auto" unmountOnExit>
@@ -110,12 +127,12 @@ const Reply = props => {
           <ListItemButton disabled>
             <Grid container sx={{ width: '100%' }}>
               <Grid xs={12} lg={12}>
-                내용요용ㅇ용
+                내용요용ㅇ용 
               </Grid>
-              <Grid xsOffset="auto">idasdfsadf</Grid>
+              <Grid xsOffset="auto">idasdfsadf/2023-10-30</Grid>
             </Grid>
           </ListItemButton>
-          <ListItemButton>
+          {/* <ListItem>
             <Grid container rowSpacing={4} sx={{ width: '100%' }}>
               <Grid xs={12} lg={12}>
                 <TextField
@@ -133,9 +150,26 @@ const Reply = props => {
                 </Button>
               </Grid>
             </Grid>
-          </ListItemButton>
+          </ListItem> */}
         </List>
       </Collapse>
+      <Grid container rowSpacing={4} sx={{ width: '100%' }}>
+              <Grid xs={12} lg={12}>
+                <TextField
+                  variant="outlined"
+                  inputProps={{ ref: isTitle }}
+                  className="!w-full"
+                  multiline
+                  rows={4}
+                  placeholder="비회원도 입력가눙!"
+                />
+              </Grid>
+              <Grid xs={12} lg={12}>
+                <Button fullWidth variant="contained" onClick={fn_save}>
+                  저장
+                </Button>
+              </Grid>
+            </Grid>
     </List>
   );
 };

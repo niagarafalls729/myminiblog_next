@@ -111,6 +111,7 @@ export default function Career() {
   const RightGrid = ({ project, innerIndex }) => {
     return (
       <Grid xs={12} md={6} key={innerIndex} className="p-2">
+        <hr className={`${styles['companyHR']} ${styles['rightHR']}`} />
         <h2 className={styles['project_h1']}>{project.project}</h2>
         <p className={styles['project_from_to_p']}>{project.project_from_to}</p>
         <h3>Description</h3>
@@ -128,15 +129,16 @@ export default function Career() {
         {career.map((item, index) => (
           <React.Fragment key={index}>
             <Grid xs={12} md={6} key={index}>
-              <Grid xs={12} md={0} key={index}>
+              {/* <Grid xs={12} md={0} key={index}>
                 <hr className={styles['companyHR']} />
-              </Grid>
-
+              </Grid> */}
+              <hr className={styles['companyHR']} />
               <h1>{item.company}</h1>
               <p>{item.company_from_to}</p>
             </Grid>
             {item.projects.map((project, innerIndex) =>
               innerIndex === 0 ? (
+                
                 <RightGrid
                   project={project}
                   innerIndex={innerIndex}

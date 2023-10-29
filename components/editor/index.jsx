@@ -15,14 +15,12 @@ const ReactQuill = dynamic(
 );
 import 'react-quill/dist/quill.snow.css';
 
-const BasicEditor = forwardRef(({ style }, parent_ref) => {
+const BasicEditor = forwardRef(({ style,value }, parent_ref) => {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const [text, setText] = useState('');
   const quillRef = useRef('');
+
   const handleChange = value => {
     setText(value);
   };
@@ -33,6 +31,16 @@ const BasicEditor = forwardRef(({ style }, parent_ref) => {
   const containerStyle = {
     ...style,
   };
+  useEffect(() => {
+    if (value !== text) {
+      setText(value);
+    }
+  }, [value]);
+  useEffect(() => {
+    setMounted(true);
+  console.log("pppp",value)
+    setText(value);
+  }, []);
   // 이미지 처리를 하는 핸들러
   const imageHandler = () => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.

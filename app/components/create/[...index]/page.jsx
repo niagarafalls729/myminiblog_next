@@ -1,5 +1,7 @@
 'use client';
 import { useState, useRef, useMemo, useEffect } from 'react'; // useEffect 추가
+
+import { axiosGet } from '@/api/baseGet';
 import Button from '@mui/material/Button';
 import styles from './create.module.css';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
@@ -42,15 +44,39 @@ export default function page() {
   const [captcha, setCaptcha] = useState('');
   const params = useParams();
 
-  console.log('params', params.index);
-
+  const [form, setForm] = useState({});
+  // console.log('-------------------')
+  // console.log('params', params.index);
+  // console.log('params', params);
+  // console.log("detail query",router)
+  // console.log('-------------------')
+  
   const generateRandomNumber = () =>
     Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
   useEffect(() => {
     setMounted(true);
     setCaptcha(generateRandomNumber);
-  }, []);
+    myAPI();
+  }, []); 
+  
+  const myAPI = async () => {
+    try {
+      if(params.index[1] == null){
+       return 
+      }
+      const res = await axiosGet(params.index[0], {index :params.index[1]});
+      // // API 호출에서 데이터를 가져온 후 rows 배열에 추가
+      setForm(res[0]);
+      // console.log("res",res);
+      // console.log("form",res[0].title)
+      isTitle.current.value= res[0].title
+      isContents.current.text=res[0].contents
+      isContents.current.value=res[0].contents
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
 
   const errCHK = () => {
     const titleValue = isTitle.current.value;
@@ -108,13 +134,16 @@ export default function page() {
                 color={!titlelErr ? 'primary' : 'warning'}
                 onBlur={errCHK}
                 onChange={errCHK}
-                inputProps={{ ref: isTitle }}
+                inputProps={{ ref: isTitle }} 
+                defaultValue={form.title}
+                autoFocus
               />
             </Grid>
             <Grid xs={12} md={12} lg={12} className="!w-full mb-8 inline-block">
               {/* <BasicEditor></BasicEditor> */}
               <BasicEditor
-                ref={isContents}
+  value={form.contents} 
+ref={isContents} 
                 style={{ height: '300px', marginBottom: '20px' }} // 스타일 속성을 객체로 설정
               />
             </Grid>
