@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+정말이지 갑작스럽게 예전에 리엑트로 만들었던 지수의 블로그가 생각났습니다.
+수정하려고 들어가보니 정말 제 소스를 수정못할 정도여서 ,,, 이번에 새롭게 프로젝트를 진행하면서 흥미롭게 여겼던 기술들을 적용하여
+저의 작은 블로그를 만들었습니다.
 
-## Getting Started
 
-First, run the development server:
+front : next.js 13 , redux 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+back : node express
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+server : ubuntu , nginx 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+dbms : oracle
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+http://138.2.119.188/
