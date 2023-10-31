@@ -10,7 +10,7 @@ export async function axiosGetMain(restUrl, payload = {}) {
   console.log('url', url);
   try {
     const response = await axios.get(url);
-    console.log('re', JSON.stringify(response.data));
+    // console.log('re', JSON.stringify(response.data));
     const inputData = response.data;
 
     // 그룹화된 결과를 저장할 빈 배열
@@ -67,7 +67,7 @@ export async function axiosGet(restUrl, payload = {}) {
   try {
     console.log('url', url);
     const response = await axios.get(url);
-    console.log('re', JSON.stringify(response.data));
+    // console.log('re', JSON.stringify(response.data));
 
     return response.data;
   } catch (error) {

@@ -1,29 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import BaseTableList from '@/components/table/BaseTableList';
+import BaseDetail from '@/components/detail/BaseDetail';
 import { axiosGet } from '@/api/baseGet';
-import { useRouter } from 'next/navigation';
-export default function myStudy() {
-  const router = useRouter();
-  const [rows, setRows] = useState([]);
-  const columns = [
-    { id: 'title', label: '제목', align: 'center' },
-    { id: 'created', label: '작성일', align: 'right' },
-  ];
-  const [dataLoaded, setDataLoaded] = useState(false); // 데이터를 불러왔는지 여부를 추적
+import { usePathname, useParams } from 'next/navigation';
 
+export default function myStudy() {
+  const [detailform, setDetailform] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false); // 데이터를 불러왔는지 여부를 추적
+  const params = useParams();
   useEffect(() => {
     const myAPI = async () => {
       try {
-        const res = await axiosGet('guestBook');
-        const dataRows = res.map(e => ({
-          index: e.index,
-          title: e.title,
-          id: e.id,
-          created: e.creation_timestamp,
-        }));
-        setRows(dataRows);
+        const res = await axiosGet('guestBook', params);
+        setDetailform(res[0]);
         setDataLoaded(true); // 데이터를 불러왔음을 표시
       } catch (error) {
         console.error('Error fetching data: ', error);
@@ -32,18 +22,18 @@ export default function myStudy() {
 
     myAPI();
   }, []);
+
   const handleRowClick = index => {
     console.log('클릭된 로우의 인덱스:', index);
-    router.push('/guestBook/detail/' + index);
     // 여기에서 필요한 작업 수행
   };
 
   return (
     <>
       {dataLoaded ? (
-        <BaseTableList
-          columns={columns}
-          rows={rows}
+        <BaseDetail
+          detailform={detailform}
+          index={params.index}
           onRowClick={handleRowClick}
         />
       ) : (

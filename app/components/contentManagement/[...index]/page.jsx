@@ -47,11 +47,11 @@ export default function page() {
   const params = useParams();
 
   const [form, setForm] = useState({});
-  console.log('-------------------');
-  console.log('params', params.index[0]);
-  console.log('params', params);
-  console.log('detail query', router);
-  console.log('-------------------');
+  // console.log('-------------------');
+  // console.log('params', params.index[0]);
+  // console.log('params', params);
+  // console.log('detail query', router);
+  // console.log('-------------------');
 
   const generateRandomNumber = () =>
     Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
