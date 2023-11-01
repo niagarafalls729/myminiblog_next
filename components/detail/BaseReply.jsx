@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+
+import React from 'react';
+
 import { axiosGet, savePost } from '@/api/baseGet';
 import { usePathname, useParams } from 'next/navigation';
 
@@ -16,32 +19,17 @@ import { useAppSelector } from '@/redux/hooks';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 
-export default Reply = props => {
-  const router = usePathname();
+function BaseReply (props) {
+
+  const { arrFrom , onReplyC,useUrl } = props;
+  const [openReply, setOpenReply] = useState(false);
+  
+  const isContents = useRef('');
   const userStatus = useAppSelector(state => state.user.status);
   const userId = useAppSelector(state => state.user.id);
-
-  const [openReply, setOpenReply] = useState(false);
-  const [form, setForm] = useState([]);
-  const isContents = useRef('');
-
+  
   const handleClick = () => {
     setOpenReply(!openReply);
-  };
-
-  useEffect(() => {
-    myAPI();
-  }, [props.index]);
-
-  const myAPI = async () => {
-    try {
-      const res = await axiosGet('guestBook/Reply', { index: props.index });
-      setForm(res);
-
-      console.log('form', form);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
   };
 
   const save_reply = async () => {
@@ -51,29 +39,22 @@ export default Reply = props => {
       member_create: userStatus ? 'Y' : 'N',
       guestbook_fk: props.index,
     };
-
-    const rtn = await savePost(
-      router.split('/')[1] === 'guestBook'
-        ? 'guestBook/Reply'
-        : 'myStudy/Reply',
-      createForm
-    );
-    alert(rtn.message);
-
-    // 페이지를 이동합니다.
-    location.reload();
+    isContents.current.value = '';
+    onReplyC(createForm)
+ 
   };
+ 
 
   return (
     <List sx={{ width: '100%' }}>
       <ListItemButton onClick={handleClick} style={{ background: 'gray' }}>
-        <ListItemText primary={`댓글 ${form.length}`} />
+        <ListItemText primary={`댓글 ${arrFrom.length}`} />
 
         {openReply ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openReply} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {form.map((e, index) => (
+          {arrFrom.map((e, index) => (
             <ListItemButton key={index} aria-readonly>
               <Grid container sx={{ width: '100%', color: 'black' }}>
                 <Grid xs={12} lg={12}>
@@ -102,7 +83,7 @@ export default Reply = props => {
           </Button>
         </Grid>
         <Grid xs={12} lg={12}>
-          <Link href={`/guestBook`}>
+          <Link href={`/${useUrl}`}>
             <Button fullWidth variant="contained" color="error">
               목록으로!
             </Button>
@@ -112,3 +93,4 @@ export default Reply = props => {
     </List>
   );
 };
+export default React.memo(BaseReply);

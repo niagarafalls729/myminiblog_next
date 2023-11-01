@@ -59,7 +59,7 @@ export async function axiosGet(restUrl, payload = {}) {
       params.delete(key);
     }
   });
-  console.log('params', params.getAll);
+ 
 
   const cleaned = String(params);
   const url = BASE_API_URL + restUrl + '?' + params.toString();
@@ -75,6 +75,9 @@ export async function axiosGet(restUrl, payload = {}) {
   }
 }
 export async function savePost(restUrl, payload = {}) {
+  if(restUrl.indexOf('/')=== 0){
+    restUrl= restUrl.substr(1)
+  }
   const url = BASE_API_URL + restUrl;
 
   try {

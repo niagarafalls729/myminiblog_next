@@ -11,7 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import Swal from 'sweetalert2';
 export default function BaseDetail(props) {
-  const { detailform, index } = props;
+
+  const { detailform, onModi , onDele } = props;
 
   const userStatus = useAppSelector(state => state.user.status);
   const userId = useAppSelector(state => state.user.id);
@@ -23,89 +24,7 @@ export default function BaseDetail(props) {
       ? true
       : false
     : //비회원
-      form.member_create === 'N';
-
-  const deleteApi = async () => {
-    let timerInterval;
-
-    const { value: password } = await Swal.fire({
-      title: 'Enter your password',
-      html: '제한시간 <b></b> >___< ',
-      input: 'password',
-      heightAuto: 'auto',
-      inputPlaceholder: 'Enter your password',
-      inputAttributes: {
-        maxlength: 10,
-        autocapitalize: 'off',
-        autocorrect: 'off',
-      },
-      didOpen: () => {
-        Swal.showLoading();
-        const b = Swal.getHtmlContainer().querySelector('b');
-        timerInterval = setInterval(() => {
-          b.textContent = Swal.getTimerLeft();
-        }, 100);
-      },
-      timer: 10000,
-      timerProgressBar: true,
-      inputPlaceholder: 'Enter your password',
-      inputAttributes: {
-        maxlength: 10,
-        autocapitalize: 'off',
-        autocorrect: 'off',
-      },
-    });
-
-    if (password) {
-      Swal.fire(`Entered password: ${password}`);
-    }
-    // const { value: password } = await Swal.fire({
-    //   title: '삭제하기 !',
-    //   html: '제한시간 <b></b> >___< ',
-    //   input: 'password',
-    //   inputPlaceholder: 'Enter your password',
-    //   inputAttributes: {
-    //     maxlength: 10,
-    //     autocapitalize: 'off',
-    //     autocorrect: 'off',
-    //   },
-    //   timer: 10000,
-    //   timerProgressBar: true,
-    //   didOpen: () => {
-    //     Swal.showLoading();
-    //     const b = Swal.getHtmlContainer().querySelector('b');
-    //     timerInterval = setInterval(() => {
-    //       b.textContent = Swal.getTimerLeft();
-    //     }, 100);
-    //   },
-    //   willClose: () => {
-    //     clearInterval(timerInterval);
-    //   },
-    // }).then(result => {
-    //   /* Read more about handling dismissals below */
-    //   if (result.dismiss === Swal.DismissReason.timer) {
-    //     console.log('I was closed by the timer');
-    //   }
-    // });
-
-    // if (password) {
-    //   Swal.fire(`Entered password: ${password}`);
-    // }
-
-    // const createForm = {
-    //   index: params.index,
-    // };
-    // const rtn = await savePost(
-    //   router.split('/')[1] === 'guestBook'
-    //     ? 'guestBook/Delete'
-    //     : 'myStudy/Delete',
-    //   createForm
-    // );
-    // alert(rtn.message);
-
-    // // 페이지를 이동합니다.
-    // router.push('/guestBook');
-  };
+      form.member_create === 'N'; 
   return (
     <>
       <div className="p-1" style={{ zIndex: 10, position: 'sticky' }}>
@@ -118,12 +37,8 @@ export default function BaseDetail(props) {
               </Grid>
               {showButton && (
                 <Grid xs={1} lg={1} xsOffset="auto">
-                  <Link
-                    href={`/components/contentManagement/guestBook/${index}`}
-                  >
-                    <EditIcon />
-                  </Link>
-                  <DeleteIcon onClick={deleteApi} />
+                    <EditIcon onClick={onModi}/>
+                  <DeleteIcon onClick={onDele} />
                 </Grid>
               )}
             </Grid>
@@ -139,9 +54,6 @@ export default function BaseDetail(props) {
             <hr />
             <Grid xs={12} lg={12} minHeight={400}>
               <div dangerouslySetInnerHTML={{ __html: form.contents }} />
-            </Grid>
-            <Grid xs={12} lg={12}>
-              {/* <Reply index={index}></Reply> */}
             </Grid>
           </Grid>
           <Grid xs={0} lg={2}></Grid>

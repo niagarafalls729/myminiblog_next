@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 
 export default function BaseTableList(props) {
   const router = useRouter();
-  const { columns, rows, onRowClick } = props;
+  const { columns, rows, onRowClick,useUrl } = props;
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -99,7 +99,7 @@ export default function BaseTableList(props) {
           onRowsPerPageChange={handleChangeRowsPerPage}
           onPageChange={handleChangePage}
         />
-        <Link href="components/contentManagement/guestBook">
+        <Link href={`/${useUrl}/create`}>
           <CreateIcon
             color="primary"
             className={styles['tablePagination_left']}
