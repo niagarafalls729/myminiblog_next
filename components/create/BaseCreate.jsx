@@ -13,10 +13,11 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { useAppSelector } from '@/redux/hooks';
-import { useRouter, useParams ,usePathname} from 'next/navigation';
+import { useRouter, useParams, usePathname } from 'next/navigation';
 
 import { savePost } from '@/api/baseGet';
 import dayjs from 'dayjs';
+import Swal from 'sweetalert2';
 
 const stylesCSS = {
   input: {
@@ -33,7 +34,7 @@ const stylesCSS = {
 };
 
 export default function BaseCreate(props) {
-  const {originForm,save} = props
+  const { originForm, save } = props;
   const path = usePathname().split('/');
 
   const [mounted, setMounted] = useState(false);
@@ -47,17 +48,18 @@ export default function BaseCreate(props) {
   const [titlelErr, settitlelErr] = useState(false);
   const [helperText, setHelperText] = useState('');
   const [captcha, setCaptcha] = useState('');
-   
-  const [form, setForm] = useState();  
-  const generateRandomNumber = () => Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+
+  const [form, setForm] = useState();
+  const generateRandomNumber = () =>
+    Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
   useEffect(() => {
     setMounted(true);
     setCaptcha(generateRandomNumber);
-    setForm(originForm ?? '')
+    setForm(originForm ?? '');
     // myAPI();
   }, []);
- 
+
   const errCHK = () => {
     const titleValue = isTitle.current.value;
     if (titleValue.length === 0) {
@@ -80,14 +82,19 @@ export default function BaseCreate(props) {
       path[2] != 'create' &&
       form.password != isPw.current.value
     ) {
-      return alert('값틀림');
+      return Swal.fire('비밀번호가 틀립니다!');
     }
     // 로그인 회원은 패스
     // 쿼리파라미터 값으로 1은 필요
     // 마지막은 값 대칭
     // 글쓰기
-    if (  !userStatus && path[2] == 'create' && captcha != isCaptcha.current.value) return alert('값틀림');
-
+    if (
+      !userStatus &&
+      path[2] == 'create' &&
+      captcha != isCaptcha.current.value
+    ) {
+      return Swal.fire('Captcha가 틀립니다!');
+    }
     const createForm = {
       title: isTitle.current.value,
       contents: isContents.current.text,
@@ -97,7 +104,6 @@ export default function BaseCreate(props) {
     };
     console.log('cc', createForm);
     save(createForm);
-    
   };
 
   return !mounted ? (
@@ -123,7 +129,7 @@ export default function BaseCreate(props) {
                 autoFocus={form.title && true}
               />
             </Grid>
-            <Grid xs={12} md={12} lg={12} className="!w-full mb-8 inline-block"> 
+            <Grid xs={12} md={12} lg={12} className="!w-full mb-8 inline-block">
               <BasicEditor
                 value={form.contents}
                 ref={isContents}
@@ -133,8 +139,7 @@ export default function BaseCreate(props) {
             <Grid xs={12} md={12} lg={12} className="mb-8">
               <div
                 style={{
-                  display:
-                    userStatus || path[2] != 'create' ? 'none' : 'flex',
+                  display: userStatus || path[2] != 'create' ? 'none' : 'flex',
                 }}
               >
                 <Grid xs={6} md={6} lg={6}>

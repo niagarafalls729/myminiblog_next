@@ -5,8 +5,7 @@ import BaseTableList from '@/components/table/BaseTableList';
 import { axiosGet } from '@/api/baseGet';
 import { usePathname, useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-export default function myStudy() {
-
+export default function guestBook() {
   const path = usePathname();
 
   const router = useRouter();
@@ -22,7 +21,7 @@ export default function myStudy() {
     const myAPI = async () => {
       try {
         // 하드코딩된 부분을 최대한 없애자 집가서 !
-        console.log("path",path)
+        console.log('path', path);
         const res = await axiosGet(path);
         const dataRows = res.map(e => ({
           index: e.index,
@@ -43,7 +42,7 @@ export default function myStudy() {
     console.log('클릭된 로우의 인덱스:', index);
     // 여기에서 필요한 작업 수행
     // 하드코딩된 부분을 최대한 없애자 집가서 !
-    router.push(path+'/detail/' + index);
+    router.push(path + '/detail/' + index);
   };
 
   return (
@@ -54,6 +53,7 @@ export default function myStudy() {
           rows={rows}
           onRowClick={handleRowClick}
           useUrl={path.split('/')[1]}
+          disabledWrite={false}
         />
       ) : (
         '데이터 로딩 중...' // 데이터를 로딩 중인 동안 표시될 메시지
