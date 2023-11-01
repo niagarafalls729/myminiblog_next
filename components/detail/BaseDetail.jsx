@@ -1,15 +1,10 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
-import { axiosGet, savePost } from '@/api/baseGet';
-import { usePathname, useParams } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react'; 
 import styles from './detail.module.css';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import { useAppSelector } from '@/redux/hooks';
-import Link from 'next/link';
+import { useAppSelector } from '@/redux/hooks'; 
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import dayjs from 'dayjs';
-import Swal from 'sweetalert2';
+import DeleteIcon from '@mui/icons-material/Delete'; 
 export default function BaseDetail(props) {
 
   const { detailform, onModi , onDele } = props;

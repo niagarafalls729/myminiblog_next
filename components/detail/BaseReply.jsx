@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 
 import React from 'react';
-
-import { axiosGet, savePost } from '@/api/baseGet';
-import { usePathname, useParams } from 'next/navigation';
-
+ 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import styles from './detail.module.css';
 
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import List from '@mui/material/List';
@@ -22,7 +20,7 @@ import dayjs from 'dayjs';
 function BaseReply (props) {
 
   const { arrFrom , onReplyC,useUrl } = props;
-  const [openReply, setOpenReply] = useState(false);
+  const [openReply, setOpenReply] = useState(true);
   
   const isContents = useRef('');
   const userStatus = useAppSelector(state => state.user.status);
@@ -46,18 +44,21 @@ function BaseReply (props) {
  
 
   return (
+    <Grid container>
+    <Grid xs={0} lg={2}></Grid>
+    <Grid xs={12} lg={8} className={styles['create_wrap']}>
     <List sx={{ width: '100%' }}>
       <ListItemButton onClick={handleClick} style={{ background: 'gray' }}>
         <ListItemText primary={`댓글 ${arrFrom.length}`} />
 
         {openReply ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={openReply} timeout="auto" unmountOnExit>
+      <Collapse in={openReply} timeout="auto" unmountOnExit  >
         <List component="div" disablePadding>
           {arrFrom.map((e, index) => (
             <ListItemButton key={index} aria-readonly>
-              <Grid container sx={{ width: '100%', color: 'black' }}>
-                <Grid xs={12} lg={12}>
+              <Grid container sx={{ width: '100%'  }}>
+                <Grid xs={12} lg={12}>d
                   {e.contents}
                 </Grid>
                 <Grid xsOffset="auto">
@@ -91,6 +92,9 @@ function BaseReply (props) {
         </Grid>
       </Grid>
     </List>
+    </Grid>
+    <Grid xs={0} lg={2}></Grid>
+    </Grid>
   );
 };
 export default React.memo(BaseReply);

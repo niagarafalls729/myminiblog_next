@@ -23,7 +23,7 @@ export default function myStudy() {
       try {
         const [detailRes, replyRes] = await Promise.all([
           axiosGet('guestBook', params),
-          axiosGet('guestBook/Reply', params)
+          axiosGet('guestBook/reply', params)
         ]);
         console.log('Data fetched successfully');
         setDetailform(detailRes[0]);
@@ -47,7 +47,7 @@ export default function myStudy() {
   };
 
   const detailDelete = async () => {
-    const replacePath = path.replace('detail','Delete')
+    const replacePath = path.replace('detail','delete')
     console.log("replacePath",replacePath)
     const createForm = {
       index: params.index,
@@ -61,10 +61,10 @@ export default function myStudy() {
   const replyCreate = async (e) => { 
     e.guestbook_fk = params.index
     // 하드코딩된 부분을 최대한 없애자 집가서 !
-    const rtn = await savePost('guestBook/Reply',e);
+    const rtn = await savePost('guestBook/reply',e);
     alert(rtn.message);
     // 데이터를 다시 가져옵니다.
-    const updatedData = await axiosGet('guestBook/Reply', params); 
+    const updatedData = await axiosGet('guestBook/reply', params); 
     // 상태를 업데이트하고 컴포넌트를 다시 렌더링합니다.
     setArrFrom(updatedData); 
   };

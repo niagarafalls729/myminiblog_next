@@ -33,12 +33,7 @@ const stylesCSS = {
 };
 
 export default function BaseCreate(props) {
-
-    const {save} = props
-
-
-  const router = useRouter();
-  const params = useParams();
+  const {originForm,save} = props
   const path = usePathname().split('/');
 
   const [mounted, setMounted] = useState(false);
@@ -52,42 +47,17 @@ export default function BaseCreate(props) {
   const [titlelErr, settitlelErr] = useState(false);
   const [helperText, setHelperText] = useState('');
   const [captcha, setCaptcha] = useState('');
-  
-  
-  const [form, setForm] = useState({});
-  console.log('-------------------');
-  console.log('params', params);
-  console.log('path', path);
-
-  console.log('-------------------');
-
-  const generateRandomNumber = () =>
-    Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+   
+  const [form, setForm] = useState();  
+  const generateRandomNumber = () => Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
   useEffect(() => {
     setMounted(true);
     setCaptcha(generateRandomNumber);
+    setForm(originForm ?? '')
     // myAPI();
   }, []);
-
-  const myAPI = async () => {
-    try {
-      if (path[1] == 'create') {
-        return;
-      }
-      const res = await axiosGet(params.index[0], { index: params.index[1] });
-      // // API 호출에서 데이터를 가져온 후 rows 배열에 추가
-      setForm(res[0]);
-      // console.log("res",res);
-      // console.log("form",res[0].title)
-      isTitle.current.value = res[0].title;
-      isContents.current.text = res[0].contents;
-      isContents.current.value = res[0].contents;
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
-  };
-
+ 
   const errCHK = () => {
     const titleValue = isTitle.current.value;
     if (titleValue.length === 0) {
@@ -153,8 +123,7 @@ export default function BaseCreate(props) {
                 autoFocus={form.title && true}
               />
             </Grid>
-            <Grid xs={12} md={12} lg={12} className="!w-full mb-8 inline-block">
-              {/* <BasicEditor></BasicEditor> */}
+            <Grid xs={12} md={12} lg={12} className="!w-full mb-8 inline-block"> 
               <BasicEditor
                 value={form.contents}
                 ref={isContents}

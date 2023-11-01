@@ -62,6 +62,9 @@ export async function axiosGet(restUrl, payload = {}) {
  
 
   const cleaned = String(params);
+  if(restUrl.indexOf('/')=== 0){
+    restUrl= restUrl.substr(1)
+  }
   const url = BASE_API_URL + restUrl + '?' + params.toString();
 
   try {
@@ -92,6 +95,9 @@ export async function savePost(restUrl, payload = {}) {
   }
 }
 export async function getPost(restUrl, payload = {}) {
+  if(restUrl.indexOf('/')=== 0){
+    restUrl= restUrl.substr(1)
+  }
   const url = BASE_API_URL + restUrl;
 
   try {
@@ -107,6 +113,9 @@ export async function getPost(restUrl, payload = {}) {
 }
 
 export async function saveBlob(restUrl, formData) {
+  if(restUrl.indexOf('/')=== 0){
+    restUrl= restUrl.substr(1)
+  }
   const url = BASE_API_URL + restUrl;
 
   try {

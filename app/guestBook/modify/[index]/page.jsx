@@ -3,20 +3,19 @@
 import { useState, useEffect } from 'react';
 import BaseCreate from '@/components/create/BaseCreate'; 
 import { savePost,axiosGet } from '@/api/baseGet';
-import { usePathname, useParams } from 'next/navigation';
+import { usePathname, useParams ,useRouter} from 'next/navigation';
 
 export default function CreateAndModify() {
     const [dataLoaded, setDataLoaded] = useState(false); // 데이터를 불러왔는지 여부를 추적
     const [originForm, setOriginForm] = useState(''); 
     const params = useParams();
     const path = usePathname();
- 
+    const router = useRouter();
     useEffect(() => {
       console.log('Before fetching data');
       const fetchData = async () => {
         try {
-          const detailRes = await(axiosGet('guestBook', params));
-          console.log('Data fetched successfully',detailRes);
+          const detailRes = await(axiosGet('guestBook', params)); 
           setOriginForm(detailRes[0]);
           setDataLoaded(true);
         } catch (error) {
@@ -29,8 +28,9 @@ export default function CreateAndModify() {
     }, []);
 
     const modifyApi = async (e) =>{ 
-        e.index = params.path
-        const rtn = await savePost( path, e);
+        e.index = params.index 
+        const replacePath = path.replace('modify','create') 
+        const rtn = await savePost( replacePath, e);
         alert(rtn.message);
         // 페이지를 이동합니다.
       //   {
@@ -42,7 +42,7 @@ export default function CreateAndModify() {
       //      index: form.index,
       // }  
 
-        router.push('/'+path[1]);
+      router.push('/'+path.split('/')[1]);
     }
   return (
     <>
