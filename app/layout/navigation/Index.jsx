@@ -38,7 +38,7 @@ const Pc = () => {
                   <Link href="/">블로그 주인</Link>
                 </li>
                 <li>
-                  <Link href="/studyHistory">공부일지</Link>
+                  <Link href="/projectHistory">프로젝트 변경 사항</Link>
                 </li>
                 <li>
                   <Link href="/guestBook" as="/guestBook">
@@ -161,7 +161,7 @@ const Mo = props => {
                   <ListItemText primary="블로그 주인" />
                 </ListItemButton>
               </Link>
-              <Link href="/studyHistory" onClick={handleShowNavbar}>
+              <Link href="/projectHistory" onClick={handleShowNavbar}>
                 <ListItemButton>
                   <ListItemText primary="공부일지" />
                 </ListItemButton>
