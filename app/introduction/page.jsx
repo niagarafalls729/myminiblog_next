@@ -17,7 +17,7 @@ export default function Introduction() {
           <div>
             <p style={{ fontWeight: 'bold' }}></p>
             <p style={{ fontWeight: 'bold' }} className={styles['about_me']}>
-              저는 4년 이상의 웹 애플리케이션 및 웹사이트 개발 경험을 가진
+              저는 5년 이상의 웹사이트 개발 경험을 가진 전 풀스택 , 현
               프론트엔드 개발자입니다.
               <br /> 제 목표는 혁신적인 프론트엔드 솔루션을 개발하여 사용자와
               비즈니스에 가치를 제공하는 것이며,

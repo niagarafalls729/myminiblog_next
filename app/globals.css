@@ -17,37 +17,69 @@
   box-sizing: border-box;
 }
 
-/* 버튼과 바디 등 필요한 변수들을 설정해줌으로써 값 지정해주기  */
-button {
-  /* background-color: var(--color-background); */
-  color: var(--color-primary);
+@font-face {
+  font-family: 'GmarketSans';
+  font-weight: 700; /* Bold */
+  font-style: normal;
+  src: url('/fonts/GmarketSansTTFBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GmarketSans';
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  src: url('/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GmarketSans';
+  font-weight: 300; /* Light */
+  font-style: normal;
+  src: url('/fonts/GmarketSansTTFLight.ttf') format('truetype');
 }
 
 body {
   margin: 0;
   background-color: var(--color-background);
   color: var(--color-primary);
+  font-family: 'GmarketSans', sans-serif; /* 폰트 패밀리 적용 */
   transition: background 0.3s ease;
 }
 
+button {
+  color: var(--color-primary);
+}
+
 h1,
+h2,
 h3,
 p {
   margin: 0;
   padding: 0;
+  font-family: 'GmarketSans', sans-serif; /* 폰트 패밀리 적용 */
 }
+
 h1 {
   font-size: 3rem;
-  font-weight: bold;
+  font-weight: 700;
 }
+
 h2 {
   font-size: 2.5rem;
-  font-weight: bold;
+  font-weight: 700;
 }
+
 h3 {
   font-size: 2rem;
   margin-top: 10px;
+  font-weight: 500;
 }
+
+p {
+  font-size: 18px;
+  font-weight: 300;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -55,39 +87,23 @@ h3 {
     --background-end-rgb: 0, 0, 0;
   }
 }
+
 [data-theme='dark'] .ql-editor.ql-blank[data-placeholder]:before {
   color: gray;
 }
 
 [data-theme='dark'] .ql-formats * {
   stroke: white !important;
-  /* 공통 스타일을 여기에 정의합니다. */
 }
 
-/* 라이트 모드에 대한 스타일 */
 [data-theme='light'] .ql-editor.ql-blank[data-placeholder]:before {
   color: black;
 }
+
 .wrap {
   padding: 10px;
 }
 
-p {
-  font-size: 18px;
-}
 div {
-  word-break: break-al;
-}
-@font-face {
-  font-family: 'NanumSquare';
-  font-weight: 400;
-  font-style: normal;
-  src: url('/public/fonts/NanumSquareB.ttf') format('ttf');
-}
-
-@font-face {
-  font-family: 'NanumSquare';
-  font-weight: 700;
-  font-style: normal;
-  src: url('/public/fonts/NanumSquareEB.ttf') format('ttf');
+  word-break: break-all;
 }
