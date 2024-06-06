@@ -1,6 +1,7 @@
 import styles from './introduction.module.css';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Career from '@/app/introduction/career';
+import Weather from '@/app/introduction/weather';
 export default function Introduction() {
   return (
     <>
@@ -12,6 +13,10 @@ export default function Introduction() {
               안녕하세요!
               <br />
               김지수입니다 <span className={styles['pin_point']}>.</span>
+              <br />
+              <span style={{ color: 'green' }}>
+                <Weather />
+              </span>
             </p>
           </div>
           <div>

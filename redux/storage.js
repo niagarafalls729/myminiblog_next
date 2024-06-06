@@ -1,4 +1,4 @@
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 const createNoopStorage = () => {
   return {
@@ -13,7 +13,9 @@ const createNoopStorage = () => {
     },
   };
 };
-
-const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
+const storage =
+  typeof window !== 'undefined'
+    ? createWebStorage('local') // 'local' 대신 'session'을 사용
+    : createNoopStorage();
 
 export default storage;

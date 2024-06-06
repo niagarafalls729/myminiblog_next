@@ -59,11 +59,10 @@ export async function axiosGet(restUrl, payload = {}) {
       params.delete(key);
     }
   });
- 
 
   const cleaned = String(params);
-  if(restUrl.indexOf('/')=== 0){
-    restUrl= restUrl.substr(1)
+  if (restUrl.indexOf('/') === 0) {
+    restUrl = restUrl.substr(1);
   }
   const url = BASE_API_URL + restUrl + '?' + params.toString();
 
@@ -78,8 +77,8 @@ export async function axiosGet(restUrl, payload = {}) {
   }
 }
 export async function savePost(restUrl, payload = {}) {
-  if(restUrl.indexOf('/')=== 0){
-    restUrl= restUrl.substr(1)
+  if (restUrl.indexOf('/') === 0) {
+    restUrl = restUrl.substr(1);
   }
   const url = BASE_API_URL + restUrl;
 
@@ -95,8 +94,8 @@ export async function savePost(restUrl, payload = {}) {
   }
 }
 export async function getPost(restUrl, payload = {}) {
-  if(restUrl.indexOf('/')=== 0){
-    restUrl= restUrl.substr(1)
+  if (restUrl.indexOf('/') === 0) {
+    restUrl = restUrl.substr(1);
   }
   const url = BASE_API_URL + restUrl;
 
@@ -105,7 +104,10 @@ export async function getPost(restUrl, payload = {}) {
       headers: { 'Content-Type': 'application/json' },
     });
     console.log('Response data:', JSON.stringify(response.data));
-    return response.data[0];
+    if (response.data[0] != null) {
+      return response.data[0];
+    }
+    return response.data;
   } catch (error) {
     console.error('API Request Error:', error);
     throw new Error('Failed to make the API request');
@@ -113,8 +115,8 @@ export async function getPost(restUrl, payload = {}) {
 }
 
 export async function saveBlob(restUrl, formData) {
-  if(restUrl.indexOf('/')=== 0){
-    restUrl= restUrl.substr(1)
+  if (restUrl.indexOf('/') === 0) {
+    restUrl = restUrl.substr(1);
   }
   const url = BASE_API_URL + restUrl;
 
