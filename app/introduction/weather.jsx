@@ -14,21 +14,22 @@ export default function Weather() {
 
   const reduxCity = useAppSelector(state => state.weather.city);
   const reduxWeather = useAppSelector(state => state.weather.weather);
-  const date = useAppSelector(state => state.weather.date);
-
+  const reduxDate = useAppSelector(state => state.weather.date);
+  const formattedDate = dayjs().format('M월 D일');
   useEffect(() => {
-    if (date != formattedDate) {
-      fetchCommits();
+    setIsMounted(true);
+  }, []);
+  useEffect(() => {
+    if (reduxDate != formattedDate) {
+      console.log('getWeather');
+      getWeather();
     } else {
-      console.log('DDDD');
       setIsWeather(reduxWeather);
       setIsCity(reduxCity);
     }
-    setIsMounted(true);
-  }, []);
-  const formattedDate = dayjs().format('M월 D일');
+  }, [reduxDate, isMounted]);
 
-  const fetchCommits = async () => {
+  const getWeather = async () => {
     try {
       const token = { key: process.env.NEXT_PUBLIC_WEATHER };
       const res = await getPost('weather', token);

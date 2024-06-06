@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   city: '',
   weather: '',
+  date: '',
 };
 const weahterSlice = createSlice({
   name: 'weahter',
@@ -10,7 +11,6 @@ const weahterSlice = createSlice({
   reducers: {
     setWeather: (state, action) => {
       console.log('setUser::action:;', action);
-      console.log('setUser::action:;', action.payload.id);
       state.city = action.payload.city;
       state.weather = action.payload.weather;
       state.date = action.payload.date;
