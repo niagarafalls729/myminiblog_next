@@ -21,11 +21,15 @@ export default function Weather() {
   }, []);
   useEffect(() => {
     if (isMounted) {
-      if (reduxDate && reduxDate !== formattedDate) {
+      if (
+        reduxDate !== formattedDate ||
+        (reduxWeather == '' && reduxCity == '')
+      ) {
         console.log('getWeather');
         getWeather();
       } else {
         console.log('noGetWeather, Reuse existing values');
+
         setIsWeather(reduxWeather);
         setIsCity(reduxCity);
       }
