@@ -4,89 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { axiosGetMain } from '@/api/baseGet';
 import { useState, useEffect, forwardRef } from 'react';
 import React from 'react';
-const mapData = [
-  {
-    company: 'MDS테크',
-    company_from_to: '2022-05-16~재직중',
-    projects: [
-      {
-        project: '파킹프렌즈',
-        project_from_to: '2022-05-16~진행중',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-      {
-        project: '그룹웨어 이관',
-        project_from_to: '2022-09-01~2022-12-20',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-      {
-        project: '카플릭스',
-        project_from_to: '2023-02-01~진행중',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-    ],
-  },
-  {
-    company: '에쓰푸드',
-    company_from_to: '2021-11-08~2022-05-02',
-    projects: [
-      {
-        project: 'Fresh On',
-        project_from_to: '2021-11-08~2022-05-02',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-      {
-        project: '존쿡마켓',
-        project_from_to: '2021-12-01~2022-05-02',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-    ],
-  },
-  {
-    company: '한국비즈넷',
-    company_from_to: '2019-09-16~2022-11-15',
-    projects: [
-      {
-        project: 'Online CRM',
-        project_from_to: '2019-09-16~2021-11-05',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-      {
-        project: '기타 홈페이지 유지보수',
-        project_from_to: '2019-09-16~2021-11-05',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-      {
-        project: 'GSABIS',
-        project_from_to: '2019-09-16~2021-11-05',
-        desc: '해외 물류 ERP',
-        stack: '넥사크로,자바,티베로,제우스,오즈리포트',
-        work: '해외 물류중 주로 해운,항운 컨테이너 로직 및 통관등 각종 레포트 갭라',
-      },
-      {
-        project: 'S-ERP',
-        project_from_to: '2021-02-01~2021-11-05',
-        desc: null,
-        stack: null,
-        work: null,
-      },
-    ],
-  },
-];
+
 export default function Career() {
   const [mounted, setMounted] = useState(false);
   const [career, setCareer] = useState([]);
@@ -99,14 +17,12 @@ export default function Career() {
   const myAPI = async () => {
     try {
       const res = await axiosGetMain('main');
+
       setCareer(res);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
-  console.log('career', career);
-
-  // const [career, setCareer] = useState(mapData);
 
   const RightGrid = ({ project, innerIndex }) => {
     return (
@@ -118,6 +34,9 @@ export default function Career() {
         {project.desc}
         <h3>Key development achievements</h3>
         {project.work}
+        <br />
+        {project.link != ' ' && '✔️'}
+        <a href={project.link}>{project.link}</a>
         <h3>Tech</h3>
         {project.stack}
       </Grid>
@@ -138,7 +57,6 @@ export default function Career() {
             </Grid>
             {item.projects.map((project, innerIndex) =>
               innerIndex === 0 ? (
-                
                 <RightGrid
                   project={project}
                   innerIndex={innerIndex}

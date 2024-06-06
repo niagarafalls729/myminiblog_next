@@ -35,6 +35,7 @@ export async function axiosGetMain(restUrl, payload = {}) {
           desc: item.desc,
           stack: item.stack,
           work: item.work,
+          link: item.link,
         });
       }
     }
