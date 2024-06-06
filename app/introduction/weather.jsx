@@ -20,15 +20,17 @@ export default function Weather() {
     setIsMounted(true);
   }, []);
   useEffect(() => {
-    if (reduxDate != formattedDate) {
-      console.log('getWeather');
-      getWeather();
-    } else {
-      setIsWeather(reduxWeather);
-      setIsCity(reduxCity);
+    if (isMounted) {
+      if (reduxDate && reduxDate !== formattedDate) {
+        console.log('getWeather');
+        getWeather();
+      } else {
+        console.log('noGetWeather, Reuse existing values');
+        setIsWeather(reduxWeather);
+        setIsCity(reduxCity);
+      }
     }
   }, [reduxDate, isMounted]);
-
   const getWeather = async () => {
     try {
       const token = { key: process.env.NEXT_PUBLIC_WEATHER };

@@ -20,7 +20,7 @@ const persistConfig = {
   key: 'root',
   //로컬스토리지를 사용할 것이기때문에 storage를 적어주었다
   storage,
-  whitelist: ['user', 'counter', 'darkAndLight'],
+  whitelist: ['user', 'counter', 'darkAndLight', 'weather'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

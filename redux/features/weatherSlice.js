@@ -5,12 +5,13 @@ const initialState = {
   weather: '',
   date: '',
 };
-const weahterSlice = createSlice({
-  name: 'weahter',
+
+const weatherSlice = createSlice({
+  name: 'weather',
   initialState,
   reducers: {
     setWeather: (state, action) => {
-      console.log('setUser::action:;', action);
+      console.log('setWeather::action:', action);
       state.city = action.payload.city;
       state.weather = action.payload.weather;
       state.date = action.payload.date;
@@ -18,10 +19,5 @@ const weahterSlice = createSlice({
   },
 });
 
-export const { setWeather } = weahterSlice.actions;
-
-// export const selectId = (state) => state.user.id;
-// export const selectEmail = (state) => state.user.email;
-// export const selectUsername = (state) => state.user.username;
-
-export default weahterSlice.reducer;
+export const { setWeather } = weatherSlice.actions;
+export default weatherSlice.reducer;

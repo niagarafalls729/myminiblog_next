@@ -14,9 +14,9 @@ export default function Introduction() {
               <br />
               김지수입니다 <span className={styles['pin_point']}>.</span>
               <br />
-              <span style={{ color: 'green' }}>
-                <Weather />
-              </span>
+            </p>
+            <p className={styles['weather']}>
+              <Weather />
             </p>
           </div>
           <div>
@@ -28,6 +28,8 @@ export default function Introduction() {
               비즈니스에 가치를 제공하는 것이며,
               <br /> 새로운 기술에 대한 지속적인 열정으로 미래의 웹 개발
               트렌드를 선도하고자 합니다.
+              <br /> 지금 현재 보고 계신 블로그는 Next.js , node.js , pm2 ,
+              nginx ,oracle을 사용하여 반응형으로 구성했습니다.
             </p>
             {/* <p style={{ fontFamily: "궁서체" }}>
               저는 4년 이상의 웹 애플리케이션 및 웹사이트 개발 경험을 가진
