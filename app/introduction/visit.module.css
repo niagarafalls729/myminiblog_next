@@ -1,0 +1,12 @@
+.visit_wrap {
+  position: fixed;
+  bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .visit_wrap {
+    color: green;
+    font-weight: bold;
+    right: 0px;
+  }
+}

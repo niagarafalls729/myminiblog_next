@@ -2,11 +2,13 @@ import styles from './introduction.module.css';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Career from '@/app/introduction/career';
 import Weather from '@/app/introduction/weather';
+import Visit from '@/app/introduction/visit';
 export default function Introduction() {
   return (
     <>
       <Grid container className="total_wrap">
         <Grid xs={0} md={4}></Grid>
+        <Visit />
         <Grid xs={12} md={6}>
           <div className="animate__animated animate__flash">
             <p className={styles['title']}>
