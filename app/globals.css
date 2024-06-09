@@ -50,12 +50,7 @@ button {
   color: var(--color-primary);
 }
 
-h1,
-h2,
-h3,
-p {
-  margin: 0;
-  padding: 0;
+* {
   font-family: 'GmarketSans', sans-serif; /* 폰트 패밀리 적용 */
 }
 
