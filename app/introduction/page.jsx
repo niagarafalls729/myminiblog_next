@@ -6,7 +6,7 @@ import Visit from '@/app/introduction/visit';
 export default function Introduction() {
   return (
     <>
-      <Grid container className="total_wrap">
+      <Grid container className={styles['total_wrap']}>
         <Grid xs={0} md={4}></Grid>
         <Visit />
         <Grid xs={12} md={6}>

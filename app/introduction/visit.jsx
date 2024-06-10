@@ -25,7 +25,7 @@ export default function Visit() {
       {mounted && (
         <div className={styles['visit_wrap']}>
           <h4>😍접속자 집계😗</h4>
-          <h5>오늘 : {isVisitCnt.today}</h5>
+          <h5>오늘 : {isVisitCnt.today + 1}</h5>
           <h5>전체 : {isVisitCnt.total + 1029}</h5>
         </div>
       )}

@@ -32,7 +32,7 @@ export default function Career() {
         <p className={styles['project_from_to_p']}>{project.project_from_to}</p>
         <h3>Description</h3>
         {project.desc}
-        <h3>Key development achievements</h3>
+        <h3>Key achievements</h3>
         {project.work}
         <br />
         {project.link != ' ' && '✔️'}
