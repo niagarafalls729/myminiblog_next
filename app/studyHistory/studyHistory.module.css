@@ -1,0 +1,25 @@
+/* pc는 옆 사이드 메뉴 , 모바일은 위에 메뉴 추가로하자 */
+@media (min-width: 1080px) {
+  .wrap {
+    display: flex;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .left {
+    flex: 3;
+  }
+  .right {
+    flex: 8;
+  }
+}
+@media (max-width: 1080px) {
+  .wrap {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    flex-direction: column;
+  }
+  .left {
+    display: none;
+  }
+}

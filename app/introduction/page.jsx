@@ -3,6 +3,7 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Career from '@/app/introduction/career';
 import Weather from '@/app/introduction/weather';
 import Visit from '@/app/introduction/visit';
+import BaseDial from '@/components/dial/BaseDial';
 export default function Introduction() {
   return (
     <>
@@ -59,6 +60,7 @@ export default function Introduction() {
 
         <Grid xs={0} md={4}></Grid>
       </Grid>
+      <BaseDial />
     </>
   );
 }
