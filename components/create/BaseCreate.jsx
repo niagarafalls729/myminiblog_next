@@ -109,77 +109,81 @@ export default function BaseCreate(props) {
   return !mounted ? (
     'loading....'
   ) : (
-    <div className="p-8" style={{ zIndex: 10 }}>
-      <Grid container>
-        <Grid xs={0} md={4} lg={4}></Grid>
-        <Grid xs={12} md={6} lg={4} className={styles['create_wrap']}>
-          <Grid xs={12} md={12} lg={12} className={styles['input_title']}>
-            <Grid container>
-              <TextField
-                id="outlined-basic"
-                variant="outlined"
-                placeholder="제목"
-                helperText={helperText}
-                fullWidth
-                color={!titlelErr ? 'primary' : 'warning'}
-                onBlur={errCHK}
-                onChange={errCHK}
-                inputProps={{ ref: isTitle, autoFocus: true }}
-                defaultValue={form.title}
-                autoFocus={form.title && true}
+    <div className={styles['create_wrap']}>
+      <div>
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          placeholder="제목"
+          helperText={helperText}
+          fullWidth
+          color={!titlelErr ? 'primary' : 'warning'}
+          onBlur={errCHK}
+          onChange={errCHK}
+          inputProps={{ ref: isTitle, autoFocus: true }}
+          defaultValue={form.title}
+          autoFocus={form.title && true}
+        />
+      </div>
+      <div className="!w-full mb-8 inline-block">
+        <BasicEditor
+          value={form.contents}
+          ref={isContents}
+          style={{ height: '300px', marginBottom: '20px' }} // 스타일 속성을 객체로 설정
+        />
+      </div>
+      <div className="mb-8">
+        <div
+          style={{
+            display: userStatus || path[2] != 'create' ? 'none' : 'flex',
+            width: '100%',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+            }}
+          >
+            <FormControl style={{ width: '100%' }}>
+              <InputLabel color="error"> {captcha}</InputLabel>
+              <OutlinedInput
+                onClick={handleClickShowPassword}
+                disabled
+                type={'number'}
+                endAdornment={<RefreshIcon color="primary" />}
               />
-            </Grid>
-            <Grid xs={12} md={12} lg={12} className="!w-full mb-8 inline-block">
-              <BasicEditor
-                value={form.contents}
-                ref={isContents}
-                style={{ height: '300px', marginBottom: '20px' }} // 스타일 속성을 객체로 설정
-              />
-            </Grid>
-            <Grid xs={12} md={12} lg={12} className="mb-8">
-              <div
-                style={{
-                  display: userStatus || path[2] != 'create' ? 'none' : 'flex',
-                }}
-              >
-                <Grid xs={6} md={6} lg={6}>
-                  <FormControl style={{ width: '100%' }}>
-                    <InputLabel color="error"> {captcha}</InputLabel>
-                    <OutlinedInput
-                      onClick={handleClickShowPassword}
-                      disabled
-                      type={'number'}
-                      endAdornment={<RefreshIcon color="primary" />}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid xs={6} md={6} lg={6}>
-                  <TextField
-                    label="captcha 번호 입력"
-                    variant="outlined"
-                    type="number"
-                    fullWidth
-                    sx={{ ...stylesCSS.input }}
-                    inputProps={{ ref: isCaptcha }}
-                  />
-                </Grid>
-              </div>
-              <FormControl
-                style={{ width: '100%', display: userStatus ? 'none' : 'auto' }}
-              >
-                <OutlinedInput
-                  type={'number'}
-                  inputProps={{ ref: isPw }}
-                  placeholder="비밀번호 입력"
-                />
-              </FormControl>
-            </Grid>
-            <Button fullWidth variant="contained" onClick={fn_save}>
-              저장
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
+            </FormControl>
+          </div>
+          <div
+            style={{
+              width: '100%',
+            }}
+          >
+            <TextField
+              label="captcha 번호 입력"
+              variant="outlined"
+              type="number"
+              fullWidth
+              sx={{ ...stylesCSS.input }}
+              inputProps={{ ref: isCaptcha }}
+            />
+          </div>
+        </div>
+        <FormControl
+          style={{ width: '100%', display: userStatus ? 'none' : 'auto' }}
+        >
+          <OutlinedInput
+            type={'number'}
+            inputProps={{ ref: isPw }}
+            placeholder="비밀번호 입력"
+          />
+        </FormControl>
+        <br />
+        <br />
+        <Button fullWidth variant="contained" onClick={fn_save}>
+          저장
+        </Button>
+      </div>
     </div>
   );
 }
