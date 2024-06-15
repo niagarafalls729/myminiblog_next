@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import GitHubCalendar from 'react-github-calendar';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import styles from './studyHistory.module.css';
 export default function Github() {
   const [commits, setCommits] = useState([]);
   const [isMounted, setIsMounted] = useState(false);

@@ -38,7 +38,7 @@ const Pc = () => {
                   <Link href="/">블로그 주인</Link>
                 </li>
                 <li>
-                  <Link href="/studyHistory">나의 여정</Link>
+                  <Link href="/activeOverview/Project">나의 여정</Link>
                 </li>
                 <li>
                   <Link href="/guestBook" as="/guestBook">
@@ -102,6 +102,10 @@ const Mo = props => {
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(panel === expanded ? false : panel);
   };
+  const [open, setOpen] = useState(true);
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   return (
     <>
@@ -161,11 +165,40 @@ const Mo = props => {
                   <ListItemText primary="블로그 주인" />
                 </ListItemButton>
               </Link>
-              <Link href="/studyHistory" onClick={handleShowNavbar}>
-                <ListItemButton>
-                  <ListItemText primary="나의 여정" />
-                </ListItemButton>
-              </Link>
+
+              <ListItemButton onClick={handleChange(1)}>
+                <ListItemText primary="나의 여정" />
+                {expanded === 1 ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={expanded === 1 ? true : false} unmountOnExit>
+                <List component="div" disablePadding>
+                  <Link
+                    href="/activeOverview/Project"
+                    onClick={handleShowNavbar}
+                  >
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemText primary="참여프로젝트" />
+                    </ListItemButton>
+                  </Link>
+                  <Link
+                    href="/activeOverview/Github"
+                    onClick={handleShowNavbar}
+                  >
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemText primary="블로그 변경 이력" />
+                    </ListItemButton>
+                  </Link>
+                  <Link
+                    href="/activeOverview/StudyHistory"
+                    onClick={handleShowNavbar}
+                  >
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemText primary="공부 일지" />
+                    </ListItemButton>
+                  </Link>
+                </List>
+              </Collapse>
+
               <Link href="/guestBook" onClick={handleShowNavbar}>
                 <ListItemButton>
                   <ListItemText primary="방명록" />

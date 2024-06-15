@@ -1,32 +1,39 @@
 'use client';
 
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from './studyHistory.module.css';
-import Github from '@/app/studyHistory/Github';
-import StudyHistory from '@/app/studyHistory/StudyHistory';
-import Project from '@/app/studyHistory/Project';
-import StudyMenu from '@/app/studyHistory/StudyMenu';
+import styles from './activeOverview.module.css';
+import Github from '@/app/activeOverview/[index]/Github';
+import StudyHistory from '@/app/activeOverview/[index]/StudyHistory';
+import Project from '@/app/activeOverview/[index]/Project';
+import SideMenu from '@/app/activeOverview/[index]/SideMenu';
 
 export default function History() {
   const [isMounted, setIsMounted] = useState(false);
-  const [isPage, setIsPage] = useState(0);
+  const [isPage, setIsPage] = useState('Project');
+  const pathname = usePathname();
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
+  useEffect(() => {
+    const trimmedPath = pathname.replace('/activeOverview/', '');
+    setIsPage(trimmedPath);
+  }, [pathname]);
   const pageChange = page => {
     setIsPage(page);
   };
 
   const Page = () => {
     switch (isPage) {
-      case 0:
+      case 'Project':
         return <Project></Project>;
-      case 1:
+      case 'Github':
         return <Github></Github>;
-      case 2:
+      case 'StudyHistory':
         return <StudyHistory></StudyHistory>;
       default:
-        return <Github></Github>;
+        return <Project></Project>;
     }
   };
   return (
@@ -35,7 +42,7 @@ export default function History() {
         <>
           <div className={styles['wrap']}>
             <div className={styles['left']}>
-              <StudyMenu onPageChange={pageChange} />
+              <SideMenu onPageChange={pageChange} />
             </div>
             <div className={styles['right']}>
               <Page />

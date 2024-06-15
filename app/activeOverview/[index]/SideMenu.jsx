@@ -10,20 +10,18 @@ import Typography from '@mui/material/Typography';
 import ArticleIcon from '@mui/icons-material/Article';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-
-import { useEffect, useState } from 'react';
-
-export default function StudyMenu(props) {
+import { useRouter } from 'next/navigation';
+export default function SideMenu(props) {
   const pageClick = e => {
     props.onPageChange(e);
   };
-
+  const router = useRouter();
   return (
     <Paper sx={{ width: 320, maxWidth: '100%' }}>
       <MenuList>
         <MenuItem
           onClick={() => {
-            pageClick(0);
+            router.push('/activeOverview/Project');
           }}
         >
           <ListItemIcon>
@@ -35,7 +33,7 @@ export default function StudyMenu(props) {
         <Divider />
         <MenuItem
           onClick={() => {
-            pageClick(1);
+            router.push('/activeOverview/Github');
           }}
         >
           <ListItemIcon>
@@ -47,7 +45,7 @@ export default function StudyMenu(props) {
         <Divider />
         <MenuItem
           onClick={() => {
-            pageClick(2);
+            router.push('/activeOverview/StudyHistory');
           }}
         >
           <ListItemIcon>
