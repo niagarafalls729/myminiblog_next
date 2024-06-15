@@ -1,4 +1,5 @@
-import * as React from 'react';
+'use client';
+
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
@@ -6,18 +7,25 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
-import ContentCut from '@mui/icons-material/ContentCut';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentPaste from '@mui/icons-material/ContentPaste';
-import Cloud from '@mui/icons-material/Cloud';
 import ArticleIcon from '@mui/icons-material/Article';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-export default function StudyMenu() {
+
+import { useEffect, useState } from 'react';
+
+export default function StudyMenu(props) {
+  const pageClick = e => {
+    props.onPageChange(e);
+  };
+
   return (
     <Paper sx={{ width: 320, maxWidth: '100%' }}>
       <MenuList>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            pageClick(0);
+          }}
+        >
           <ListItemIcon>
             <AssignmentIndIcon fontSize="small" />
           </ListItemIcon>
@@ -25,7 +33,11 @@ export default function StudyMenu() {
           <Typography color="text.secondary">😎</Typography>
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            pageClick(1);
+          }}
+        >
           <ListItemIcon>
             <ArticleIcon fontSize="small" />
           </ListItemIcon>
@@ -33,7 +45,11 @@ export default function StudyMenu() {
           <Typography color="text.secondary">😄</Typography>
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            pageClick(2);
+          }}
+        >
           <ListItemIcon>
             <BorderColorIcon fontSize="small" />
           </ListItemIcon>
