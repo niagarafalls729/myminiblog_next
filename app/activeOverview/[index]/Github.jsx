@@ -33,7 +33,14 @@ export default function Github() {
       if (response.data.length === 0) {
         break;
       }
-      allCommits = allCommits.concat(response.data);
+      const commitsWithRepoName = [];
+      for (let e of response.data) {
+        e.repoName = repo;
+        commitsWithRepoName.push(e);
+      }
+
+      console.log(commitsWithRepoName);
+      allCommits = allCommits.concat(commitsWithRepoName);
       page += 1;
     }
 
@@ -78,6 +85,7 @@ export default function Github() {
             <ul>
               {combinedCommits.map(e => (
                 <li key={e.sha}>
+                  <span>{e.repoName}</span>
                   <strong>{e.commit.message}</strong>-{' '}
                   {dayjs(e.commit.author.date).format('YYYY-MM-DD')}
                 </li>
