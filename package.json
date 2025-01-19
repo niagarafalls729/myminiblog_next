@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 3002",
     "lint": "next lint",
-    "stop": "kill $(lsof -t -i :3002)"
+    "stop": "lsof -t -i :3002 | xargs -r kill -9"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
