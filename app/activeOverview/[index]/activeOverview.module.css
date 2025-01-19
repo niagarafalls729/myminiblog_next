@@ -11,6 +11,10 @@
   .right {
     flex: 8;
   }
+
+  .project_wrap {
+    width: 80%;
+  }
 }
 @media (max-width: 1080px) {
   .wrap {
@@ -22,4 +26,34 @@
   .left {
     display: none;
   }
+}
+.title {
+  font-weight: bold;
+  font-size: 3rem;
+}
+.sub_title {
+  font-weight: bold;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+.pin_point {
+  margin-left: -10px;
+  font-size: 90px;
+  line-height: 0px;
+  color: hotpink;
+}
+.about_me {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+.weather {
+  color: green;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+.total_wrap {
+  padding-top: 25px;
+  padding-bottom: 25px;
 }

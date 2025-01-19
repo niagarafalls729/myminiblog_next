@@ -4,6 +4,8 @@ import Career from '@/app/introduction/career';
 import Weather from '@/app/introduction/weather';
 import Visit from '@/app/introduction/visit';
 import BaseDial from '@/components/dial/BaseDial';
+import { colors } from '@mui/material';
+import Link from 'next/link';
 export default function Introduction() {
   return (
     <>
@@ -33,7 +35,17 @@ export default function Introduction() {
               트렌드를 선도하고자 합니다.
               <br /> 지금 현재 보고 계신 블로그는 Next.js , node.js , pm2 ,
               nginx ,oracle을 사용하여 반응형으로 구성했습니다.
+              <br />
+              결혼 준비로 인해 약간의 업데이트가 지연되었습니다.
+              <br />
+              차근차근 다시 수정하고 있습니다.
+              <br /> <br />
+              저의 참여 프로젝트는 👉{' '}
+              <span style={{ color: 'blue' }}>
+                <Link href="/activeOverview/Project"> 이동</Link>{' '}
+              </span>
             </p>
+
             {/* <p style={{ fontFamily: "궁서체" }}>
               저는 4년 이상의 웹 애플리케이션 및 웹사이트 개발 경험을 가진
               프론트엔드 개발자입니다. 제 목표는 혁신적인 프론트엔드 솔루션을
@@ -46,7 +58,7 @@ export default function Introduction() {
               활력소입니다! 돈이최고!
             </p> */}
             <br />
-            <p className={styles['sub_title']}>경력사항</p>
+            {/* <p className={styles['sub_title']}>경력사항</p>
             <Career></Career>
             <br />
             <h3>
@@ -54,7 +66,7 @@ export default function Introduction() {
               어떠한 질문이나 제안이 있으시면 언제든지 연락 주시기 바랍니다.
               <br></br> 👻 010-9898-9845
               <br></br> 👌 wltn729@gmail.com
-            </h3>
+            </h3> */}
           </div>
         </Grid>
 

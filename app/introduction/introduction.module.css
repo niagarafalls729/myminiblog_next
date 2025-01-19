@@ -1,3 +1,7 @@
+.total_wrap {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
 .title {
   font-weight: bold;
   font-size: 3rem;
@@ -24,7 +28,9 @@
   font-size: 2rem;
   margin-bottom: 30px;
 }
-.total_wrap {
-  padding-top: 25px;
-  padding-bottom: 25px;
+.my_img_wrap {
+  display: flex;
+  justify-content: space-between;
+}
+.my_img {
 }
