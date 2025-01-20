@@ -5,7 +5,7 @@ import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useMemo, useRef, useState } from 'react';
 
-function App() {
+const App = () => {
   const [value, setValue] = useState('');
   const quillRef = useRef();
 
@@ -22,7 +22,7 @@ function App() {
     // input이 클릭되면 파일 선택창이 나타난다.
 
     // input에 변화가 생긴다면 = 이미지를 선택
-    input.addEventListener('change', async () => {
+    input.addEventListener('change', async() => {
       console.log('온체인지');
       const file = input.files[0];
       // multer에 맞는 형식으로 데이터 만들어준다.
@@ -110,6 +110,6 @@ function App() {
       />
     </div>
   );
-}
+};
 
 export default App;

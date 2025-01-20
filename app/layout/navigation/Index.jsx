@@ -240,7 +240,7 @@ const Mo = props => {
     </>
   );
 };
-function Navigation() {
+const Navigation = () => {
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
@@ -261,6 +261,6 @@ function Navigation() {
       </ThemeProvider>
     </>
   );
-}
+};
 
 export default Navigation;

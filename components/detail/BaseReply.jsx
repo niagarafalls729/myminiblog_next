@@ -17,7 +17,7 @@ import { useAppSelector } from '@/redux/hooks';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 
-function BaseReply(props) {
+const BaseReply = props => {
   const { arrFrom, onReplyC, useUrl } = props;
   const [openReply, setOpenReply] = useState(true);
 
@@ -29,7 +29,7 @@ function BaseReply(props) {
     setOpenReply(!openReply);
   };
 
-  const save_reply = async () => {
+  const save_reply = async() => {
     const createForm = {
       contents: isContents.current.value,
       id: userStatus ? userId : '익명' + dayjs().format('mmss'),
@@ -93,5 +93,5 @@ function BaseReply(props) {
       <Grid xs={0} lg={2}></Grid>
     </Grid>
   );
-}
+};
 export default React.memo(BaseReply);

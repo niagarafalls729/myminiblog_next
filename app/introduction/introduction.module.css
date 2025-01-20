@@ -42,7 +42,6 @@
     padding-bottom: 25px;
     display: flex;
     margin: auto;
-    flex-direction: column;
   }
   .total_wrap > div:first-child {
     flex: 3;

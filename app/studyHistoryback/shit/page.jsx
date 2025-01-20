@@ -1,11 +1,5 @@
-"use client";
+'use client';
 
 export default function guestBook() {
-  return (
-    <>
-     
-   
-     비밀글쓰기!
-    </>
-  );
+  return <>비밀글쓰기!</>;
 }

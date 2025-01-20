@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-function RandomCHk({ outputVal }) {
+const RandomCHk = ({ outputVal }) => {
   const min = 1000; // 최소값 (1000)
   const max = 9999; // 최대값 (9999)
   const randomNumber = useMemo(
@@ -23,6 +23,6 @@ function RandomCHk({ outputVal }) {
       </Button>
     </Grid>
   );
-}
+};
 
 export default RandomCHk;

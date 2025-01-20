@@ -234,7 +234,7 @@ export default function page() {
   );
 }
 
-function CustomTabPanel(props) {
+const CustomTabPanel = props => {
   const { children, value, index } = props;
 
   return (
@@ -251,4 +251,4 @@ function CustomTabPanel(props) {
       )}
     </div>
   );
-}
+};

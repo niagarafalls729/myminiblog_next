@@ -10,7 +10,7 @@ export default function Introduction() {
   return (
     <>
       <div className={styles['total_wrap']}>
-        <div></div>
+        <div>&nbsp;</div>
         <div>
           <div className="animate__animated animate__flash">
             <p className={styles['title']}>

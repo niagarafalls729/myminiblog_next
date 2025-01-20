@@ -1,13 +1,12 @@
 'use client';
-import { useState, useEffect, useRef } from 'react'; 
+import { useState, useEffect, useRef } from 'react';
 import styles from './detail.module.css';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import { useAppSelector } from '@/redux/hooks'; 
+import { useAppSelector } from '@/redux/hooks';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete'; 
+import DeleteIcon from '@mui/icons-material/Delete';
 export default function BaseDetail(props) {
-
-  const { detailform, onModi , onDele } = props;
+  const { detailform, onModi, onDele } = props;
 
   const userStatus = useAppSelector(state => state.user.status);
   const userId = useAppSelector(state => state.user.id);
@@ -19,7 +18,7 @@ export default function BaseDetail(props) {
       ? true
       : false
     : //비회원
-      form.member_create === 'N'; 
+      form.member_create === 'N';
   return (
     <>
       <div className="p-1" style={{ zIndex: 10, position: 'sticky' }}>
@@ -32,7 +31,7 @@ export default function BaseDetail(props) {
               </Grid>
               {showButton && (
                 <Grid xs={1} lg={1} xsOffset="auto">
-                    <EditIcon onClick={onModi}/>
+                  <EditIcon onClick={onModi} />
                   <DeleteIcon onClick={onDele} />
                 </Grid>
               )}
