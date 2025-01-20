@@ -1,8 +1,7 @@
 'use client';
 import styles from './career.module.css';
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { axiosGetMain } from '@/api/baseGet';
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react';
 
 export default function Career() {
@@ -17,7 +16,6 @@ export default function Career() {
   const myAPI = async () => {
     try {
       const res = await axiosGetMain('main');
-
       setCareer(res);
     } catch (error) {
       console.error('Error fetching data: ', error);
@@ -26,7 +24,7 @@ export default function Career() {
 
   const RightGrid = ({ project, innerIndex }) => {
     return (
-      <Grid xs={12} md={6} key={innerIndex} className="p-2">
+      <div key={innerIndex} className={`${styles['rightGrid']} p-2`}>
         <hr className={`${styles['companyHR']} ${styles['rightHR']}`} />
         <h2 className={styles['project_h1']}>{project.project}</h2>
         <p className={styles['project_from_to_p']}>{project.project_from_to}</p>
@@ -35,26 +33,24 @@ export default function Career() {
         <h3>Key achievements</h3>
         {project.work}
         <br />
-        {project.link != ' ' && '✔️'}
+        {project.link !== ' ' && '✔️'}
         <a href={project.link}>{project.link}</a>
         <h3>Tech</h3>
         {project.stack}
-      </Grid>
+      </div>
     );
   };
+
   return (
     <>
-      <Grid container>
+      <div className={styles['container']}>
         {career.map((item, index) => (
           <React.Fragment key={index}>
-            <Grid xs={12} md={6} key={index}>
-              {/* <Grid xs={12} md={0} key={index}>
-                <hr className={styles['companyHR']} />
-              </Grid> */}
+            <div className={styles['leftGrid']} key={index}>
               <hr className={styles['companyHR']} />
               <h1>{item.company}</h1>
               <p>{item.company_from_to}</p>
-            </Grid>
+            </div>
             {item.projects.map((project, innerIndex) =>
               innerIndex === 0 ? (
                 <RightGrid
@@ -64,7 +60,7 @@ export default function Career() {
                 />
               ) : (
                 <React.Fragment key={innerIndex}>
-                  <Grid xs={12} md={6}></Grid>
+                  <div className={styles['placeholder']}></div>
                   <RightGrid
                     key={innerIndex}
                     project={project}
@@ -75,7 +71,7 @@ export default function Career() {
             )}
           </React.Fragment>
         ))}
-      </Grid>
+      </div>
       <hr />
     </>
   );

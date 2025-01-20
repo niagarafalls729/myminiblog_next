@@ -1,7 +1,3 @@
-.total_wrap {
-  padding-top: 25px;
-  padding-bottom: 25px;
-}
 .title {
   font-weight: bold;
   font-size: 3rem;
@@ -33,4 +29,18 @@
   justify-content: space-between;
 }
 .my_img {
+}
+
+@media (max-width: 1080px) {
+  .total_wrap {
+    width: 100%;
+  }
+}
+@media (min-width: 1080px) {
+  .total_wrap {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 60%;
+    margin: auto;
+  }
 }
