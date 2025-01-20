@@ -40,7 +40,14 @@
   .total_wrap {
     padding-top: 25px;
     padding-bottom: 25px;
-    width: 60%;
+    display: flex;
     margin: auto;
+    flex-direction: column;
+  }
+  .total_wrap > div:first-child {
+    flex: 3;
+  }
+  .total_wrap > div:last-child {
+    flex: 8;
   }
 }

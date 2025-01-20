@@ -10,6 +10,7 @@ export default function Introduction() {
   return (
     <>
       <div className={styles['total_wrap']}>
+        <div></div>
         <div>
           <div className="animate__animated animate__flash">
             <p className={styles['title']}>
@@ -45,8 +46,6 @@ export default function Introduction() {
             </p>
           </div>
         </div>
-
-        <div></div>
       </div>
       <Visit />
       <BaseDial />
