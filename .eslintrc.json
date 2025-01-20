@@ -4,13 +4,14 @@
     "es6": true,
     "node": true
   },
+  // "parser": "@babel/eslint-parser",
   "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    // "airbnb",
     "plugin:prettier/recommended",
-    "next/core-web-vitals",
-    "eslint-config-prettier" // 추가
+    "next/core-web-vitals"
   ],
   "settings": {
     "react": {
@@ -37,6 +38,8 @@
     "import/order": 0,
     "import/prefer-default-export": "off",
     "import/extensions": 0,
+    "import/no-unresolved": 0,
+    // "arrow-body-style": "error",
     "prefer-arrow-callback": "off",
     "no-var": "error",
     "no-dupe-keys": "error",
@@ -44,7 +47,10 @@
     "react/function-component-definition": [
       2,
       {
-        "namedComponents": "arrow-function"
+        "namedComponents": [
+          "arrow-function",
+          "function-declaration"
+        ]
       }
     ],
     "@typescript-eslint/no-explicit-any": "error",
@@ -61,16 +67,27 @@
         "SwitchCase": 1
       }
     ],
-    "semi": ["error", "always"],
+    "semi": [
+      "error",
+      "always"
+    ],
     "no-unsafe-finally": 0,
     "no-return-assign": 0,
-    "comma-dangle": ["error", "always-multiline"],
-    "object-curly-spacing": ["error", "always"],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "skipBlankLines": true,
+    "ignoreComments": false,
     "no-multiple-empty-lines": [
       "error",
       {
         "max": 2,
-        "maxEOF": 1
+        "maxEOF": 0
       }
     ],
     "space-before-function-paren": [
