@@ -31,7 +31,7 @@ export default function Career() {
         <h3>Description</h3>
         {project.desc}
         <h3>Key achievements</h3>
-        {project.work}
+        <div style={{ whiteSpace: 'pre-line' }}>{project.work}</div>
         <br />
         {project.link !== ' ' && '✔️'}
         <a href={project.link}>{project.link}</a>
