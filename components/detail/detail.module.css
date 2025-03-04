@@ -1,3 +1,137 @@
 .input_title {
   height: 10vh;
 }
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e0e0e0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e0e0e0;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.content {
+  min-height: 400px;
+  background: white;
+  padding: 16px;
+  border-radius: 4px;
+}
+@media (max-width: 1080px) {
+  .meta {
+    flex-direction: column;
+  }
+}
+.replyContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 0;
+}
+
+.replyBox {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.replyHeader {
+  width: 100%;
+  background: gray;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon {
+  font-size: 16px;
+}
+
+.replyList {
+  list-style: none;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.replyItem {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.replyContent {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.replyMeta {
+  font-size: 12px;
+  color: #666;
+}
+
+.inputSection {
+  margin-top: 16px;
+}
+
+.textInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+.submitButton {
+  width: 100%;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+
+.listButton {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.linkButton {
+  display: block;
+  width: 100%;
+  background: #ff4d4d;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 4px;
+}
