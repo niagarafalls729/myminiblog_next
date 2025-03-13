@@ -87,7 +87,13 @@ export default function Github() {
             >
               <thead>
                 <tr style={{ backgroundColor: '#f4f4f4' }}>
-                  <th style={{ border: '1px solid #ddd', padding: '10px' }}>
+                  <th
+                    style={{
+                      border: '1px solid #ddd',
+                      padding: '10px',
+                      width: '125px',
+                    }}
+                  >
                     Repository
                   </th>
                   <th
@@ -114,7 +120,13 @@ export default function Github() {
               <tbody>
                 {combinedCommits.map(e => (
                   <tr key={e.sha}>
-                    <td style={{ border: '1px solid #ddd', padding: '10px' }}>
+                    <td
+                      style={{
+                        border: '1px solid #ddd',
+                        padding: '10px',
+                        textAlign: 'center',
+                      }}
+                    >
                       {e.repoName}
                     </td>
                     <td style={{ border: '1px solid #ddd', padding: '10px' }}>
