@@ -1,0 +1,87 @@
+/* 전체 컨테이너 */
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* 타이틀 */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* 테이블 스타일 */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th,
+.td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* 제목 스타일 (클릭 가능하도록 디자인) */
+.td-title {
+  text-align: left;
+  padding-left: 12px;
+  color: #007bff;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.td-title:hover {
+  text-decoration: underline;
+}
+
+/* 글쓰기 버튼 */
+.write-btn {
+  margin-top: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+}
+
+.write-btn:hover {
+  background-color: #218838;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+
+  .th,
+  .td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .write-btn {
+    width: 100%;
+    font-size: 14px;
+  }
+}
