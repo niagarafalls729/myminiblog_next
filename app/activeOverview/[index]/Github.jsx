@@ -73,8 +73,8 @@ export default function Github() {
   return (
     <>
       {isMounted && (
-        <div style={{ paddingTop: '20px', padding: '0 10px' }}>
-          <div>
+        <div style={{ paddingTop: '20px', padding: '0 10px', width: '100%' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <GitHubCalendar username={owner} showWeekdayLabels />
           </div>
           <div style={{ overflowX: 'auto', marginTop: '20px' }}>
@@ -90,7 +90,13 @@ export default function Github() {
                   <th style={{ border: '1px solid #ddd', padding: '10px' }}>
                     Repository
                   </th>
-                  <th style={{ border: '1px solid #ddd', padding: '10px' }}>
+                  <th
+                    style={{
+                      border: '1px solid #ddd',
+                      padding: '10px',
+                      maxWidth: '600px',
+                    }}
+                  >
                     Commit Message
                   </th>
                   <th
@@ -98,6 +104,7 @@ export default function Github() {
                       border: '1px solid #ddd',
                       padding: '10px',
                       textAlign: 'right',
+                      minWidth: '130px',
                     }}
                   >
                     Date
