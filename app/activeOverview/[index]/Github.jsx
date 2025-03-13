@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import GitHubCalendar from 'react-github-calendar';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import styles from './Github.module.css';
 
 export default function Github() {
   const [combinedCommits, setCombinedCommits] = useState([]);
@@ -73,72 +74,33 @@ export default function Github() {
   return (
     <>
       {isMounted && (
-        <div style={{ paddingTop: '20px', padding: '0 10px', width: '100%' }}>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className={styles.container}>
+          <div className={styles.calendarWrapper}>
             <GitHubCalendar username={owner} showWeekdayLabels />
           </div>
-          <div style={{ overflowX: 'auto', marginTop: '20px' }}>
-            <table
-              style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                minWidth: '600px',
-              }}
-            >
-              <thead>
-                <tr style={{ backgroundColor: '#f4f4f4' }}>
-                  <th
-                    style={{
-                      border: '1px solid #ddd',
-                      padding: '10px',
-                      width: '125px',
-                    }}
-                  >
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead className={styles.thead}>
+                <tr>
+                  <th className={`${styles.th} ${styles.thRepo}`}>
                     Repository
                   </th>
-                  <th
-                    style={{
-                      border: '1px solid #ddd',
-                      padding: '10px',
-                      maxWidth: '600px',
-                    }}
-                  >
+                  <th className={`${styles.th} ${styles.thMessage}`}>
                     Commit Message
                   </th>
-                  <th
-                    style={{
-                      border: '1px solid #ddd',
-                      padding: '10px',
-                      textAlign: 'right',
-                      minWidth: '130px',
-                    }}
-                  >
-                    Date
-                  </th>
+                  <th className={`${styles.th} ${styles.thDate}`}>Date</th>
                 </tr>
               </thead>
               <tbody>
                 {combinedCommits.map(e => (
                   <tr key={e.sha}>
-                    <td
-                      style={{
-                        border: '1px solid #ddd',
-                        padding: '10px',
-                        textAlign: 'center',
-                      }}
-                    >
+                    <td className={`${styles.td} ${styles.tdRepo}`}>
                       {e.repoName}
                     </td>
-                    <td style={{ border: '1px solid #ddd', padding: '10px' }}>
+                    <td className={`${styles.td} ${styles.tdMessage}`}>
                       {e.commit.message}
                     </td>
-                    <td
-                      style={{
-                        border: '1px solid #ddd',
-                        padding: '10px',
-                        textAlign: 'right',
-                      }}
-                    >
+                    <td className={`${styles.td} ${styles.tdDate}`}>
                       {dayjs(e.commit.author.date).format('YYYY-MM-DD')}
                     </td>
                   </tr>

@@ -1,0 +1,63 @@
+/* 컨테이너 */
+.container {
+  padding-top: 20px;
+  padding: 0 10px;
+  width: 100%;
+}
+
+/* 깃허브 캘린더 */
+.calendarWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* 테이블 컨테이너 */
+.tableContainer {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+/* 테이블 스타일 */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+/* 테이블 헤더 */
+.thead {
+  background-color: #f4f4f4;
+}
+
+/* 공통적인 테이블 셀 스타일 */
+.th,
+.td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+[data-theme='dark'] .thead,
+.th,
+.td {
+  background: #333;
+  color: #fff;
+}
+
+/* 레포지토리 컬럼 */
+.thRepo,
+.tdRepo {
+  width: 125px;
+  text-align: center;
+}
+
+/* 커밋 메시지 컬럼 */
+.thMessage,
+.tdMessage {
+  max-width: 600px;
+}
+
+/* 날짜 컬럼 */
+.thDate,
+.tdDate {
+  text-align: right;
+  min-width: 130px;
+}
