@@ -44,9 +44,10 @@ export default function History() {
             <div className={styles['left']}>
               <SideMenu onPageChange={pageChange} />
             </div>
-            <div className={styles['right']}>
+            <div className={styles['center']}>
               <Page />
             </div>
+            <div className={styles['right']}></div>
           </div>
         </>
       )}

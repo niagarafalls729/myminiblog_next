@@ -4,16 +4,8 @@ import { useEffect, useState } from 'react';
 import GitHubCalendar from 'react-github-calendar';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
 export default function Github() {
-  const [isReact, setIsReact] = useState([]);
-  const [isNode, setIsNode] = useState([]);
   const [combinedCommits, setCombinedCommits] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
   const [error, setError] = useState(null);
@@ -24,6 +16,7 @@ export default function Github() {
 
   const owner = process.env.NEXT_PUBLIC_GITHUB;
   const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+
   const fetchAllCommits = async repo => {
     let page = 1;
     const perPage = 100;
@@ -40,16 +33,11 @@ export default function Github() {
       if (response.data.length === 0) {
         break;
       }
-      const commitsWithRepoName = [];
-      for (let e of response.data) {
-        if (repo == 'myminiblog_next') {
-          e.repoName = 'server';
-        } else {
-          e.repoName = 'front';
-        }
 
-        commitsWithRepoName.push(e);
-      }
+      const commitsWithRepoName = response.data.map(e => ({
+        ...e,
+        repoName: repo === 'myminiblog_next' ? 'server' : 'front',
+      }));
 
       allCommits = allCommits.concat(commitsWithRepoName);
       page += 1;
@@ -57,6 +45,7 @@ export default function Github() {
 
     return allCommits;
   };
+
   useEffect(() => {
     const reactRepo = 'myminiblog_next';
     const reactNode = 'node_api_blog';
@@ -68,8 +57,7 @@ export default function Github() {
           fetchAllCommits(reactNode),
         ]);
 
-        const combined = [...reactCommits, ...nodeCommits];
-        combined.sort(
+        const combined = [...reactCommits, ...nodeCommits].sort(
           (a, b) =>
             new Date(b.commit.author.date) - new Date(a.commit.author.date)
         );
@@ -85,49 +73,61 @@ export default function Github() {
   return (
     <>
       {isMounted && (
-        <>
-          <div style={{ paddingTop: '20px' }}>
-            <br />
-            <GitHubCalendar
-              username={process.env.NEXT_PUBLIC_GITHUB}
-              showWeekdayLabels
-            />
-            {/* 
-            <ul>
-              {combinedCommits.map(e => (
-                <li key={e.sha}>
-                  <span></span>
-                  <strong></strong>-{' '}
-                
-                </li>
-              ))}
-            </ul> 
-            */}
-
-            <TableContainer sx={{ maxWidth: 1050 }} component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>repository</TableCell>
-                    <TableCell>commit coment</TableCell>
-                    <TableCell align="right">date</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {combinedCommits.map(e => (
-                    <TableRow key={e.sha}>
-                      <TableCell sx={{ width: 100 }}>{e.repoName}</TableCell>
-                      <TableCell>{e.commit.message}</TableCell>
-                      <TableCell sx={{ width: 120 }} align="right">
-                        {dayjs(e.commit.author.date).format('YYYY-MM-DD')}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+        <div style={{ paddingTop: '20px', padding: '0 10px' }}>
+          <div>
+            <GitHubCalendar username={owner} showWeekdayLabels />
           </div>
-        </>
+          <div style={{ overflowX: 'auto', marginTop: '20px' }}>
+            <table
+              style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                minWidth: '600px',
+              }}
+            >
+              <thead>
+                <tr style={{ backgroundColor: '#f4f4f4' }}>
+                  <th style={{ border: '1px solid #ddd', padding: '10px' }}>
+                    Repository
+                  </th>
+                  <th style={{ border: '1px solid #ddd', padding: '10px' }}>
+                    Commit Message
+                  </th>
+                  <th
+                    style={{
+                      border: '1px solid #ddd',
+                      padding: '10px',
+                      textAlign: 'right',
+                    }}
+                  >
+                    Date
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {combinedCommits.map(e => (
+                  <tr key={e.sha}>
+                    <td style={{ border: '1px solid #ddd', padding: '10px' }}>
+                      {e.repoName}
+                    </td>
+                    <td style={{ border: '1px solid #ddd', padding: '10px' }}>
+                      {e.commit.message}
+                    </td>
+                    <td
+                      style={{
+                        border: '1px solid #ddd',
+                        padding: '10px',
+                        textAlign: 'right',
+                      }}
+                    >
+                      {dayjs(e.commit.author.date).format('YYYY-MM-DD')}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </>
   );
