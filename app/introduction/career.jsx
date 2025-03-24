@@ -29,7 +29,7 @@ export default function Career() {
         <h2 className={styles['project_h1']}>{project.project}</h2>
         <p className={styles['project_from_to_p']}>{project.project_from_to}</p>
         <h3>Description</h3>
-        {project.desc}
+        <div style={{ whiteSpace: 'pre-line' }}>{project.desc}</div>
         <h3>Key achievements</h3>
         <div style={{ whiteSpace: 'pre-line' }}>{project.work}</div>
         <br />
