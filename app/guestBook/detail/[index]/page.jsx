@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
 export default function guestBookDetail() {
   const [detailform, setDetailform] = useState(null);
   const [arrFrom, setArrFrom] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const path = usePathname();
@@ -21,18 +20,19 @@ export default function guestBookDetail() {
     // params.index가 있을 때만 API 호출
     if (!params.index) {
       console.log('params.index가 없습니다.');
+      setLoading(false);
       return;
     }
 
     console.log('상세 페이지 데이터 로딩 시작 - index:', params.index);
     setLoading(true);
-    setDataLoaded(false);
 
     const fetchData = async () => {
       try {
         console.log('API 호출 시작');
+        // 새로운 단일 게시글 조회 API 사용
         const [detailRes, replyRes] = await Promise.all([
-          axiosGet('guestBook', { index: params.index }),
+          axiosGet(`guestBook/detail/${params.index}`),
           axiosGet('guestBook/reply', { index: params.index }),
         ]);
         
@@ -41,17 +41,8 @@ export default function guestBookDetail() {
           replyRes
         });
         
-        // detailRes는 배열이므로 첫 번째 요소를 가져옴
-        const detailData = Array.isArray(detailRes) && detailRes.length > 0 ? detailRes[0] : null;
-        
-        console.log('처리된 데이터:', {
-          detailData,
-          replyData: replyRes
-        });
-        
-        setDetailform(detailData);
+        setDetailform(detailRes);
         setArrFrom(replyRes || []);
-        setDataLoaded(true);
       } catch (error) {
         console.error('데이터 로딩 실패:', error);
         setDetailform(null);
