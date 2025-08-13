@@ -1,19 +1,16 @@
 'use client';
-import { useState, useRef, useMemo, useEffect } from 'react'; // useEffect 추가
+import { useState, useRef, useMemo, useEffect } from 'react';
 
 import { axiosGet } from '@/api/baseGet';
-import Button from '@mui/material/Button';
+import Button from '@/components/ui/Button';
 import styles from './create.module.css';
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import TextField from '@mui/material/TextField';
+import Grid from '@/components/ui/Grid';
+import Input from '@/components/ui/Input';
 import BasicEditor from '@/components/editor/index';
-// import BasicEditor from '@/components/editor/copy';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { useAppSelector } from '@/redux/hooks';
 import { useRouter, useParams, usePathname } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 import { savePost } from '@/api/baseGet';
 import dayjs from 'dayjs';
@@ -111,16 +108,14 @@ export default function BaseCreate(props) {
   ) : (
     <div className={styles['create_wrap']}>
       <div>
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
+        <Input
           placeholder="제목"
           helperText={helperText}
           fullWidth
-          color={!titlelErr ? 'primary' : 'warning'}
+          error={titlelErr}
           onBlur={errCHK}
           onChange={errCHK}
-          inputProps={{ ref: isTitle, autoFocus: true }}
+          ref={isTitle}
           defaultValue={form.title}
           autoFocus={form.title && true}
         />
@@ -129,60 +124,51 @@ export default function BaseCreate(props) {
         <BasicEditor
           value={form.contents}
           ref={isContents}
-          style={{ height: '300px', marginBottom: '20px' }} // 스타일 속성을 객체로 설정
+          style={{ height: '300px', marginBottom: '20px' }}
         />
       </div>
       <div className="mb-8">
-        <div
-          style={{
-            display: userStatus || path[2] != 'create' ? 'none' : 'flex',
-            width: '100%',
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <FormControl style={{ width: '100%' }}>
-              <InputLabel color="error"> {captcha}</InputLabel>
-              <OutlinedInput
-                onClick={handleClickShowPassword}
-                disabled
-                type={'number'}
-                endAdornment={<RefreshIcon color="primary" />}
-              />
-            </FormControl>
-          </div>
-          <div
-            style={{
-              width: '100%',
-            }}
-          >
-            <TextField
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} style={{
+            display: userStatus || path[2] != 'create' ? 'none' : 'block'
+          }}>
+            <div className={styles.captchaContainer}>
+              <div className={styles.captchaDisplay}>
+                <span className={styles.captchaText}>{captcha}</span>
+                <button 
+                  className={styles.refreshButton}
+                  onClick={handleClickShowPassword}
+                  type="button"
+                >
+                  <FontAwesomeIcon icon={faRefresh} />
+                </button>
+              </div>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6} style={{
+            display: userStatus || path[2] != 'create' ? 'none' : 'block'
+          }}>
+            <Input
               label="captcha 번호 입력"
-              variant="outlined"
               type="number"
               fullWidth
-              sx={{ ...stylesCSS.input }}
-              inputProps={{ ref: isCaptcha }}
+              ref={isCaptcha}
             />
-          </div>
-        </div>
-        <FormControl
-          style={{ width: '100%', display: userStatus ? 'none' : 'auto' }}
-        >
-          <OutlinedInput
-            type={'number'}
-            inputProps={{ ref: isPw }}
+          </Grid>
+        </Grid>
+        <div style={{ display: userStatus ? 'none' : 'block', marginTop: '16px' }}>
+          <Input
+            type="number"
             placeholder="비밀번호 입력"
+            fullWidth
+            ref={isPw}
           />
-        </FormControl>
-        <br />
-        <br />
-        <Button fullWidth variant="contained" onClick={fn_save}>
-          저장
-        </Button>
+        </div>
+        <div style={{ marginTop: '24px' }}>
+          <Button fullWidth variant="primary" onClick={fn_save}>
+            저장
+          </Button>
+        </div>
       </div>
     </div>
   );

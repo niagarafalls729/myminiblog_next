@@ -1,5 +1,9 @@
 .a_link {
-    color: #009cc7 !important;
+    color: var(--color-info) !important;
     text-decoration: underline !important;
+}
 
+/* 다크모드 스타일 */
+[data-theme='dark'] .a_link {
+    color: var(--color-info) !important;
 }

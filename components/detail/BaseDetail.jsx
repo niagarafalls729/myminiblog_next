@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import styles from './detail.module.css';
 import { useAppSelector } from '@/redux/hooks';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default function BaseDetail(props) {
   const { detailform, onModi, onDele } = props;
@@ -22,8 +22,20 @@ export default function BaseDetail(props) {
           <div className={styles.title}>제목 : {form.title}</div>
           {showButton && (
             <div className={styles.actions}>
-              <EditIcon onClick={onModi} />
-              <DeleteIcon onClick={onDele} />
+              <button 
+                className={styles.actionButton}
+                onClick={onModi}
+                title="수정"
+              >
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+              <button 
+                className={styles.actionButton}
+                onClick={onDele}
+                title="삭제"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
             </div>
           )}
         </div>

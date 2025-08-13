@@ -22,24 +22,32 @@
   width: 100%;
   border-collapse: collapse;
   min-width: 600px;
+  background-color: var(--color-surface);
 }
 
 /* 테이블 헤더 */
 .thead {
-  background-color: #f4f4f4;
+  background-color: var(--color-surface-variant);
 }
 
 /* 공통적인 테이블 셀 스타일 */
 .th,
 .td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   padding: 10px;
+  color: var(--color-text-primary);
 }
-[data-theme='dark'] .thead,
-.th,
-.td {
-  background: #333;
-  color: #fff;
+
+/* 다크모드 스타일 */
+[data-theme='dark'] .thead {
+  background-color: var(--color-surface-variant);
+}
+
+[data-theme='dark'] .th,
+[data-theme='dark'] .td {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
 }
 
 /* 레포지토리 컬럼 */

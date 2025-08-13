@@ -4,55 +4,52 @@
   max-width: 800px;
   margin: 50px auto;
   padding: 20px;
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  color: var(--color-text-primary);
 }
-[data-theme='dark'] .container {
-  background: #333;
-  color: #fff;
-}
-[data-theme='dark'] .th {
-  background: #333;
-  color: #fff;
-}
+
 /* 타이틀 */
 .title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: var(--color-text-primary);
 }
 
 /* 테이블 스타일 */
 .table {
   width: 100%;
   border-collapse: collapse;
+  background-color: var(--color-surface);
 }
 
 .th,
 .td {
   padding: 12px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
   text-align: center;
+  color: var(--color-text-primary);
 }
 
 .th {
-  background-color: #f4f4f4;
+  background-color: var(--color-surface-variant);
   font-weight: bold;
 }
 
 .tr:hover {
-  background-color: #f9f9f9;
+  background-color: var(--color-surface-variant);
 }
 
 /* 제목 스타일 (클릭 가능하도록 디자인) */
 .td-title {
   text-align: left;
   padding-left: 12px;
-  color: #007bff;
+  color: var(--color-info);
   cursor: pointer;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .td-title:hover {
@@ -66,13 +63,34 @@
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #28a745;
+  background-color: var(--color-success);
   color: white;
   cursor: pointer;
 }
 
 .write-btn:hover {
   background-color: #218838;
+}
+
+/* 다크모드 스타일 */
+[data-theme='dark'] .container {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .th {
+  background-color: var(--color-surface-variant);
+  color: var(--color-text-primary);
+}
+
+[data-theme='dark'] .tr:hover {
+  background-color: var(--color-surface-variant);
+}
+
+[data-theme='dark'] .td-title {
+  color: var(--color-info);
+  border-bottom-color: var(--color-border);
 }
 
 /* 반응형 스타일 */

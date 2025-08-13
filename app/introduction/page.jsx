@@ -4,7 +4,7 @@ import Career from '@/app/introduction/career';
 import Weather from '@/app/introduction/weather';
 import Visit from '@/app/introduction/visit';
 import BaseDial from '@/components/dial/BaseDial';
-import { colors } from '@mui/material';
+
 import Link from 'next/link';
 export default function Introduction() {
   return (

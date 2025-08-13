@@ -6,37 +6,23 @@ import * as React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { useAppSelector } from '@/redux/hooks';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 
 export let persistor = persistStore(store);
-
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 export function ThemaMod({ children }: { children: React.ReactNode }) {
   const darkV = useAppSelector(state => state.darkAndLight.value);
 
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {},
-    }),
-    []
-  );
+  // 다크모드 상태를 body에 적용
+  React.useEffect(() => {
+    if (darkV) {
+      document.body.setAttribute('data-theme', 'dark');
+    } else {
+      document.body.setAttribute('data-theme', 'light');
+    }
+  }, [darkV]);
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: darkV ? 'dark' : 'light',
-        },
-      }),
-    [darkV]
-  );
-
-  return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </ColorModeContext.Provider>
-  );
+  return <>{children}</>;
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {

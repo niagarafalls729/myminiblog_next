@@ -4,7 +4,8 @@ import { decrement, increment, reset } from '@/redux/features/counterSliceJS';
 import { toggleDarkAndLight } from '@/redux/features/darkSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun } from '@fortawesome/free-solid-svg-icons';
 export default function Home() {
   const count = useAppSelector(state => state.counter.value);
 
@@ -28,7 +29,7 @@ export default function Home() {
           onClick={() => dispatch(toggleDarkAndLight())}
         ></button>
         <label htmlFor="dark">
-          <SettingsBrightnessIcon></SettingsBrightnessIcon>
+          <FontAwesomeIcon icon={faSun} />
         </label>
       </div>
     </main>

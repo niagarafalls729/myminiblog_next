@@ -1,11 +1,13 @@
 .title {
   font-weight: bold;
   font-size: 3rem;
+  color: var(--color-text-primary);
 }
 .sub_title {
   font-weight: bold;
   font-size: 3rem;
   margin-bottom: 20px;
+  color: var(--color-text-primary);
 }
 .pin_point {
   margin-left: -10px;
@@ -17,9 +19,10 @@
   font-size: 1.5rem;
   line-height: 1.4;
   font-weight: 500;
+  color: var(--color-text-primary);
 }
 .weather {
-  color: green;
+  color: var(--color-success);
   font-weight: bold;
   font-size: 2rem;
   margin-bottom: 30px;
@@ -49,4 +52,17 @@
   .total_wrap > div:last-child {
     flex: 8;
   }
+}
+
+/* 다크모드 스타일 */
+[data-theme='dark'] .title {
+  color: var(--color-text-primary);
+}
+
+[data-theme='dark'] .sub_title {
+  color: var(--color-text-primary);
+}
+
+[data-theme='dark'] .about_me {
+  color: var(--color-text-primary);
 }

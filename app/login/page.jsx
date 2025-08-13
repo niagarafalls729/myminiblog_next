@@ -1,21 +1,13 @@
 'use client';
 import { useState, useRef, useMemo } from 'react';
-import Button from '@mui/material/Button';
+import Button from '@/components/ui/Button';
 import { savePost, getPost } from '@/api/baseGet';
 import styles from './login.module.css';
 import useDetect from '@/app/layout/mediaQuery/Detect';
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import FormControl from '@mui/material/FormControl';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
+import Grid from '@/components/ui/Grid';
+import Input from '@/components/ui/Input';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 
 import { useRouter } from 'next/navigation';
@@ -67,36 +59,31 @@ export default function page() {
         <Grid container spacing={3} className="p-4 ">
           <Grid xs={12} md={12} lg={12}></Grid>
           <Grid xs={12} md={12} lg={12}>
-            <TextField
-              id="outlined-basic"
+            <Input
               label="아이디"
-              variant="outlined"
               fullWidth
-              inputProps={{ ref: idRef }}
+              ref={idRef}
             />
           </Grid>
           <Grid xs={12} md={12} lg={12}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">
-                비밀번호
-              </InputLabel>
-              <OutlinedInput
-                fullWidth
-                inputProps={{ ref: pwRef }}
-                type={showPassword ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleClickShowPassword}>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
+            <div className={styles.passwordInput}>
+              <Input
                 label="비밀번호"
+                type={showPassword ? 'text' : 'password'}
+                fullWidth
+                ref={pwRef}
               />
-            </FormControl>
+              <button 
+                type="button"
+                className={styles.passwordToggle}
+                onClick={handleClickShowPassword}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </button>
+            </div>
           </Grid>
           <Grid xs={12} md={12} lg={12}>
-            <Button fullWidth variant="contained" onClick={loginApi}>
+            <Button fullWidth variant="primary" onClick={loginApi}>
               로그인
             </Button>
           </Grid>
@@ -146,51 +133,42 @@ export default function page() {
         <Grid container spacing={3} className="p-4 ">
           <Grid xs={12} md={12} lg={12}></Grid>
           <Grid xs={12} md={12} lg={12}>
-            <TextField
+            <Input
               label="아이디"
-              variant="outlined"
               fullWidth
-              inputProps={{ ref: idRef }}
+              ref={idRef}
             />
           </Grid>
           <Grid xs={12} md={12} lg={12}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel htmlFor="pw"> 비밀번호</InputLabel>
-              <OutlinedInput
-                id="pw"
-                fullWidth
-                inputProps={{ ref: pwRef }}
-                type={showPassword ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={handleClickShowPassword}
-                      onMouseDown={e => {
-                        e.preventDefault();
-                      }}
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
+            <div className={styles.passwordInput}>
+              <Input
                 label="비밀번호"
+                type={showPassword ? 'text' : 'password'}
+                fullWidth
+                ref={pwRef}
               />
-            </FormControl>
+              <button 
+                type="button"
+                className={styles.passwordToggle}
+                onClick={handleClickShowPassword}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </button>
+            </div>
           </Grid>
           <Grid xs={12} md={12} lg={12}>
-            <TextField
+            <Input
               label="이메일"
-              variant="outlined"
               helperText={emailHelperText}
               fullWidth
-              color={!emailErr ? 'primary' : 'warning'}
+              error={emailErr}
               onBlur={errEmailCHK}
               onChange={errEmailCHK}
-              inputProps={{ ref: emailRef }} // ref 설정을 inputProps에 추가
+              ref={emailRef}
             />
           </Grid>
           <Grid xs={12} md={12} lg={12}>
-            <Button fullWidth variant="contained" onClick={joinApi}>
+            <Button fullWidth variant="primary" onClick={joinApi}>
               회원가입
             </Button>
           </Grid>
@@ -218,14 +196,24 @@ export default function page() {
           <Grid container>
             <Grid xs={0} md={4} lg={4}></Grid>
             <Grid xs={12} md={4} lg={4}>
-              <Box sx={{ width: '100%' }}>
-                <Tabs value={value} variant="fullWidth" onChange={handleChange}>
-                  <Tab value="login" label="로그인" />
-                  <Tab value="join" label="회원가입" />
-                </Tabs>
+              <div className={styles.tabContainer}>
+                <div className={styles.tabs}>
+                  <button 
+                    className={`${styles.tab} ${value === 'login' ? styles.active : ''}`}
+                    onClick={() => setValue('login')}
+                  >
+                    로그인
+                  </button>
+                  <button 
+                    className={`${styles.tab} ${value === 'join' ? styles.active : ''}`}
+                    onClick={() => setValue('join')}
+                  >
+                    회원가입
+                  </button>
+                </div>
                 <Login></Login>
                 <Join></Join>
-              </Box>
+              </div>
             </Grid>
           </Grid>
         </div>

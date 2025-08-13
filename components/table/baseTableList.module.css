@@ -6,3 +6,50 @@
 .tablePagination_right {
   float: right;
 }
+
+.create_wrap {
+  padding: 20px;
+}
+
+.tableWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.createButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-info);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.createButton:hover {
+  background-color: #1565c0;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.createButton svg {
+  font-size: 1.2rem;
+}
+
+/* 다크모드 스타일 */
+[data-theme='dark'] .createButton {
+  background-color: var(--color-info);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='dark'] .createButton:hover {
+  background-color: #1976d2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}

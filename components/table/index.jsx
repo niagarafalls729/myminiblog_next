@@ -1,19 +1,9 @@
 'use client';
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import styles from './index.module.css';
 
 function createData(title, date, history) {
   return {
@@ -39,35 +29,31 @@ const Row = props => {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
+      <tr className={styles.tableRow}>
+        <td className={styles.expandCell}>
+          <button
+            className={styles.expandButton}
             onClick={() => setOpen(!open)}
+            aria-label="expand row"
           >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.title}
-        </TableCell>
-        <TableCell align="right">{row.date}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Historyㄷㄷ
-                {/* {row.history.map((historyRow) => (
-                                    { historyRow }
-                                ))} */}
-              </Typography>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+            <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
+          </button>
+        </td>
+        <td className={styles.titleCell}>{row.title}</td>
+        <td className={styles.dateCell}>{row.date}</td>
+      </tr>
+      <tr className={styles.expandRow}>
+        <td colSpan={3} className={styles.expandContent}>
+          <div className={`${styles.collapse} ${open ? styles.expanded : ''}`}>
+            <div className={styles.historyContent}>
+              <h6>History</h6>
+              {/* {row.history.map((historyRow) => (
+                { historyRow }
+              ))} */}
+            </div>
+          </div>
+        </td>
+      </tr>
     </>
   );
 };
@@ -93,21 +79,21 @@ const rows = [
 
 export default function CollapsibleTable() {
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>제목</TableCell>
-            <TableCell align="right">날짜</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+    <div className={styles.tableContainer}>
+      <table className={styles.table} aria-label="collapsible table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>제목</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody>
           {rows.map(row => (
             <Row key={row.name} row={row} />
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+    </div>
   );
 }

@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e0e0e0;
+  background-color: var(--color-surface-variant);
   padding: 10px;
   border-radius: 4px;
 }
@@ -18,6 +18,7 @@
 .title {
   font-size: 18px;
   font-weight: bold;
+  color: var(--color-text-primary);
 }
 
 .actions {
@@ -29,17 +30,19 @@
 .meta {
   display: flex;
   justify-content: space-between;
-  background-color: #e0e0e0;
+  background-color: var(--color-surface-variant);
   padding: 10px;
   border-radius: 4px;
   margin-top: 8px;
+  color: var(--color-text-primary);
 }
 
 .content {
   min-height: 400px;
-  background: white;
+  background: var(--color-surface);
   padding: 16px;
   border-radius: 4px;
+  color: var(--color-text-primary);
 }
 @media (max-width: 1080px) {
   .meta {
@@ -60,7 +63,7 @@
 
 .replyHeader {
   width: 100%;
-  background: gray;
+  background: var(--color-text-secondary);
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -84,17 +87,18 @@
 
 .replyItem {
   padding: 8px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .replyContent {
   font-size: 16px;
   margin-bottom: 4px;
+  color: var(--color-text-primary);
 }
 
 .replyMeta {
   font-size: 12px;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .inputSection {
@@ -104,14 +108,16 @@
 .textInput {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   resize: none;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
 }
 
 .submitButton {
   width: 100%;
-  background: #007bff;
+  background: var(--color-info);
   color: white;
   border: none;
   padding: 10px;
@@ -128,10 +134,65 @@
 .linkButton {
   display: block;
   width: 100%;
-  background: #ff4d4d;
+  background: var(--color-error);
   color: white;
   text-align: center;
   padding: 10px;
   text-decoration: none;
   border-radius: 4px;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+}
+
+.actionButton:hover {
+  background-color: var(--color-surface-variant);
+  color: var(--color-text-primary);
+}
+
+.actionButton:first-child:hover {
+  color: var(--color-info);
+}
+
+.actionButton:last-child:hover {
+  color: var(--color-error);
+}
+
+/* 다크모드 스타일 */
+[data-theme='dark'] .header {
+  background-color: var(--color-surface-variant);
+}
+
+[data-theme='dark'] .meta {
+  background-color: var(--color-surface-variant);
+}
+
+[data-theme='dark'] .content {
+  background-color: var(--color-surface);
+}
+
+[data-theme='dark'] .replyHeader {
+  background-color: var(--color-text-secondary);
+}
+
+[data-theme='dark'] .replyItem {
+  border-bottom-color: var(--color-border);
+}
+
+[data-theme='dark'] .textInput {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+[data-theme='dark'] .actionButton:hover {
+  background-color: var(--color-surface-variant);
 }

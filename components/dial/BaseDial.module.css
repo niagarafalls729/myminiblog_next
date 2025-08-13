@@ -1,1 +1,47 @@
- 
+.speed-dial-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.speed-dial-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-info);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.speed-dial-button:hover {
+  background-color: #1565c0;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.speed-dial-button:active {
+  transform: scale(0.95);
+}
+
+.speed-dial-button svg {
+  font-size: 1.2rem;
+}
+
+/* 다크모드 스타일 */
+[data-theme='dark'] .speed-dial-button {
+  background-color: var(--color-info);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .speed-dial-button:hover {
+  background-color: #1976d2;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+} 

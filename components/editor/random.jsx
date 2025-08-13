@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Button from '@/components/ui/Button';
+import Grid from '@/components/ui/Grid';
 const RandomCHk = ({ outputVal }) => {
   const min = 1000; // 최소값 (1000)
   const max = 9999; // 최대값 (9999)
@@ -15,8 +15,7 @@ const RandomCHk = ({ outputVal }) => {
   return (
     <Grid item xs={6} md={6} lg={6}>
       <Button
-        color="primary"
-        variant="contained"
+        variant="primary"
         style={{ width: '100%', height: '100%' }}
       >
         {randomNumber}

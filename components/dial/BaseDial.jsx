@@ -1,11 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp, faPlus } from '@fortawesome/free-solid-svg-icons';
+import styles from './BaseDial.module.css';
 
 export default function BaseDial() {
   const handleScrollToTop = () => {
@@ -16,21 +14,15 @@ export default function BaseDial() {
   };
 
   return (
-    <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
+    <div className={styles['speed-dial-container']}>
+      <button 
+        className={styles['speed-dial-button']}
+        onClick={handleScrollToTop}
+        title="맨 위로"
+        aria-label="맨 위로 스크롤"
       >
-        <SpeedDialAction
-          key={'up'}
-          icon={<ArrowUpwardIcon />}
-          tooltipTitle={'up!!!'}
-          onClick={() => {
-            handleScrollToTop();
-          }}
-        />
-      </SpeedDial>
-    </Box>
+        <FontAwesomeIcon icon={faArrowUp} />
+      </button>
+    </div>
   );
 }

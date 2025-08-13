@@ -4,23 +4,20 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import './nav.css';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faBars, 
+  faTimes, 
+  faChevronDown, 
+  faChevronUp, 
+  faSun, 
+  faHome 
+} from '@fortawesome/free-solid-svg-icons';
 import { toggleDarkAndLight } from '@/redux/features/darkSlice';
 import { logout } from '@/redux/features/userSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import Typed from '@/components/typed/index';
 import dayjs from 'dayjs';
-import HomeIcon from '@mui/icons-material/Home';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 
 const Pc = () => {
   const dispatch = useAppDispatch();
@@ -70,7 +67,7 @@ const Pc = () => {
                 onClick={() => dispatch(toggleDarkAndLight())}
               ></button>
               <label htmlFor="dark">
-                <SettingsBrightnessIcon></SettingsBrightnessIcon>
+                <FontAwesomeIcon icon={faSun} />
               </label>
             </div>
           </div>
@@ -117,18 +114,18 @@ const Mo = props => {
             onClick={() => dispatch(toggleDarkAndLight())}
           ></button>
           <label htmlFor="dark" style={{ zIndex: 25 }}>
-            <SettingsBrightnessIcon></SettingsBrightnessIcon>
+            <FontAwesomeIcon icon={faSun} />
           </label>
         </div>
         <div style={{ zIndex: 25 }}>
           <Link href="/">
-            <label htmlFor="home">
-              <HomeIcon></HomeIcon>
-            </label>
+                      <label htmlFor="home">
+            <FontAwesomeIcon icon={faHome} />
+          </label>
           </Link>
         </div>
         <div className="menu-icon" onClick={handleShowNavbar}>
-          {!showNavbar ? <MenuIcon /> : <CloseIcon />}
+          {!showNavbar ? <FontAwesomeIcon icon={faBars} /> : <FontAwesomeIcon icon={faTimes} />}
         </div>
         <div
           className={`nav-elements main  ${showNavbar && 'active'}`}
@@ -150,90 +147,76 @@ const Mo = props => {
             </ul>
           </div>
           <div className={'navDown'}>
-            <List
-              sx={{
-                width: '100%',
-              }}
-              style={{
-                backgroundColor: 'hotpink',
-              }}
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-            >
-              <Link href="/" onClick={handleShowNavbar}>
-                <ListItemButton>
-                  <ListItemText primary="블로그 주인" />
-                </ListItemButton>
+            <nav className="mobile-nav">
+              <Link href="/" onClick={handleShowNavbar} className="nav-item">
+                블로그 주인
               </Link>
 
-              <ListItemButton onClick={handleChange(1)}>
-                <ListItemText primary="나의 여정" />
-                {expanded === 1 ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={expanded === 1 ? true : false} unmountOnExit>
-                <List component="div" disablePadding>
+              <div className="nav-item">
+                <button 
+                  className="nav-toggle" 
+                  onClick={handleChange(1)}
+                >
+                  <span>나의 여정</span>
+                  <FontAwesomeIcon 
+                    icon={expanded === 1 ? faChevronUp : faChevronDown} 
+                  />
+                </button>
+                <div className={`nav-submenu ${expanded === 1 ? 'expanded' : ''}`}>
                   <Link
                     href="/activeOverview/Project"
                     onClick={handleShowNavbar}
+                    className="nav-subitem"
                   >
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="참여프로젝트" />
-                    </ListItemButton>
+                    참여프로젝트
                   </Link>
                   <Link
                     href="/activeOverview/Github"
                     onClick={handleShowNavbar}
+                    className="nav-subitem"
                   >
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="블로그 변경 이력" />
-                    </ListItemButton>
+                    블로그 변경 이력
                   </Link>
                   <Link
                     href="/activeOverview/StudyHistory"
                     onClick={handleShowNavbar}
+                    className="nav-subitem"
                   >
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="공부 일지" />
-                    </ListItemButton>
+                    공부 일지
                   </Link>
-                </List>
-              </Collapse>
+                </div>
+              </div>
 
-              <Link href="/guestBook" onClick={handleShowNavbar}>
-                <ListItemButton>
-                  <ListItemText primary="방명록" />
-                </ListItemButton>
+              <Link href="/guestBook" onClick={handleShowNavbar} className="nav-item">
+                방명록
               </Link>
 
               {userStatus ? (
-                <>
-                  <ListItemButton onClick={handleChange(2)}>
-                    <ListItemText primary="로그아웃 & 수정 " />
-                    {expanded === 2 ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={expanded === 2 ? true : false} unmountOnExit>
-                    <List component="div" disablePadding>
-                      <Link href="/" onClick={() => dispatch(logout())}>
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemText primary={userId + ' 로그아웃'} />
-                        </ListItemButton>
-                      </Link>
-                      <Link href="/userModi" onClick={handleShowNavbar}>
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemText primary={userId + ' 비밀번호 변경'} />
-                        </ListItemButton>
-                      </Link>
-                    </List>
-                  </Collapse>
-                </>
+                <div className="nav-item">
+                  <button 
+                    className="nav-toggle" 
+                    onClick={handleChange(2)}
+                  >
+                    <span>로그아웃 & 수정</span>
+                    <FontAwesomeIcon 
+                      icon={expanded === 2 ? faChevronUp : faChevronDown} 
+                    />
+                  </button>
+                  <div className={`nav-submenu ${expanded === 2 ? 'expanded' : ''}`}>
+                    <Link href="/" onClick={() => dispatch(logout())} className="nav-subitem">
+                      {userId} 로그아웃
+                    </Link>
+                    <Link href="/userModi" onClick={handleShowNavbar} className="nav-subitem">
+                      {userId} 비밀번호 변경
+                    </Link>
+                  </div>
+                </div>
               ) : (
-                <Link href="/login" as="/login" onClick={handleShowNavbar}>
-                  <ListItemButton>
-                    <ListItemText primary="로그인/회원가입" />
-                  </ListItemButton>
+                <Link href="/login" as="/login" onClick={handleShowNavbar} className="nav-item">
+                  로그인/회원가입
                 </Link>
               )}
-            </List>
+            </nav>
           </div>
         </div>
       </div>
@@ -241,11 +224,6 @@ const Mo = props => {
   );
 };
 const Navigation = () => {
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
   const darkV = useAppSelector(state => state.darkAndLight.value);
   if (darkV) {
     document.body.setAttribute('data-theme', 'dark');
@@ -254,11 +232,8 @@ const Navigation = () => {
   }
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
-        {darkV && <CssBaseline />}
-        <Pc></Pc>
-        <Mo darkV={darkV}></Mo>
-      </ThemeProvider>
+      <Pc></Pc>
+      <Mo darkV={darkV}></Mo>
     </>
   );
 };
