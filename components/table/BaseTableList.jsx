@@ -52,9 +52,11 @@ export default function BaseTableList(props) {
     setRowsPerPage(+event.target.value);
   };
 
-  const rowClick = e => {
-    console.log('e', e.index);
-    onRowClick(e.index);
+  const rowClick = (rowData) => {
+    console.log('BaseTableList rowClick:', rowData);
+    if (onRowClick) {
+      onRowClick(rowData);
+    }
   };
 
   return !mounted ? (

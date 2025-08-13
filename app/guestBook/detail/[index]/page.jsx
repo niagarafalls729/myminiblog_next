@@ -8,50 +8,79 @@ import { useRouter, usePathname, useParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 
 export default function guestBookDetail() {
-  const [detailform, setDetailform] = useState([]);
+  const [detailform, setDetailform] = useState(null);
   const [arrFrom, setArrFrom] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false); // 데이터를 불러왔는지 여부를 추적
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
   const params = useParams();
   const path = usePathname();
   const pathSplit = usePathname().split('/');
   const router = useRouter();
 
   useEffect(() => {
-    console.log('Before fetching data');
+    // params.index가 있을 때만 API 호출
+    if (!params.index) {
+      console.log('params.index가 없습니다.');
+      return;
+    }
+
+    console.log('상세 페이지 데이터 로딩 시작 - index:', params.index);
+    setLoading(true);
+    setDataLoaded(false);
+
     const fetchData = async () => {
       try {
+        console.log('API 호출 시작');
         const [detailRes, replyRes] = await Promise.all([
-          axiosGet('guestBook', params),
-          axiosGet('guestBook/reply', params),
+          axiosGet('guestBook', { index: params.index }),
+          axiosGet('guestBook/reply', { index: params.index }),
         ]);
-        console.log('Data fetched successfully', detailRes[0]);
-        setDetailform(detailRes[0]);
-        setArrFrom(replyRes);
+        
+        console.log('API 호출 완료:', {
+          detailRes,
+          replyRes
+        });
+        
+        // detailRes는 배열이므로 첫 번째 요소를 가져옴
+        const detailData = Array.isArray(detailRes) && detailRes.length > 0 ? detailRes[0] : null;
+        
+        console.log('처리된 데이터:', {
+          detailData,
+          replyData: replyRes
+        });
+        
+        setDetailform(detailData);
+        setArrFrom(replyRes || []);
         setDataLoaded(true);
       } catch (error) {
-        console.error('Error fetching data: ', error);
+        console.error('데이터 로딩 실패:', error);
+        setDetailform(null);
+        setArrFrom([]);
+      } finally {
+        setLoading(false);
       }
     };
 
-    console.log('After fetching data');
     fetchData();
-  }, []);
+  }, [params.index]); // params.index가 변경될 때만 실행
 
   const detailModify = () => {
-    console.log('pathSplit', pathSplit[0], pathSplit[1], pathSplit[2]);
-    // params 활용 자식에게 전달했다가 굳이 다시 부모에게 전달할필요없음.
-    //editor 화면으로 보낸다.
+    console.log('수정 페이지로 이동:', pathSplit);
     const replacePath = path.replace('detail', 'modify');
     router.push(replacePath);
   };
 
   const detailDelete = async () => {
+    if (!detailform) {
+      Swal.fire('데이터가 없습니다.');
+      return;
+    }
+
     Swal.fire({
       title: '비밀번호를 입력해주세요',
       input: 'text',
       icon: 'warning',
-      inputPlaceholder:
-        detailform.password + '입력 당시 비밀번호를 입력해주세요',
+      inputPlaceholder: detailform.password + '입력 당시 비밀번호를 입력해주세요',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, cancel!',
@@ -66,7 +95,6 @@ export default function guestBookDetail() {
             const rtn = await savePost(replacePath, createForm);
 
             Swal.fire(rtn.message);
-            // // 페이지를 이동합니다.
             router.push('/' + pathSplit[1]);
           } else {
             return resolve('비밀번호가 틀렸습니다 :)');
@@ -75,36 +103,68 @@ export default function guestBookDetail() {
       },
     });
   };
+
   const replyCreate = async e => {
     e.guestbook_fk = params.index;
-    // 하드코딩된 부분을 최대한 없애자 집가서 !
-    console.log('re', e);
-    const rtn = await savePost('guestBook/reply', e);
-    Swal.fire(rtn.message);
-    // 데이터를 다시 가져옵니다.
-    const updatedData = await axiosGet('guestBook/reply', params);
-    // 상태를 업데이트하고 컴포넌트를 다시 렌더링합니다.
-    setArrFrom(updatedData);
+    console.log('댓글 생성:', e);
+    
+    try {
+      const rtn = await savePost('guestBook/reply', e);
+      Swal.fire(rtn.message);
+      
+      // 댓글 목록만 다시 가져오기
+      const updatedData = await axiosGet('guestBook/reply', { index: params.index });
+      setArrFrom(updatedData || []);
+    } catch (error) {
+      console.error('댓글 생성 실패:', error);
+      Swal.fire('댓글 생성에 실패했습니다.');
+    }
   };
+
+  // 로딩 중일 때
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '200px',
+        fontSize: '18px',
+        color: '#666'
+      }}>
+        데이터 로딩 중...
+      </div>
+    );
+  }
+
+  // 데이터가 없을 때
+  if (!detailform) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '200px',
+        fontSize: '18px',
+        color: '#666'
+      }}>
+        게시글을 찾을 수 없습니다.
+      </div>
+    );
+  }
 
   return (
     <>
-      {dataLoaded ? (
-        <>
-          <BaseDetail
-            detailform={detailform}
-            onModi={detailModify}
-            onDele={detailDelete}
-          />
-          <BaseReply
-            arrFrom={arrFrom}
-            onReplyC={replyCreate}
-            useUrl={pathSplit[1]}
-          />
-        </>
-      ) : (
-        <p>데이터 로딩 중...</p>
-      )}
+      <BaseDetail
+        detailform={detailform}
+        onModi={detailModify}
+        onDele={detailDelete}
+      />
+      <BaseReply
+        arrFrom={arrFrom}
+        onReplyC={replyCreate}
+        useUrl={pathSplit[1]}
+      />
     </>
   );
 }

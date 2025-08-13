@@ -37,10 +37,10 @@ export default function GuestBook() {
   }, []);
 
   const columns = [
-    { id: 'GUESTBOOK_ID', label: '번호', align: 'center' },
-    { id: 'TITLE', label: '제목' },
-    { id: 'AUTHOR', label: '작성자' },
-    { id: 'CREATED_AT', label: '작성일' }
+    { id: 'GUESTBOOK_ID', label: '번호', align: 'center', width: '80px' },
+    { id: 'TITLE', label: '제목', width: 'auto' },
+    { id: 'AUTHOR', label: '작성자', align: 'center', width: '100px' },
+    { id: 'CREATED_AT', label: '작성일', align: 'center', width: '120px' }
   ];
 
   const fetchData = async (page = 1, limit = 10) => {
@@ -124,6 +124,14 @@ export default function GuestBook() {
     router.push(`/guestBook?${params.toString()}`);
   };
 
+  // 로우 클릭 핸들러 추가
+  const handleRowClick = (rowData) => {
+    console.log('로우 클릭:', rowData);
+    if (rowData && rowData.GUESTBOOK_ID) {
+      router.push(`/guestBook/detail/${rowData.GUESTBOOK_ID}`);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -135,14 +143,17 @@ export default function GuestBook() {
           <IoAdd size={24} />
         </button>
       </div>
-      <BaseTableList
-        columns={columns}
-        rows={rows}
-        pagination={pagination}
-        onPageChange={handlePageChange}
-        loading={loading}
-        dataLoaded={true}
-      />
+      <div className={styles.tableWrapper}>
+        <BaseTableList
+          columns={columns}
+          rows={rows}
+          pagination={pagination}
+          onPageChange={handlePageChange}
+          onRowClick={handleRowClick}
+          loading={loading}
+          dataLoaded={true}
+        />
+      </div>
     </div>
   );
 }

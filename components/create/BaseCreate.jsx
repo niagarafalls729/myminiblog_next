@@ -94,7 +94,7 @@ export default function BaseCreate(props) {
     }
     const createForm = {
       title: isTitle.current.value,
-      contents: isContents.current.text,
+      contents: isContents.current.getContents ? isContents.current.getContents() : isContents.current.text,
       id: userStatus ? userId : '익명' + dayjs().format('mmss'),
       member_create: userStatus ? 'Y' : 'N',
       password: isPw.current.value,

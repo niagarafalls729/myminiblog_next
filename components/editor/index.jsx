@@ -2,43 +2,105 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { forwardRef, useImperativeHandle } from 'react'; // forwardRef와 useImperativeHandle를 한 번만 import
+import { forwardRef, useImperativeHandle } from 'react';
 import axios from 'axios';
+
+// react-quill-new를 동적으로 import
 const ReactQuill = dynamic(
-  async () => {
-    const { default: RQ } = await import('react-quill');
-    return function comp({ forwardedRef, ...props }) {
-      return <RQ ref={forwardedRef} {...props} />;
-    };
-  },
-  { ssr: false }
+  () => import('react-quill-new').then((mod) => mod.default),
+  { 
+    ssr: false,
+    loading: () => <p>에디터 로딩 중...</p>
+  }
 );
-import 'react-quill/dist/quill.snow.css';
+
+import 'react-quill-new/dist/quill.snow.css';
 
 const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
   const [mounted, setMounted] = useState(false);
-
   const [text, setText] = useState('');
-  const quillRef = useRef('');
+  const quillRef = useRef(null);
 
   const handleChange = value => {
     setText(value);
   };
+
   // useImperativeHandle을 사용하여 외부에서 호출 가능한 메서드를 정의
   useImperativeHandle(parent_ref, () => ({
     text,
+    getContents: () => {
+      if (quillRef.current) {
+        const editor = quillRef.current.getEditor();
+        return editor.root.innerHTML;
+      }
+      return text;
+    }
   }));
+
   const containerStyle = {
     ...style,
   };
+
   useEffect(() => {
     if (value !== text) {
       setText(value);
     }
   }, [value]);
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // 이미지 붙여넣기 처리
+  useEffect(() => {
+    if (quillRef.current && mounted) {
+      const editor = quillRef.current.getEditor();
+      
+      const handlePaste = async (e) => {
+        const items = e.clipboardData.items;
+        let hasImage = false;
+        
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].type.indexOf('image') !== -1) {
+            hasImage = true;
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const file = items[i].getAsFile();
+            console.log('붙여넣기된 이미지:', file);
+            
+            if (file) {
+              const formData = new FormData();
+              formData.append('img', file);
+              
+              try {
+                const result = await axios.post(
+                  process.env.NEXT_PUBLIC_API_KEY + 'img',
+                  formData
+                );
+                console.log('붙여넣기 성공:', result.data.url);
+                const IMG_URL = result.data.url;
+
+                const range = editor.getSelection();
+                editor.insertEmbed(range, 'image', IMG_URL);
+              } catch (error) {
+                console.log('붙여넣기 실패:', error);
+              }
+            }
+            break;
+          }
+        }
+      };
+
+      // 에디터에 paste 이벤트 리스너 추가
+      editor.root.addEventListener('paste', handlePaste, true);
+      
+      return () => {
+        editor.root.removeEventListener('paste', handlePaste, true);
+      };
+    }
+  }, [mounted, quillRef.current]);
+
   // 이미지 처리를 하는 핸들러
   const imageHandler = () => {
     // 1. 이미지를 저장할 input type=file DOM을 만든다.
@@ -71,17 +133,19 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
         // 이미지는 꼭 로컬 백엔드 uploads 폴더가 아닌 다른 곳에 저장해 URL로 사용하면된다.
 
         // 이미지 태그를 에디터에 써주기 - 여러 방법이 있다.
-        const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-        // 1. 에디터 root의 innerHTML을 수정해주기
-        // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
-        // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
-        // editor.root.innerHTML =
-        //   editor.root.innerHTML + `<img src=${IMG_URL} /><br/>`; // 현재 있는 내용들 뒤에 써줘야한다.
+        if (quillRef.current) {
+          const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+          // 1. 에디터 root의 innerHTML을 수정해주기
+          // editor의 root는 에디터 컨텐츠들이 담겨있다. 거기에 img태그를 추가해준다.
+          // 이미지를 업로드하면 -> 멀터에서 이미지 경로 URL을 받아와 -> 이미지 요소로 만들어 에디터 안에 넣어준다.
+          // editor.root.innerHTML =
+          //   editor.root.innerHTML + `<img src=${IMG_URL} /><br/>`; // 현재 있는 내용들 뒤에 써줘야한다.
 
-        // 2. 현재 에디터 커서 위치값을 가져온다
-        const range = editor.getSelection();
-        // 가져온 위치에 이미지를 삽입한다
-        editor.insertEmbed(range, 'image', IMG_URL);
+          // 2. 현재 에디터 커서 위치값을 가져온다
+          const range = editor.getSelection();
+          // 가져온 위치에 이미지를 삽입한다
+          editor.insertEmbed(range, 'image', IMG_URL);
+        }
       } catch (error) {
         console.log('실패했어요ㅠ');
       }
@@ -105,8 +169,12 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
           image: imageHandler,
         },
       },
+      clipboard: {
+        matchVisual: false,
+      },
     };
   }, []);
+
   // 위에서 설정한 모듈들 foramts을 설정한다
   const formats = [
     'header',
@@ -118,21 +186,26 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
     'image',
   ];
 
-  return !mounted ? (
-    'loading....'
-  ) : (
-    <>
+  if (!mounted) {
+    return <div>에디터 로딩 중...</div>;
+  }
+
+  return (
+    <div>
       <ReactQuill
-        forwardedRef={quillRef}
+        ref={quillRef}
         style={containerStyle}
         theme="snow"
-        placeholder="내용을 입력해주세여!"
+        placeholder="내용을 입력해주세요!"
         value={text}
         onChange={handleChange}
         modules={modules}
         formats={formats}
       />
-    </>
+    </div>
   );
 });
+
+BasicEditor.displayName = 'BasicEditor';
+
 export default BasicEditor;

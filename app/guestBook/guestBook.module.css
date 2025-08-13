@@ -52,10 +52,57 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+/* 테이블 컬럼 비율 설정 */
+.tableWrapper :global(table) {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tableWrapper :global(th:nth-child(1)),
+.tableWrapper :global(td:nth-child(1)) {
+  width: 10%;
+}
+
+.tableWrapper :global(th:nth-child(2)),
+.tableWrapper :global(td:nth-child(2)) {
+  width: 60%;
+}
+
+.tableWrapper :global(th:nth-child(3)),
+.tableWrapper :global(td:nth-child(3)) {
+  width: 15%;
+}
+
+.tableWrapper :global(th:nth-child(4)),
+.tableWrapper :global(td:nth-child(4)) {
+  width: 15%;
+}
+
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .header {
     max-width: 100%;
     margin: 20px 0;
+  }
+  
+  /* 모바일에서는 비율 조정 */
+  .tableWrapper :global(th:nth-child(1)),
+  .tableWrapper :global(td:nth-child(1)) {
+    width: 15%;
+  }
+  
+  .tableWrapper :global(th:nth-child(2)),
+  .tableWrapper :global(td:nth-child(2)) {
+    width: 50%;
+  }
+  
+  .tableWrapper :global(th:nth-child(3)),
+  .tableWrapper :global(td:nth-child(3)) {
+    width: 20%;
+  }
+  
+  .tableWrapper :global(th:nth-child(4)),
+  .tableWrapper :global(td:nth-child(4)) {
+    width: 15%;
   }
 }
