@@ -3,6 +3,7 @@
 // 클라이언트 사이드로 마킹
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import './nav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -18,6 +19,32 @@ import { logout } from '@/redux/features/userSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import Typed from '@/components/typed/index';
 import dayjs from 'dayjs';
+
+// 현재 페이지 상태를 유지하는 스마트 링크 컴포넌트
+const SmartLink = ({ href, children, className, onClick, as }) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
+  // 현재 방명록 페이지인지 확인
+  const isGuestBookPage = pathname === '/guestBook';
+  const currentPage = searchParams.get('page') || '1';
+  
+  // 방명록 페이지에서 방명록 링크를 클릭할 때는 현재 페이지 유지
+  if (href === '/guestBook' && isGuestBookPage) {
+    return (
+      <Link href={`/guestBook?page=${currentPage}`} className={className} onClick={onClick} as={as}>
+        {children}
+      </Link>
+    );
+  }
+  
+  // 그 외의 경우는 기본 동작
+  return (
+    <Link href={href} className={className} onClick={onClick} as={as}>
+      {children}
+    </Link>
+  );
+};
 
 const Pc = () => {
   const dispatch = useAppDispatch();
@@ -38,9 +65,9 @@ const Pc = () => {
                   <Link href="/activeOverview/Project">나의 여정</Link>
                 </li>
                 <li>
-                  <Link href="/guestBook" as="/guestBook">
+                  <SmartLink href="/guestBook" as="/guestBook">
                     방명록
-                  </Link>
+                  </SmartLink>
                 </li>
                 {userStatus ? (
                   <>
@@ -187,9 +214,9 @@ const Mo = props => {
                 </div>
               </div>
 
-              <Link href="/guestBook" onClick={handleShowNavbar} className="nav-item">
+              <SmartLink href="/guestBook" onClick={handleShowNavbar} className="nav-item">
                 방명록
-              </Link>
+              </SmartLink>
 
               {userStatus ? (
                 <div className="nav-item">

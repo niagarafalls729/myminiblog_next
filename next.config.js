@@ -14,8 +14,6 @@ module.exports = {
     BASE_URL: process.env.BASE_URL,
   },
   reactStrictMode: true,
-  swcMinify: true,
-  reactStrictMode: false,
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

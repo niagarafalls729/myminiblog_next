@@ -1,8 +1,61 @@
-.tablePagination_left {
-  transform: translateY(15px);
-  margin-left: 15px;
+.container {
+  /* 전체 컨테이너 */
 }
 
-.tablePagination_right {
-  float: right;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  max-width: 60%;
+  margin: 20px auto 20px auto;
+  padding: 0 20px;
+}
+
+.headerMobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  max-width: 100%;
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.title {
+  margin: 0;
+}
+
+.addButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.addButton:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.addButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .header {
+    max-width: 100%;
+    margin: 20px 0;
+  }
 }
