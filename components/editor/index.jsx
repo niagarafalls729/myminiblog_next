@@ -7,10 +7,10 @@ import axios from 'axios';
 
 // react-quill-new를 동적으로 import
 const ReactQuill = dynamic(
-  () => import('react-quill-new').then((mod) => mod.default),
-  { 
+  () => import('react-quill-new').then(mod => mod.default),
+  {
     ssr: false,
-    loading: () => <p>에디터 로딩 중...</p>
+    loading: () => <p>에디터 로딩 중...</p>,
   }
 );
 
@@ -34,7 +34,7 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
         return editor.root.innerHTML;
       }
       return text;
-    }
+    },
   }));
 
   const containerStyle = {
@@ -55,27 +55,27 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
   useEffect(() => {
     if (quillRef.current && mounted) {
       const editor = quillRef.current.getEditor();
-      
-      const handlePaste = async (e) => {
+
+      const handlePaste = async e => {
         const items = e.clipboardData.items;
         let hasImage = false;
-        
+
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf('image') !== -1) {
             hasImage = true;
             e.preventDefault();
             e.stopPropagation();
-            
+
             const file = items[i].getAsFile();
             console.log('붙여넣기된 이미지:', file);
-            
+
             if (file) {
               const formData = new FormData();
               formData.append('img', file);
-              
+
               try {
                 const result = await axios.post(
-                  process.env.NEXT_PUBLIC_API_KEY + 'img',
+                  'http://127.0.0.1:4000/img',
                   formData
                 );
                 console.log('붙여넣기 성공:', result.data.url);
@@ -94,7 +94,7 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
 
       // 에디터에 paste 이벤트 리스너 추가
       editor.root.addEventListener('paste', handlePaste, true);
-      
+
       return () => {
         editor.root.removeEventListener('paste', handlePaste, true);
       };
@@ -121,10 +121,7 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
       formData.append('img', file); // formData는 키-밸류 구조
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
-        const result = await axios.post(
-          process.env.NEXT_PUBLIC_API_KEY + 'img',
-          formData
-        );
+        const result = await axios.post('http://127.0.0.1:4000/img', formData);
         console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
         const IMG_URL = result.data.url;
 

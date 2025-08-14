@@ -1,10 +1,7 @@
 'use client';
-import { useState, useRef, useMemo } from 'react';
-import Button from '@/components/ui/Button';
+import { useState, useRef } from 'react';
 import { savePost, getPost } from '@/api/baseGet';
 import styles from './login.module.css';
-import useDetect from '@/app/layout/mediaQuery/Detect';
-import Grid from '@/components/ui/Grid';
 import Input from '@/components/ui/Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -20,14 +17,8 @@ export default function page() {
 
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const disSize = useDetect();
-
-  // const sizeV = disSize == 'mo' ? '500/1000' : '1200/2400';
 
   const [value, setValue] = useState('login');
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -47,7 +38,13 @@ export default function page() {
 
       // 페이지를 이동합니다.
       if (rtn.code === '0000') {
-        dispatch(setUser(rtn));
+        // 사용자 정보를 올바른 구조로 설정
+        const userData = {
+          id: rtn.id,
+          email: rtn.email,
+          status: rtn.status,
+        };
+        dispatch(setUser(userData));
         router.push('/');
       } else {
         Swal.fire('비번 틀림');
@@ -56,16 +53,11 @@ export default function page() {
 
     return (
       <CustomTabPanel value={value} index={'login'}>
-        <Grid container spacing={3} className="p-4 ">
-          <Grid xs={12} md={12} lg={12}></Grid>
-          <Grid xs={12} md={12} lg={12}>
-            <Input
-              label="아이디"
-              fullWidth
-              ref={idRef}
-            />
-          </Grid>
-          <Grid xs={12} md={12} lg={12}>
+        <div className={styles.formContent}>
+          <div className={styles.inputGroup}>
+            <Input label="아이디" fullWidth ref={idRef} />
+          </div>
+          <div className={styles.inputGroup}>
             <div className={styles.passwordInput}>
               <Input
                 label="비밀번호"
@@ -73,7 +65,7 @@ export default function page() {
                 fullWidth
                 ref={pwRef}
               />
-              <button 
+              <button
                 type="button"
                 className={styles.passwordToggle}
                 onClick={handleClickShowPassword}
@@ -81,13 +73,13 @@ export default function page() {
                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
               </button>
             </div>
-          </Grid>
-          <Grid xs={12} md={12} lg={12}>
-            <Button fullWidth variant="primary" onClick={loginApi}>
+          </div>
+          <div className={styles.inputGroup}>
+            <button className={styles.loginButton} onClick={loginApi}>
               로그인
-            </Button>
-          </Grid>
-        </Grid>
+            </button>
+          </div>
+        </div>
       </CustomTabPanel>
     );
   };
@@ -130,16 +122,11 @@ export default function page() {
 
     return (
       <CustomTabPanel value={value} index={'join'}>
-        <Grid container spacing={3} className="p-4 ">
-          <Grid xs={12} md={12} lg={12}></Grid>
-          <Grid xs={12} md={12} lg={12}>
-            <Input
-              label="아이디"
-              fullWidth
-              ref={idRef}
-            />
-          </Grid>
-          <Grid xs={12} md={12} lg={12}>
+        <div className={styles.formContent}>
+          <div className={styles.inputGroup}>
+            <Input label="아이디" fullWidth ref={idRef} />
+          </div>
+          <div className={styles.inputGroup}>
             <div className={styles.passwordInput}>
               <Input
                 label="비밀번호"
@@ -147,7 +134,7 @@ export default function page() {
                 fullWidth
                 ref={pwRef}
               />
-              <button 
+              <button
                 type="button"
                 className={styles.passwordToggle}
                 onClick={handleClickShowPassword}
@@ -155,8 +142,8 @@ export default function page() {
                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
               </button>
             </div>
-          </Grid>
-          <Grid xs={12} md={12} lg={12}>
+          </div>
+          <div className={styles.inputGroup}>
             <Input
               label="이메일"
               helperText={emailHelperText}
@@ -166,19 +153,25 @@ export default function page() {
               onChange={errEmailCHK}
               ref={emailRef}
             />
-          </Grid>
-          <Grid xs={12} md={12} lg={12}>
-            <Button fullWidth variant="primary" onClick={joinApi}>
+          </div>
+          <div className={styles.inputGroup}>
+            <button className={styles.loginButton} onClick={joinApi}>
               회원가입
-            </Button>
-          </Grid>
-        </Grid>
+            </button>
+          </div>
+        </div>
       </CustomTabPanel>
     );
   };
   return (
     <>
       <div className={styles['main_login']}>
+        {/* 움직이는 배경 요소들 */}
+        <div className={styles['floating-element-1']}></div>
+        <div className={styles['floating-element-2']}></div>
+        <div className={styles['floating-element-3']}></div>
+        <div className={styles['floating-element-4']}></div>
+
         {/* <img
           src={`https://picsum.photos/${sizeV}?grayscale`}
           // style={{disSize =="mo" ? 'position: a':'' }}
@@ -192,30 +185,33 @@ export default function page() {
           alt="Random Image"
         /> */}
 
-        <div className="p-8 " style={{ zIndex: 10, position: 'sticky' }}>
-          <Grid container>
-            <Grid xs={0} md={4} lg={4}></Grid>
-            <Grid xs={12} md={4} lg={4}>
-              <div className={styles.tabContainer}>
-                <div className={styles.tabs}>
-                  <button 
-                    className={`${styles.tab} ${value === 'login' ? styles.active : ''}`}
-                    onClick={() => setValue('login')}
-                  >
-                    로그인
-                  </button>
-                  <button 
-                    className={`${styles.tab} ${value === 'join' ? styles.active : ''}`}
-                    onClick={() => setValue('join')}
-                  >
-                    회원가입
-                  </button>
-                </div>
-                <Login></Login>
-                <Join></Join>
-              </div>
-            </Grid>
-          </Grid>
+        <div
+          style={{
+            zIndex: 10,
+            position: 'relative',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <div className={styles.tabContainer}>
+            <div className={styles.tabs}>
+              <button
+                className={`${styles.tab} ${value === 'login' ? styles.active : ''}`}
+                onClick={() => setValue('login')}
+              >
+                로그인
+              </button>
+              <button
+                className={`${styles.tab} ${value === 'join' ? styles.active : ''}`}
+                onClick={() => setValue('join')}
+              >
+                회원가입
+              </button>
+            </div>
+            <Login></Login>
+            <Join></Join>
+          </div>
         </div>
       </div>
     </>
@@ -232,11 +228,7 @@ const CustomTabPanel = props => {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
-      {value === index && (
-        <Box>
-          <div>{children}</div>
-        </Box>
-      )}
+      {value === index && <div>{children}</div>}
     </div>
   );
 };

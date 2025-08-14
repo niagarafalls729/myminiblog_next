@@ -1,10 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  id: '',
-  status: false,
-  email: '',
+// localStorage에서 사용자 정보를 가져오거나 기본값 사용
+const getInitialState = () => {
+  if (typeof window !== 'undefined') {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      return JSON.parse(savedUser);
+    }
+  }
+  return {
+    id: '',
+    status: false,
+    email: '',
+  };
 };
+
+const initialState = getInitialState();
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -15,8 +26,26 @@ const userSlice = createSlice({
       state.status = true;
       state.email = action.payload.email;
       state.id = action.payload.id;
+
+      // localStorage에 사용자 정보 저장
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            id: action.payload.id,
+            status: true,
+            email: action.payload.email,
+          })
+        );
+      }
     },
-    logout: state => initialState,
+    logout: state => {
+      // localStorage에서 사용자 정보 제거
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('user');
+      }
+      return initialState;
+    },
   },
 });
 

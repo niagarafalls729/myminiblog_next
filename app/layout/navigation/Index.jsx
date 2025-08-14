@@ -6,13 +6,14 @@ import { useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import './nav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faBars, 
-  faTimes, 
-  faChevronDown, 
-  faChevronUp, 
-  faSun, 
-  faHome 
+import {
+  faBars,
+  faTimes,
+  faChevronDown,
+  faChevronUp,
+  faSun,
+  faMoon,
+  faHome,
 } from '@fortawesome/free-solid-svg-icons';
 import { toggleDarkAndLight } from '@/redux/features/darkSlice';
 import { logout } from '@/redux/features/userSlice';
@@ -24,20 +25,25 @@ import dayjs from 'dayjs';
 const SmartLink = ({ href, children, className, onClick, as }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
+
   // 현재 방명록 페이지인지 확인
   const isGuestBookPage = pathname === '/guestBook';
   const currentPage = searchParams.get('page') || '1';
-  
+
   // 방명록 페이지에서 방명록 링크를 클릭할 때는 현재 페이지 유지
   if (href === '/guestBook' && isGuestBookPage) {
     return (
-      <Link href={`/guestBook?page=${currentPage}`} className={className} onClick={onClick} as={as}>
+      <Link
+        href={`/guestBook?page=${currentPage}`}
+        className={className}
+        onClick={onClick}
+        as={as}
+      >
         {children}
       </Link>
     );
   }
-  
+
   // 그 외의 경우는 기본 동작
   return (
     <Link href={href} className={className} onClick={onClick} as={as}>
@@ -50,6 +56,7 @@ const Pc = () => {
   const dispatch = useAppDispatch();
   const userStatus = useAppSelector(state => state.user.status);
   const userId = useAppSelector(state => state.user.id);
+  const darkV = useAppSelector(state => state.darkAndLight.value);
   return (
     <>
       <div className="underLine">
@@ -75,7 +82,16 @@ const Pc = () => {
                       <Link href="/userModi">{userId} 비밀번호 변경</Link>
                     </li>
                     <li>
-                      <Link href="/" onClick={() => dispatch(logout())}>
+                      <Link
+                        href="/"
+                        onClick={() => {
+                          dispatch(logout());
+                          // 로그아웃 후 페이지 새로고침
+                          setTimeout(() => {
+                            window.location.reload();
+                          }, 100);
+                        }}
+                      >
                         로그아웃
                       </Link>
                     </li>
@@ -93,8 +109,18 @@ const Pc = () => {
                 id="dark"
                 onClick={() => dispatch(toggleDarkAndLight())}
               ></button>
-              <label htmlFor="dark">
-                <FontAwesomeIcon icon={faSun} />
+              <label htmlFor="dark" className="theme-toggle">
+                {darkV ? (
+                  <FontAwesomeIcon
+                    icon={faSun}
+                    className="theme-icon sun-icon active"
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faMoon}
+                    className="theme-icon moon-icon active"
+                  />
+                )}
               </label>
             </div>
           </div>
@@ -140,19 +166,33 @@ const Mo = props => {
             id="dark"
             onClick={() => dispatch(toggleDarkAndLight())}
           ></button>
-          <label htmlFor="dark" style={{ zIndex: 25 }}>
-            <FontAwesomeIcon icon={faSun} />
+          <label htmlFor="dark" style={{ zIndex: 25 }} className="theme-toggle">
+            {props.darkV ? (
+              <FontAwesomeIcon
+                icon={faSun}
+                className="theme-icon sun-icon active"
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faMoon}
+                className="theme-icon moon-icon active"
+              />
+            )}
           </label>
         </div>
         <div style={{ zIndex: 25 }}>
           <Link href="/">
-                      <label htmlFor="home">
-            <FontAwesomeIcon icon={faHome} />
-          </label>
+            <label htmlFor="home">
+              <FontAwesomeIcon icon={faHome} />
+            </label>
           </Link>
         </div>
         <div className="menu-icon" onClick={handleShowNavbar}>
-          {!showNavbar ? <FontAwesomeIcon icon={faBars} /> : <FontAwesomeIcon icon={faTimes} />}
+          {!showNavbar ? (
+            <FontAwesomeIcon icon={faBars} />
+          ) : (
+            <FontAwesomeIcon icon={faTimes} />
+          )}
         </div>
         <div
           className={`nav-elements main  ${showNavbar && 'active'}`}
@@ -180,16 +220,15 @@ const Mo = props => {
               </Link>
 
               <div className="nav-item">
-                <button 
-                  className="nav-toggle" 
-                  onClick={handleChange(1)}
-                >
+                <button className="nav-toggle" onClick={handleChange(1)}>
                   <span>나의 여정</span>
-                  <FontAwesomeIcon 
-                    icon={expanded === 1 ? faChevronUp : faChevronDown} 
+                  <FontAwesomeIcon
+                    icon={expanded === 1 ? faChevronUp : faChevronDown}
                   />
                 </button>
-                <div className={`nav-submenu ${expanded === 1 ? 'expanded' : ''}`}>
+                <div
+                  className={`nav-submenu ${expanded === 1 ? 'expanded' : ''}`}
+                >
                   <Link
                     href="/activeOverview/Project"
                     onClick={handleShowNavbar}
@@ -214,32 +253,54 @@ const Mo = props => {
                 </div>
               </div>
 
-              <SmartLink href="/guestBook" onClick={handleShowNavbar} className="nav-item">
+              <SmartLink
+                href="/guestBook"
+                onClick={handleShowNavbar}
+                className="nav-item"
+              >
                 방명록
               </SmartLink>
 
               {userStatus ? (
                 <div className="nav-item">
-                  <button 
-                    className="nav-toggle" 
-                    onClick={handleChange(2)}
-                  >
+                  <button className="nav-toggle" onClick={handleChange(2)}>
                     <span>로그아웃 & 수정</span>
-                    <FontAwesomeIcon 
-                      icon={expanded === 2 ? faChevronUp : faChevronDown} 
+                    <FontAwesomeIcon
+                      icon={expanded === 2 ? faChevronUp : faChevronDown}
                     />
                   </button>
-                  <div className={`nav-submenu ${expanded === 2 ? 'expanded' : ''}`}>
-                    <Link href="/" onClick={() => dispatch(logout())} className="nav-subitem">
+                  <div
+                    className={`nav-submenu ${expanded === 2 ? 'expanded' : ''}`}
+                  >
+                    <Link
+                      href="/"
+                      onClick={() => {
+                        dispatch(logout());
+                        // 로그아웃 후 페이지 새로고침
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 100);
+                      }}
+                      className="nav-subitem"
+                    >
                       {userId} 로그아웃
                     </Link>
-                    <Link href="/userModi" onClick={handleShowNavbar} className="nav-subitem">
+                    <Link
+                      href="/userModi"
+                      onClick={handleShowNavbar}
+                      className="nav-subitem"
+                    >
                       {userId} 비밀번호 변경
                     </Link>
                   </div>
                 </div>
               ) : (
-                <Link href="/login" as="/login" onClick={handleShowNavbar} className="nav-item">
+                <Link
+                  href="/login"
+                  as="/login"
+                  onClick={handleShowNavbar}
+                  className="nav-item"
+                >
                   로그인/회원가입
                 </Link>
               )}

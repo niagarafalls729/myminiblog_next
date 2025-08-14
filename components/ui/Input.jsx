@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './Input.module.css';
 
-export default function Input({ 
+export default function Input({
   label,
   type = 'text',
   error,
@@ -15,7 +15,7 @@ export default function Input({
   onFocus,
   onBlur,
   className = '',
-  ...props 
+  ...props
 }) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -25,15 +25,17 @@ export default function Input({
     error && styles.error,
     disabled && styles.disabled,
     isFocused && styles.focused,
-    className
-  ].filter(Boolean).join(' ');
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-  const handleFocus = (e) => {
+  const handleFocus = e => {
     setIsFocused(true);
     onFocus?.(e);
   };
 
-  const handleBlur = (e) => {
+  const handleBlur = e => {
     setIsFocused(false);
     onBlur?.(e);
   };
@@ -46,7 +48,7 @@ export default function Input({
           {required && <span className={styles.required}>*</span>}
         </label>
       )}
-      <input 
+      <input
         type={type}
         className={inputClasses}
         placeholder={placeholder}
@@ -59,11 +61,12 @@ export default function Input({
         {...props}
       />
       {(error || helperText) && (
-        <div className={`${styles.helperText} ${error ? styles.errorText : ''}`}>
+        <div
+          className={`${styles.helperText} ${error ? styles.errorText : ''}`}
+        >
           {error || helperText}
         </div>
       )}
     </div>
   );
 }
-
