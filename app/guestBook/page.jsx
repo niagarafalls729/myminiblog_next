@@ -77,9 +77,14 @@ export default function GuestBook() {
             }
           }
           
+          // 댓글 개수를 제목에 추가
+          const titleWithReplyCount = item.replyCount > 0 
+            ? `${item.title} (${item.replyCount})` 
+            : item.title;
+          
           return {
             GUESTBOOK_ID: item.index || '',
-            TITLE: item.title || '',      // title을 제목으로
+            TITLE: titleWithReplyCount || '',      // 댓글 개수가 포함된 제목
             CONTENT: item.contents || '', // contents를 내용으로
             AUTHOR: item.id || '',
             CREATED_AT: formattedDate
