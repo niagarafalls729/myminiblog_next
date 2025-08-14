@@ -24,14 +24,14 @@ export default function SideMenu(props) {
         >
           <p>블로그 변경 이력 😄</p>
         </button>
-        <hr />
+        {/* <hr />
         <button
           onClick={() => {
             router.push('/activeOverview/StudyHistory');
           }}
         >
           <p>공부 일지 🙂</p>
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -35,10 +35,8 @@ export default function UserModi() {
       return;
     }
 
-    // 기존 이메일 설정
-    if (user.email) {
-      setNewEmail(user.email);
-    }
+    // 새 이메일 필드는 빈 값으로 시작
+    setNewEmail('');
   }, [user, router]);
 
   const validateEmail = email => {
@@ -48,7 +46,10 @@ export default function UserModi() {
 
   const handleEmailChange = email => {
     setNewEmail(email);
-    if (email && !validateEmail(email)) {
+    if (!email) {
+      setEmailErr(false);
+      setEmailHelperText('');
+    } else if (!validateEmail(email)) {
       setEmailErr(true);
       setEmailHelperText('유효하지 않은 이메일 주소입니다.');
     } else {
@@ -253,7 +254,7 @@ export default function UserModi() {
               type="email"
               value={newEmail}
               onChange={e => handleEmailChange(e.target.value)}
-              placeholder="새 이메일을 입력하세요"
+              placeholder="새 이메일 주소를 입력하세요"
               className={emailErr ? styles.errorInput : ''}
             />
             {emailHelperText && (

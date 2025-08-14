@@ -235,6 +235,17 @@
   color: #ffffff;
 }
 
+[data-theme='dark'] .errorInput {
+  border-color: #f44336 !important;
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .errorInput:focus {
+  border-color: #f44336 !important;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1) !important;
+}
+
 [data-theme='dark'] .formGroup input:focus {
   border-color: #90caf9;
   box-shadow: 0 0 0 3px rgba(144, 202, 249, 0.1);

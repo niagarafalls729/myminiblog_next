@@ -243,13 +243,13 @@ const Mo = props => {
                   >
                     블로그 변경 이력
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/activeOverview/StudyHistory"
                     onClick={handleShowNavbar}
                     className="nav-subitem"
                   >
                     공부 일지
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
