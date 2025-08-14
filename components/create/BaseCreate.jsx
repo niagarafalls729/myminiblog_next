@@ -4,7 +4,6 @@ import { useState, useRef, useMemo, useEffect } from 'react';
 import { axiosGet } from '@/api/baseGet';
 import Button from '@/components/ui/Button';
 import styles from './create.module.css';
-import Grid from '@/components/ui/Grid';
 import Input from '@/components/ui/Input';
 import BasicEditor from '@/components/editor/index';
 import { useAppSelector } from '@/redux/hooks';
@@ -94,7 +93,9 @@ export default function BaseCreate(props) {
     }
     const createForm = {
       title: isTitle.current.value,
-      contents: isContents.current.getContents ? isContents.current.getContents() : isContents.current.text,
+      contents: isContents.current.getContents
+        ? isContents.current.getContents()
+        : isContents.current.text,
       id: userStatus ? userId : '익명' + dayjs().format('mmss'),
       member_create: userStatus ? 'Y' : 'N',
       password: isPw.current.value,
@@ -128,35 +129,36 @@ export default function BaseCreate(props) {
         />
       </div>
       <div className="mb-8">
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} style={{
-            display: userStatus || path[2] != 'create' ? 'none' : 'block'
-          }}>
-            <div className={styles.captchaContainer}>
-              <div className={styles.captchaDisplay}>
-                <span className={styles.captchaText}>{captcha}</span>
-                <button 
-                  className={styles.refreshButton}
-                  onClick={handleClickShowPassword}
-                  type="button"
-                >
-                  <FontAwesomeIcon icon={faRefresh} />
-                </button>
-              </div>
+        <div
+          className={styles.captchaSection}
+          style={{
+            display: userStatus || path[2] != 'create' ? 'none' : 'flex',
+          }}
+        >
+          <div className={styles.captchaContainer}>
+            <div className={styles.captchaDisplay}>
+              <span className={styles.captchaText}>{captcha}</span>
+              <button
+                className={styles.refreshButton}
+                onClick={handleClickShowPassword}
+                type="button"
+              >
+                <FontAwesomeIcon icon={faRefresh} />
+              </button>
             </div>
-          </Grid>
-          <Grid item xs={12} sm={6} style={{
-            display: userStatus || path[2] != 'create' ? 'none' : 'block'
-          }}>
+          </div>
+          <div className={styles.captchaInput}>
             <Input
-              label="captcha 번호 입력"
               type="number"
+              placeholder="captcha 번호 입력"
               fullWidth
               ref={isCaptcha}
             />
-          </Grid>
-        </Grid>
-        <div style={{ display: userStatus ? 'none' : 'block', marginTop: '16px' }}>
+          </div>
+        </div>
+        <div
+          style={{ display: userStatus ? 'none' : 'block', marginTop: '16px' }}
+        >
           <Input
             type="number"
             placeholder="비밀번호 입력"
