@@ -168,6 +168,38 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
       },
       clipboard: {
         matchVisual: false,
+        onPaste: async (e) => {
+          const items = e.clipboardData.items;
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+              e.preventDefault();
+              const file = items[i].getAsFile();
+              console.log('onPaste에서 이미지 발견:', file);
+
+              if (file) {
+                const formData = new FormData();
+                formData.append('img', file);
+
+                try {
+                  const result = await axios.post(
+                    'http://127.0.0.1:4000/img',
+                    formData
+                  );
+                  console.log('onPaste에서 업로드 성공:', result.data.url);
+                  const IMG_URL = result.data.url;
+
+                  const range = quillRef.current.getEditor().getSelection();
+                  quillRef.current.getEditor().insertEmbed(range.index, 'image', IMG_URL);
+                  return false; // 기본 붙여넣기 동작 중단
+                } catch (error) {
+                  console.log('onPaste에서 업로드 실패:', error);
+                }
+              }
+              break;
+            }
+          }
+          return true; // 기본 붙여넣기 동작 허용
+        },
       },
     };
   }, []);
