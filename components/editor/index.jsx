@@ -47,17 +47,27 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
     }
   }, [value]);
 
-  useEffect(() => {
+    useEffect(() => {
     setMounted(true);
   }, []);
 
   // 이미지 붙여넣기 처리
   useEffect(() => {
+    console.log('useEffect 실행됨 - mounted:', mounted, 'quillRef.current:', !!quillRef.current);
+    
     if (quillRef.current && mounted) {
       const editor = quillRef.current.getEditor();
+      console.log('에디터 객체 생성됨:', !!editor);
 
       const handlePaste = async e => {
         console.log('handlePaste 실행됨');
+        
+        // 에디터가 준비되지 않았으면 무시
+        if (!quillRef.current || !quillRef.current.getEditor()) {
+          console.log('에디터가 준비되지 않음');
+          return;
+        }
+        
         e.preventDefault();
         e.stopPropagation();
         
