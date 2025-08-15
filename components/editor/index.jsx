@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { forwardRef, useImperativeHandle } from 'react';
-import axios from 'axios';
+import { saveBlob } from '../../api/baseGet';
 
 // react-quill-new를 동적으로 import
 const ReactQuill = dynamic(
@@ -74,12 +74,9 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
               formData.append('img', file);
 
               try {
-                const result = await axios.post(
-                  'http://127.0.0.1:4000/img',
-                  formData
-                );
-                console.log('붙여넣기 성공:', result.data.url);
-                const IMG_URL = result.data.url;
+                const result = await saveBlob('/img', formData);
+                console.log('붙여넣기 성공:', result.url);
+                const IMG_URL = result.url;
 
                 const range = editor.getSelection();
                 editor.insertEmbed(range.index, 'image', IMG_URL);
@@ -121,9 +118,9 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
       formData.append('img', file); // formData는 키-밸류 구조
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
-        const result = await axios.post('http://127.0.0.1:4000/img', formData);
-        console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
-        const IMG_URL = result.data.url;
+        const result = await saveBlob('/img', formData);
+        console.log('성공 시, 백엔드가 보내주는 데이터', result.url);
+        const IMG_URL = result.url;
 
         // 이 URL을 img 태그의 src에 넣은 요소를 현재 에디터의 커서에 넣어주면 에디터 내에서 이미지가 나타난다
         // src가 base64가 아닌 짧은 URL이기 때문에 데이터베이스에 에디터의 전체 글 내용을 저장할 수있게된다
@@ -181,12 +178,9 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
                 formData.append('img', file);
 
                 try {
-                  const result = await axios.post(
-                    'http://127.0.0.1:4000/img',
-                    formData
-                  );
-                  console.log('onPaste에서 업로드 성공:', result.data.url);
-                  const IMG_URL = result.data.url;
+                  const result = await saveBlob('/img', formData);
+                  console.log('onPaste에서 업로드 성공:', result.url);
+                  const IMG_URL = result.url;
 
                   const range = quillRef.current.getEditor().getSelection();
                   quillRef.current.getEditor().insertEmbed(range.index, 'image', IMG_URL);
