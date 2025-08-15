@@ -19,9 +19,11 @@ body {
   height: 100%;
 }
 
-.logo {
-  margin-left: 25px;
-}
+  .logo {
+    margin-left: 25px;
+    display: flex;
+    align-items: center;
+  }
 
 .navbar {
   height: 60px;
@@ -72,6 +74,7 @@ body {
 
 .mo_display {
   display: none;
+  align-items: center;
 }
 .dark {
   width: 40px;
@@ -148,6 +151,7 @@ body {
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     z-index: 20;
     position: sticky;
   }
@@ -168,7 +172,9 @@ body {
     text-align: center;
     vertical-align: middle;
     align-items: center;
+    justify-content: center;
     margin-right: 10px;
+    height: 40px;
   }
 
   .nav-elements {

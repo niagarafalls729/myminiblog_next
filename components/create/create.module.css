@@ -8,8 +8,14 @@
 }
 @media (max-width: 1080px) {
   .captchaSection {
-    flex-direction: column;
-    gap: 12px;
+    flex-direction: row;
+    gap: 16px;
+  }
+  
+  .passwordSection {
+    flex-direction: row;
+    gap: 16px;
+    margin-top: 16px;
   }
 }
 @media (min-width: 1080px) {
@@ -31,6 +37,20 @@
 }
 
 .captchaInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.passwordSection {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-top: 16px;
+}
+
+
+
+.passwordInput {
   flex: 1;
   min-width: 0;
 }

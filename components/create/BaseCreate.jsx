@@ -157,14 +157,17 @@ export default function BaseCreate(props) {
           </div>
         </div>
         <div
-          style={{ display: userStatus ? 'none' : 'block', marginTop: '16px' }}
+          className={styles.passwordSection}
+          style={{ display: userStatus ? 'none' : 'flex' }}
         >
-          <Input
-            type="number"
-            placeholder="비밀번호 입력"
-            fullWidth
-            ref={isPw}
-          />
+          <div className={styles.passwordInput}>
+            <Input
+              type="number"
+              placeholder="비밀번호 입력"
+              fullWidth
+              ref={isPw}
+            />
+          </div>
         </div>
         <div style={{ marginTop: '24px' }}>
           <Button fullWidth variant="primary" onClick={fn_save}>
