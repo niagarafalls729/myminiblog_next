@@ -108,7 +108,7 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
     // 속성 써주기
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
-    input.setAttribute('capture', 'environment'); // 모바일에서 카메라 접근 허용
+    // input.setAttribute('capture', 'environment'); // 모바일에서 카메라 접근 허용
     input.style.display = 'none'; // 숨김 처리
     document.body.appendChild(input); // DOM에 추가
     
