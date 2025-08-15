@@ -57,14 +57,18 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
       const editor = quillRef.current.getEditor();
 
       const handlePaste = async e => {
+        console.log('handlePaste 실행됨');
+        e.preventDefault();
+        e.stopPropagation();
+        
         const items = e.clipboardData.items;
         let hasImage = false;
 
         for (let i = 0; i < items.length; i++) {
+          console.log('item type:', items[i].type);
           if (items[i].type.indexOf('image') !== -1) {
             hasImage = true;
-            e.preventDefault();
-            e.stopPropagation();
+            console.log('이미지 발견!');
 
             const file = items[i].getAsFile();
             console.log('붙여넣기된 이미지:', file);
@@ -85,6 +89,15 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
               }
             }
             break;
+          }
+        }
+        
+        // 이미지가 없으면 텍스트만 허용
+        if (!hasImage) {
+          const textData = e.clipboardData.getData('text/plain');
+          if (textData) {
+            const range = editor.getSelection();
+            editor.insertText(range.index, textData);
           }
         }
       };
@@ -166,14 +179,18 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
       clipboard: {
         matchVisual: false,
         onPaste: async (e) => {
+          console.log('onPaste 실행됨');
+          e.preventDefault();
+          e.stopPropagation();
+          
           const items = e.clipboardData.items;
           let hasImage = false;
           
           for (let i = 0; i < items.length; i++) {
+            console.log('item type:', items[i].type);
             if (items[i].type.indexOf('image') !== -1) {
               hasImage = true;
-              e.preventDefault();
-              e.stopPropagation();
+              console.log('이미지 발견!');
               
               const file = items[i].getAsFile();
               console.log('onPaste에서 이미지 발견:', file);
@@ -197,17 +214,13 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
             }
           }
           
-          // 이미지가 있으면 기본 붙여넣기 동작 완전 차단
-          if (hasImage) {
-            return false;
-          }
-          
           // 이미지가 없으면 텍스트만 허용
-          const textData = e.clipboardData.getData('text/plain');
-          if (textData) {
-            const range = quillRef.current.getEditor().getSelection();
-            quillRef.current.getEditor().insertText(range.index, textData);
-            return false;
+          if (!hasImage) {
+            const textData = e.clipboardData.getData('text/plain');
+            if (textData) {
+              const range = quillRef.current.getEditor().getSelection();
+              quillRef.current.getEditor().insertText(range.index, textData);
+            }
           }
           
           return false; // 모든 기본 붙여넣기 동작 차단
