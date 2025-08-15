@@ -102,11 +102,11 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
         }
       };
 
-      // 에디터에 paste 이벤트 리스너 추가
-      editor.root.addEventListener('paste', handlePaste, true);
+      // document 레벨에서 이벤트 리스너 추가
+      document.addEventListener('paste', handlePaste, true);
 
       return () => {
-        editor.root.removeEventListener('paste', handlePaste, true);
+        document.removeEventListener('paste', handlePaste, true);
       };
     }
   }, [mounted, quillRef.current]);
