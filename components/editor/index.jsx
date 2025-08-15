@@ -167,9 +167,14 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
         matchVisual: false,
         onPaste: async (e) => {
           const items = e.clipboardData.items;
+          let hasImage = false;
+          
           for (let i = 0; i < items.length; i++) {
             if (items[i].type.indexOf('image') !== -1) {
+              hasImage = true;
               e.preventDefault();
+              e.stopPropagation();
+              
               const file = items[i].getAsFile();
               console.log('onPaste에서 이미지 발견:', file);
 
@@ -184,7 +189,6 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
 
                   const range = quillRef.current.getEditor().getSelection();
                   quillRef.current.getEditor().insertEmbed(range.index, 'image', IMG_URL);
-                  return false; // 기본 붙여넣기 동작 중단
                 } catch (error) {
                   console.log('onPaste에서 업로드 실패:', error);
                 }
@@ -192,7 +196,21 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
               break;
             }
           }
-          return true; // 기본 붙여넣기 동작 허용
+          
+          // 이미지가 있으면 기본 붙여넣기 동작 완전 차단
+          if (hasImage) {
+            return false;
+          }
+          
+          // 이미지가 없으면 텍스트만 허용
+          const textData = e.clipboardData.getData('text/plain');
+          if (textData) {
+            const range = quillRef.current.getEditor().getSelection();
+            quillRef.current.getEditor().insertText(range.index, textData);
+            return false;
+          }
+          
+          return false; // 모든 기본 붙여넣기 동작 차단
         },
       },
     };
