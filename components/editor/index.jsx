@@ -19,6 +19,7 @@ import 'react-quill-new/dist/quill.snow.css';
 const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
   const [mounted, setMounted] = useState(false);
   const [editorReady, setEditorReady] = useState(false);
+  const [forceRender, setForceRender] = useState(0);
   const [text, setText] = useState('');
   const quillRef = useRef(null);
 
@@ -62,81 +63,63 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
       return;
     }
     
-    // quillRef.current가 준비될 때까지 기다림
-    const checkEditorReady = () => {
-      if (quillRef.current) {
-        const editor = quillRef.current.getEditor();
-        console.log('에디터 객체 생성됨:', !!editor);
+    // 에디터가 준비되면 붙여넣기 이벤트 리스너 등록
+    if (quillRef.current && mounted) {
+      const editor = quillRef.current.getEditor();
+
+      const handlePaste = async e => {
+        console.log('handlePaste 실행됨');
         
-        // 에디터가 완전히 준비되었음을 표시
-        setEditorReady(true);
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const items = e.clipboardData.items;
+        let hasImage = false;
 
-        const handlePaste = async e => {
-          console.log('handlePaste 실행됨');
-          
-          // 에디터가 준비되지 않았으면 무시
-          if (!quillRef.current || !quillRef.current.getEditor()) {
-            console.log('에디터가 준비되지 않음');
-            return;
-          }
-          
-          e.preventDefault();
-          e.stopPropagation();
-          
-          const items = e.clipboardData.items;
-          let hasImage = false;
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].type.indexOf('image') !== -1) {
+            hasImage = true;
+            console.log('이미지 발견!');
 
-          for (let i = 0; i < items.length; i++) {
-            console.log('item type:', items[i].type);
-            if (items[i].type.indexOf('image') !== -1) {
-              hasImage = true;
-              console.log('이미지 발견!');
+            const file = items[i].getAsFile();
+            console.log('붙여넣기된 이미지:', file);
 
-              const file = items[i].getAsFile();
-              console.log('붙여넣기된 이미지:', file);
+            if (file) {
+              const formData = new FormData();
+              formData.append('img', file);
 
-              if (file) {
-                const formData = new FormData();
-                formData.append('img', file);
+              try {
+                const result = await saveBlob('/img', formData);
+                console.log('붙여넣기 성공:', result.url);
+                const IMG_URL = result.url;
 
-                try {
-                  const result = await saveBlob('/img', formData);
-                  console.log('붙여넣기 성공:', result.url);
-                  const IMG_URL = result.url;
-
-                  const range = editor.getSelection();
-                  editor.insertEmbed(range.index, 'image', IMG_URL);
-                } catch (error) {
-                  console.log('붙여넣기 실패:', error);
-                }
+                const range = editor.getSelection();
+                editor.insertEmbed(range.index, 'image', IMG_URL);
+              } catch (error) {
+                console.log('붙여넣기 실패:', error);
               }
-              break;
             }
+            break;
           }
-          
-          // 이미지가 없으면 텍스트만 허용
-          if (!hasImage) {
-            const textData = e.clipboardData.getData('text/plain');
-            if (textData) {
-              const range = editor.getSelection();
-              editor.insertText(range.index, textData);
-            }
+        }
+        
+        // 이미지가 없으면 텍스트만 허용
+        if (!hasImage) {
+          const textData = e.clipboardData.getData('text/plain');
+          if (textData) {
+            const range = editor.getSelection();
+            editor.insertText(range.index, textData);
           }
-        };
+        }
+      };
 
-        // document 레벨에서 이벤트 리스너 추가
-        document.addEventListener('paste', handlePaste, true);
+      // document 레벨에서 이벤트 리스너 추가
+      document.addEventListener('paste', handlePaste, true);
 
-        return () => {
-          document.removeEventListener('paste', handlePaste, true);
-        };
-      } else {
-        // 에디터가 아직 준비되지 않았으면 100ms 후 다시 시도
-        setTimeout(checkEditorReady, 100);
-      }
-    };
-
-    checkEditorReady();
+      return () => {
+        document.removeEventListener('paste', handlePaste, true);
+      };
+    }
   }, [mounted, quillRef.current]);
 
   // 이미지 처리를 하는 핸들러
@@ -268,7 +251,7 @@ const BasicEditor = forwardRef(({ style, value }, parent_ref) => {
     'image',
   ];
 
-  if (!mounted || !editorReady) {
+  if (!mounted) {
     return <div>에디터 로딩 중...</div>;
   }
 
