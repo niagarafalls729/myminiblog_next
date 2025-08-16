@@ -266,6 +266,14 @@ const Mo = props => {
                 방명록
               </SmartLink>
 
+              <Link
+                href="/dcbest"
+                onClick={handleShowNavbar}
+                className="nav-item"
+              >
+                실베
+              </Link>
+
               {userStatus ? (
                 <div className="nav-item">
                   <button className="nav-toggle" onClick={handleChange(2)}>
