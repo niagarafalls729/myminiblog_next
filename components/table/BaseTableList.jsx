@@ -7,8 +7,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from '@/node_modules/next/link';
 
 import { useAppSelector } from '@/redux/hooks';
-import Grid from '@/components/ui/Grid';
-
+import useDetect from '@/app/layout/mediaQuery/Detect';
 export default function BaseTableList(props) {
   const userId = useAppSelector(state => state.user.id);
   const { 
@@ -32,6 +31,7 @@ export default function BaseTableList(props) {
   // 부모 컴포넌트의 페이지 상태와 동기화 (0부터 시작하는 인덱스로 변환)
   const currentPage = (pagination?.page || 1) - 1;
 
+  const deviceType = useDetect(); // 'mo' 또는 'pc'
   // 디버깅 로그
   console.log('BaseTableList props:', {
     rowsLength: rows?.length,
@@ -70,32 +70,24 @@ export default function BaseTableList(props) {
   return !mounted ? (
     'loading....'
   ) : (
-    <>
-      <Grid container>
-        <Grid xs={0} lg={2}></Grid>
-        <Grid xs={12} lg={8} className={styles['create_wrap']}>
-          <div className={styles.tableWrapper}>
-            {loading && <div className={styles.loading}>로딩 중...</div>}
-            <Table 
-              columns={columns}
-              rows={rows}
-              onRowClick={rowClick}
-              pagination={true}
-              page={currentPage}
-              rowsPerPage={rowsPerPage}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              totalRows={pagination?.total || 0}
-              totalPages={pagination?.totalPages || 0}
-              variant={variant}
-              showRowNumbers={showRowNumbers}
-              hoverEffect={hoverEffect}
-              striped={striped}
-            />
-          </div>
-        </Grid>
-        <Grid xs={0} lg={2}></Grid>
-      </Grid>
-    </>
+    <div className={styles.tableWrapper}>
+      {loading && <div className={styles.loading}>로딩 중...</div>}
+      <Table 
+        columns={columns}
+        rows={rows}
+        onRowClick={rowClick}
+        pagination={true}
+        page={currentPage}
+        rowsPerPage={rowsPerPage}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        totalRows={pagination?.total || 0}
+        totalPages={pagination?.totalPages || 0}
+        variant={variant}
+        showRowNumbers={showRowNumbers}
+        hoverEffect={hoverEffect}
+        striped={striped}
+      />
+    </div>
   );
 }

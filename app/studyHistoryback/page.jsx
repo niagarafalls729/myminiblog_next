@@ -65,7 +65,8 @@ export default function StudyHistoryBack() {
             TITLE: item.title || '',
             CONTENT: item.contents || '',
             AUTHOR: item.id || '',
-            CREATED_AT: formattedDate
+            CREATED_AT: formattedDate,
+            COMMENT_COUNT: item.replyCount || 0 // 댓글 수를 별도 필드로 추가
           };
         });
 

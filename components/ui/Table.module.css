@@ -156,6 +156,82 @@
   cursor: not-allowed;
 }
 
+/* 모바일 카드 스타일 */
+.mobileCards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+
+.mobileCard {
+  position: relative;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mobileCard:hover {
+  background-color: var(--color-surface-variant);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+  line-height: 1.4;
+  word-break: break-word;
+  padding-right: 40px; /* 댓글 숫자 공간 확보 */
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.metaItem::before {
+  content: '•';
+  color: var(--color-text-secondary);
+  margin-right: 4px;
+}
+
+.cardNumber {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #ff4444;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 12px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.noData {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
 /* 다크모드 스타일 */
 [data-theme='dark'] .tableContainer {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -176,6 +252,27 @@
 [data-theme='dark'] .paginationButton:hover:not(:disabled) {
   background-color: var(--color-surface-variant);
   border-color: var(--color-text-secondary);
+}
+
+[data-theme='dark'] .mobileCard {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+[data-theme='dark'] .mobileCard:hover {
+  background-color: var(--color-surface-variant);
+}
+
+[data-theme='dark'] .cardTitle {
+  color: var(--color-text-primary);
+}
+
+[data-theme='dark'] .cardMeta {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='dark'] .metaItem::before {
+  color: var(--color-text-secondary);
 }
 
 /* Responsive */

@@ -38,7 +38,7 @@ export default function GuestBook() {
   }, []);
 
   const columns = [
-    { id: 'TITLE', label: '제목', width: '80%', padding: '16px 20px 20px 46px' },
+    { id: 'TITLE', label: '제목', width: '80%', padding: '20px' },
     { id: 'AUTHOR', label: '작성자', align: 'center', width: '10%', padding: '16px 8px' },
     { id: 'CREATED_AT', label: '작성일', align: 'center', width: '10%', padding: '16px 8px' }
   ];
@@ -103,17 +103,13 @@ export default function GuestBook() {
           // 날짜 처리 개선 - YY-MM-DD HH:mm 형식으로 변환
           const formattedDate = formatDate(item.creation_timestamp);
           
-          // 댓글 개수를 제목에 추가
-          const titleWithReplyCount = item.replyCount > 0 
-            ? `${item.title} (${item.replyCount})` 
-            : item.title;
-          
           return {
             GUESTBOOK_ID: item.index || '', // 디테일 페이지 이동을 위해 필요
-            TITLE: titleWithReplyCount || '',      // 댓글 개수가 포함된 제목
+            TITLE: item.title || '',      // 제목
             CONTENT: item.contents || '', // contents를 내용으로
             AUTHOR: item.id || '',
-            CREATED_AT: formattedDate
+            CREATED_AT: formattedDate,
+            COMMENT_COUNT: item.replyCount || 0 // 댓글 수를 별도 필드로 추가
           };
         });
 

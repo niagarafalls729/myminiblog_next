@@ -14,6 +14,18 @@
 .tableWrapper {
   position: relative;
   width: 100%;
+  max-width: 60%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 모바일에서는 꽉차게 */
+@media (max-width: 768px) {
+  .tableWrapper {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .loading {

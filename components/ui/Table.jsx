@@ -1,4 +1,5 @@
 import styles from './Table.module.css';
+import { useEffect, useState } from 'react';
 
 export default function Table({ 
   columns, 
@@ -18,6 +19,19 @@ export default function Table({
   striped = false, // 줄무늬 효과 여부
   ...props 
 }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const handleRowClick = (rowData) => {
     if (onRowClick) {
       onRowClick(rowData);
@@ -45,9 +59,77 @@ export default function Table({
     totalRows,
     totalPages,
     variant,
-    showRowNumbers
+    showRowNumbers,
+    isMobile
   });
 
+  // 모바일 카드 렌더링
+  if (isMobile) {
+    return (
+      <div className={tableClassName} {...props}>
+        <div className={styles.mobileCards}>
+          {rows && rows.length > 0 ? (
+            rows.map((row, index) => (
+              <div 
+                key={index} 
+                className={`${styles.mobileCard} ${onRowClick ? styles.clickable : ''} ${hoverEffect ? styles.hoverable : ''}`}
+                onClick={() => handleRowClick(row)}
+              >
+                {/* 제목 (첫 번째 컬럼) */}
+                <div className={styles.cardTitle}>
+                  {row[columns[0].id]}
+                </div>
+                
+                {/* 메타데이터 (나머지 컬럼들) */}
+                <div className={styles.cardMeta}>
+                  {columns.slice(1).map(column => (
+                    <span key={column.id} className={styles.metaItem}>
+                      {column.label}: {row[column.id]}
+                    </span>
+                  ))}
+                </div>
+                
+                {/* 우측 상단 숫자 (댓글 수 등) */}
+                {row.COMMENT_COUNT > 0 && (
+                  <div className={styles.cardNumber}>
+                    {row.COMMENT_COUNT}
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <div className={styles.noData}>데이터가 없습니다</div>
+          )}
+        </div>
+        
+        {pagination && (
+          <div className={styles.pagination}>
+            <div className={styles.paginationInfo}>
+              {`${page * rowsPerPage + 1}-${Math.min((page + 1) * rowsPerPage, totalRows)} of ${totalRows}`}
+            </div>
+            <div className={styles.paginationControls}>
+              <button
+                className={styles.paginationButton}
+                onClick={() => handlePageChange(page - 1)}
+                disabled={page === 0}
+              >
+                Previous
+              </button>
+              <button
+                className={styles.paginationButton}
+                onClick={() => handlePageChange(page + 1)}
+                disabled={page >= totalPages - 1}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // 데스크톱 테이블 렌더링
   return (
     <div className={tableClassName} {...props}>
       <table className={tableClass}>
