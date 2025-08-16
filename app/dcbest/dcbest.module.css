@@ -1,0 +1,152 @@
+.container {
+  /* 전체 컨테이너 */
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  max-width: 60%;
+  margin: 20px auto 20px auto;
+  padding: 0 20px;
+}
+
+.headerMobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  max-width: 100%;
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  transition: color 0.3s ease;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-top: 5px;
+  transition: color 0.3s ease;
+}
+
+.createButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: var(--color-button);
+  color: var(--color-button-text);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.createButton:hover {
+  background-color: var(--color-primary-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  color: var(--color-button-text);
+  text-decoration: none;
+}
+
+.createButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.addButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--color-button);
+  color: var(--color-button-text);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.addButton:hover {
+  background-color: var(--color-primary-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.addButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 테이블 컬럼 비율 설정 */
+.tableWrapper :global(table) {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tableWrapper :global(th:nth-child(1)),
+.tableWrapper :global(td:nth-child(1)) {
+  width: 10%;
+}
+
+.tableWrapper :global(th:nth-child(2)),
+.tableWrapper :global(td:nth-child(2)) {
+  width: 60%;
+}
+
+.tableWrapper :global(th:nth-child(3)),
+.tableWrapper :global(td:nth-child(3)) {
+  width: 15%;
+}
+
+.tableWrapper :global(th:nth-child(4)),
+.tableWrapper :global(td:nth-child(4)) {
+  width: 15%;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .header {
+    max-width: 100%;
+    margin: 20px 0;
+  }
+  
+  .createButton {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  
+  /* 모바일에서는 비율 조정 */
+  .tableWrapper :global(th:nth-child(1)),
+  .tableWrapper :global(td:nth-child(1)) {
+    width: 15%;
+  }
+  
+  .tableWrapper :global(th:nth-child(2)),
+  .tableWrapper :global(td:nth-child(2)) {
+    width: 50%;
+  }
+  
+  .tableWrapper :global(th:nth-child(3)),
+  .tableWrapper :global(td:nth-child(3)) {
+    width: 20%;
+  }
+  
+  .tableWrapper :global(th:nth-child(4)),
+  .tableWrapper :global(td:nth-child(4)) {
+    width: 15%;
+  }
+}

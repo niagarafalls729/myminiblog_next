@@ -76,6 +76,11 @@ const Pc = () => {
                     방명록
                   </SmartLink>
                 </li>
+                <li>
+                  <Link href="/dcbest">
+                    실베
+                  </Link>
+                </li>
                 {userStatus ? (
                   <>
                     <li>

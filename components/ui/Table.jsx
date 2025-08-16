@@ -17,6 +17,8 @@ export default function Table({
   showRowNumbers = false, // 행 번호 표시 여부
   hoverEffect = true, // 호버 효과 여부
   striped = false, // 줄무늬 효과 여부
+  searchValue = '',
+  onSearch = null,
   ...props 
 }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -107,6 +109,17 @@ export default function Table({
             <div className={styles.paginationInfo}>
               {`${page * rowsPerPage + 1}-${Math.min((page + 1) * rowsPerPage, totalRows)} of ${totalRows}`}
             </div>
+            {onSearch && (
+              <div className={styles.searchContainer}>
+                <input
+                  type="text"
+                  placeholder="제목 검색..."
+                  value={searchValue}
+                  onChange={(e) => onSearch(e.target.value)}
+                  className={styles.searchInput}
+                />
+              </div>
+            )}
             <div className={styles.paginationControls}>
               <button
                 className={styles.paginationButton}
@@ -202,6 +215,17 @@ export default function Table({
           <div className={styles.paginationInfo}>
             {`${page * rowsPerPage + 1}-${Math.min((page + 1) * rowsPerPage, totalRows)} of ${totalRows}`}
           </div>
+          {onSearch && (
+            <div className={styles.searchContainer}>
+              <input
+                type="text"
+                placeholder="제목 검색..."
+                value={searchValue}
+                onChange={(e) => onSearch(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+          )}
           <div className={styles.paginationControls}>
             <button
               className={styles.paginationButton}

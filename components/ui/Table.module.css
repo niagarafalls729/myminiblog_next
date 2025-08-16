@@ -130,6 +130,42 @@
   color: var(--color-text-secondary);
 }
 
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.searchInput {
+  padding: 10px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+  width: 500px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.searchInput:hover {
+  border-color: var(--color-text-secondary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .paginationControls {
   display: flex;
   gap: 8px;
@@ -275,6 +311,22 @@
   color: var(--color-text-secondary);
 }
 
+[data-theme='dark'] .searchInput {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+[data-theme='dark'] .searchInput:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .searchInput:hover {
+  border-color: var(--color-text-secondary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .headerCell,
@@ -284,7 +336,37 @@
   
   .pagination {
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    padding: 20px 16px;
+  }
+
+  .searchContainer {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .searchInput {
+    width: 100%;
+    
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  .paginationInfo {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .paginationControls {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .paginationButton {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 8px;
   }
 }
 

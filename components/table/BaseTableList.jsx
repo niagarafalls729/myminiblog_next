@@ -22,7 +22,9 @@ export default function BaseTableList(props) {
     variant = 'default',
     showRowNumbers = false,
     hoverEffect = true,
-    striped = false
+    striped = false,
+    searchValue = '',
+    onSearch = null
   } = props;
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -87,6 +89,8 @@ export default function BaseTableList(props) {
         showRowNumbers={showRowNumbers}
         hoverEffect={hoverEffect}
         striped={striped}
+        searchValue={searchValue}
+        onSearch={onSearch}
       />
     </div>
   );
