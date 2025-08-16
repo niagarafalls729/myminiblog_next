@@ -12,6 +12,10 @@ export default function Table({
   totalRows = 0,
   totalPages = 0,
   className = '',
+  variant = 'default', // 테이블 변형 (default, compact, wide 등)
+  showRowNumbers = false, // 행 번호 표시 여부
+  hoverEffect = true, // 호버 효과 여부
+  striped = false, // 줄무늬 효과 여부
   ...props 
 }) {
   const handleRowClick = (rowData) => {
@@ -27,10 +31,10 @@ export default function Table({
     }
   };
 
-  // 서버 사이드 페이지네이션을 사용하므로 클라이언트 사이드 슬라이싱 제거
-  // const paginatedRows = pagination 
-  //   ? rows.slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-  //   : rows;
+  // 테이블 클래스명 동적 생성
+  const tableClassName = `${styles.tableContainer} ${className} ${styles[variant] || ''}`;
+  const tableClass = `${styles.table} ${styles[`table_${variant}`] || ''}`;
+  const rowClass = `${styles.row} ${onRowClick ? styles.clickable : ''} ${hoverEffect ? styles.hoverable : ''} ${striped ? styles.striped : ''}`;
 
   // 디버깅 로그 추가
   console.log('Table 컴포넌트 렌더링:', {
@@ -38,21 +42,31 @@ export default function Table({
     pagination,
     page,
     rowsPerPage,
-    // paginatedRowsLength: paginatedRows?.length,
     totalRows,
-    totalPages
+    totalPages,
+    variant,
+    showRowNumbers
   });
 
   return (
-    <div className={`${styles.tableContainer} ${className}`} {...props}>
-      <table className={styles.table}>
+    <div className={tableClassName} {...props}>
+      <table className={tableClass}>
         <thead>
           <tr className={styles.headerRow}>
+            {showRowNumbers && (
+              <th className={styles.headerCell} style={{ width: '50px', textAlign: 'center' }}>
+                #
+              </th>
+            )}
             {columns.map(column => (
               <th 
                 key={column.id} 
                 className={styles.headerCell}
-                style={{ textAlign: column.align || 'left' }}
+                style={{ 
+                  textAlign: column.align || 'left',
+                  width: column.width || 'auto',
+                  padding: column.padding || '16px'
+                }}
               >
                 {column.label}
               </th>
@@ -64,14 +78,23 @@ export default function Table({
             rows.map((row, index) => (
               <tr 
                 key={index} 
-                className={`${styles.row} ${onRowClick ? styles.clickable : ''}`}
+                className={rowClass}
                 onClick={() => handleRowClick(row)}
               >
+                {showRowNumbers && (
+                  <td className={styles.cell} style={{ width: '50px', textAlign: 'center' }}>
+                    {page * rowsPerPage + index + 1}
+                  </td>
+                )}
                 {columns.map(column => (
                   <td 
                     key={column.id} 
                     className={styles.cell}
-                    style={{ textAlign: column.align || 'left' }}
+                    style={{ 
+                      textAlign: column.align || 'left',
+                      width: column.width || 'auto',
+                      padding: column.padding || '16px'
+                    }}
                   >
                     {column.id === 'CONTENT' ? (
                       <div dangerouslySetInnerHTML={{ __html: row[column.id] }} />
@@ -84,7 +107,7 @@ export default function Table({
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length} style={{ textAlign: 'center', padding: '20px' }}>
+              <td colSpan={showRowNumbers ? columns.length + 1 : columns.length} style={{ textAlign: 'center', padding: '20px' }}>
                 데이터가 없습니다
               </td>
             </tr>
@@ -95,24 +118,20 @@ export default function Table({
       {pagination && (
         <div className={styles.pagination}>
           <div className={styles.paginationInfo}>
-            {totalRows > 0 ? (
-              `${page * rowsPerPage + 1}-${Math.min((page + 1) * rowsPerPage, totalRows)} of ${totalRows}`
-            ) : (
-              '데이터가 없습니다'
-            )}
+            {`${page * rowsPerPage + 1}-${Math.min((page + 1) * rowsPerPage, totalRows)} of ${totalRows}`}
           </div>
           <div className={styles.paginationControls}>
-            <button 
+            <button
               className={styles.paginationButton}
-              disabled={page === 0}
               onClick={() => handlePageChange(page - 1)}
+              disabled={page === 0}
             >
               Previous
             </button>
-            <button 
+            <button
               className={styles.paginationButton}
-              disabled={(page + 1) * rowsPerPage >= totalRows}
               onClick={() => handlePageChange(page + 1)}
+              disabled={page >= totalPages - 1}
             >
               Next
             </button>

@@ -52,9 +52,15 @@ export default function BaseCreate(props) {
   useEffect(() => {
     setMounted(true);
     setCaptcha(generateRandomNumber);
-    setForm(originForm ?? '');
-    // myAPI();
   }, []);
+
+  // originForm이 변경될 때마다 form 상태 업데이트
+  useEffect(() => {
+    if (originForm) {
+      console.log('BaseCreate originForm 업데이트:', originForm);
+      setForm(originForm);
+    }
+  }, [originForm]);
 
   const errCHK = () => {
     const titleValue = isTitle.current.value;
@@ -117,13 +123,13 @@ export default function BaseCreate(props) {
           onBlur={errCHK}
           onChange={errCHK}
           ref={isTitle}
-          defaultValue={form.title}
-          autoFocus={form.title && true}
+          defaultValue={form?.title || ''}
+          autoFocus={form?.title && true}
         />
       </div>
       <div className="!w-full mb-8 inline-block">
         <BasicEditor
-          value={form.contents}
+          value={form?.contents || ''}
           ref={isContents}
           style={{ height: '300px', marginBottom: '20px' }}
         />

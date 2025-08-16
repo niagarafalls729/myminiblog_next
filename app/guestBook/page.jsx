@@ -6,6 +6,7 @@ import BaseTableList from '../../components/table/BaseTableList';
 import { axiosGet } from '../../api/baseGet';
 import styles from './guestBook.module.css';
 import { IoAdd } from 'react-icons/io5';
+import Link from 'next/link';
 
 export default function GuestBook() {
   const searchParams = useSearchParams();
@@ -37,11 +38,45 @@ export default function GuestBook() {
   }, []);
 
   const columns = [
-    { id: 'GUESTBOOK_ID', label: '번호', align: 'center', width: '80px' },
-    { id: 'TITLE', label: '제목', width: 'auto' },
-    { id: 'AUTHOR', label: '작성자', align: 'center', width: '100px' },
-    { id: 'CREATED_AT', label: '작성일', align: 'center', width: '120px' }
+    { id: 'TITLE', label: '제목', width: '80%', padding: '16px 20px 20px 46px' },
+    { id: 'AUTHOR', label: '작성자', align: 'center', width: '10%', padding: '16px 8px' },
+    { id: 'CREATED_AT', label: '작성일', align: 'center', width: '10%', padding: '16px 8px' }
   ];
+
+  // 날짜 형식을 YY-MM-DD HH:mm으로 변환하는 함수
+  const formatDate = (dateString) => {
+    if (!dateString) return '날짜 없음';
+    
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        // 이미 한국 시간 형식인 경우 (예: "2025-08-16 21:56")
+        const match = dateString.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
+        if (match) {
+          const year = match[1].slice(-2); // 뒤의 2자리만
+          const month = match[2];
+          const day = match[3];
+          const hour = match[4];
+          const minute = match[5];
+          return `${year}-${month}-${day} ${hour}:${minute}`;
+        }
+        return dateString;
+      }
+      
+      // UTC 시간을 한국 시간으로 변환
+      const koreanTime = new Date(date.getTime() + (9 * 60 * 60 * 1000));
+      const year = koreanTime.getFullYear().toString().slice(-2);
+      const month = String(koreanTime.getMonth() + 1).padStart(2, '0');
+      const day = String(koreanTime.getDate()).padStart(2, '0');
+      const hour = String(koreanTime.getHours()).padStart(2, '0');
+      const minute = String(koreanTime.getMinutes()).padStart(2, '0');
+      
+      return `${year}-${month}-${day} ${hour}:${minute}`;
+    } catch (error) {
+      console.log('날짜 변환 오류:', error);
+      return dateString;
+    }
+  };
 
   const fetchData = async (page = 1, limit = 10) => {
     console.log('fetchData 호출 - page:', page);
@@ -65,17 +100,8 @@ export default function GuestBook() {
       if (response.data && response.pagination) {
         // 데이터 변환 - API 응답 구조에 맞게 수정
         const transformedData = response.data.map(item => {
-          // 날짜 처리 개선
-          let formattedDate = '날짜 없음';
-          if (item.creation_timestamp) {
-            try {
-              // 이미 한국 시간으로 변환된 문자열이므로 직접 사용
-              formattedDate = item.creation_timestamp;
-            } catch (error) {
-              console.log('날짜 변환 오류:', error);
-              formattedDate = item.creation_timestamp || '날짜 없음';
-            }
-          }
+          // 날짜 처리 개선 - YY-MM-DD HH:mm 형식으로 변환
+          const formattedDate = formatDate(item.creation_timestamp);
           
           // 댓글 개수를 제목에 추가
           const titleWithReplyCount = item.replyCount > 0 
@@ -83,7 +109,7 @@ export default function GuestBook() {
             : item.title;
           
           return {
-            GUESTBOOK_ID: item.index || '',
+            GUESTBOOK_ID: item.index || '', // 디테일 페이지 이동을 위해 필요
             TITLE: titleWithReplyCount || '',      // 댓글 개수가 포함된 제목
             CONTENT: item.contents || '', // contents를 내용으로
             AUTHOR: item.id || '',
@@ -105,33 +131,19 @@ export default function GuestBook() {
     }
   };
 
-  // URL 파라미터가 변경될 때마다 데이터 가져오기
   useEffect(() => {
-    console.log('URL 페이지 변경 감지:', urlPage);
-    fetchData(urlPage, 10);
+    fetchData(urlPage);
   }, [urlPage]);
 
   const handlePageChange = (newPage) => {
-    console.log('handlePageChange 호출 - newPage:', newPage);
-    
-    if (newPage === undefined || newPage === null || isNaN(newPage)) {
-      console.log('유효하지 않은 페이지 번호:', newPage);
-      return;
-    }
-
-    // API는 1-indexed, frontend는 0-indexed이므로 +1
-    const apiPage = newPage + 1;
-    console.log('API 호출할 페이지:', apiPage);
-
-    // URL 업데이트
-    const params = new URLSearchParams(searchParams);
-    params.set('page', apiPage.toString());
-    router.push(`/guestBook?${params.toString()}`);
+    console.log('페이지 변경:', newPage);
+    const nextPage = newPage + 1; // 0-based를 1-based로 변환
+    router.push(`/guestBook?page=${nextPage}`);
   };
 
-  // 로우 클릭 핸들러 추가
   const handleRowClick = (rowData) => {
-    console.log('로우 클릭:', rowData);
+    console.log('행 클릭:', rowData);
+    // 상세 페이지로 이동
     if (rowData && rowData.GUESTBOOK_ID) {
       router.push(`/guestBook/detail/${rowData.GUESTBOOK_ID}`);
     }
@@ -141,24 +153,24 @@ export default function GuestBook() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>방명록</h1>
-        <button 
-          onClick={() => router.push('/guestBook/create')}
-          className={styles.addButton}
-        >
-          <IoAdd size={24} />
-        </button>
+        <Link href="/guestBook/create" className={styles.createButton}>
+          <IoAdd />
+          글쓰기
+        </Link>
       </div>
-      <div className={styles.tableWrapper}>
-        <BaseTableList
-          columns={columns}
-          rows={rows}
-          pagination={pagination}
-          onPageChange={handlePageChange}
-          onRowClick={handleRowClick}
-          loading={loading}
-          dataLoaded={true}
-        />
-      </div>
+      
+      <BaseTableList
+        columns={columns}
+        rows={rows}
+        onRowClick={handleRowClick}
+        useUrl="guestBook"
+        pagination={pagination}
+        onPageChange={handlePageChange}
+        loading={loading}
+        variant="minimal"
+        hoverEffect={true}
+        striped={false}
+      />
     </div>
   );
 }

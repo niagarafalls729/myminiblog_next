@@ -12,21 +12,26 @@ export default function CreateAndModify() {
   const params = useParams();
   const path = usePathname();
   const router = useRouter();
+  
   useEffect(() => {
-    console.log('Before fetching data');
+    console.log('수정 화면 데이터 로딩 시작 - index:', params.index);
     const fetchData = async () => {
       try {
-        const detailRes = await axiosGet('guestBook', params);
-        setOriginForm(detailRes[0]);
+        // 단일 게시글 조회 API 사용
+        const detailRes = await axiosGet(`guestBook/detail/${params.index}`);
+        console.log('수정 화면 데이터 로딩 완료:', detailRes);
+        setOriginForm(detailRes);
         setDataLoaded(true);
       } catch (error) {
-        console.error('Error fetching data: ', error);
+        console.error('수정 화면 데이터 로딩 실패:', error);
+        Swal.fire('데이터 로딩에 실패했습니다.');
       }
     };
 
-    console.log('After fetching data');
-    fetchData();
-  }, []);
+    if (params.index) {
+      fetchData();
+    }
+  }, [params.index]);
 
   const modifyApi = async e => {
     e.index = params.index;
@@ -45,6 +50,7 @@ export default function CreateAndModify() {
 
     router.push('/' + path.split('/')[1]);
   };
+  
   return (
     <>
       {dataLoaded ? (

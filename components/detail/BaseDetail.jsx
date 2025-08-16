@@ -17,15 +17,35 @@ export default function BaseDetail(props) {
     setForm(detailform);
   }
 
-  // 권한 체크 로직 개선
+  // 권한 체크 로직 수정
   const isLoggedIn = userStatus === true; // 로그인 상태
   const isAuthor = isLoggedIn && userId === form.id; // 본인이 작성한 글인지
   const isGuestPost = form.member_create === 'N'; // 게스트가 작성한 글인지 (비회원 글)
+  const isGuestUser = !isLoggedIn; // 현재 사용자가 비회원인지
 
   // 수정/삭제 버튼 표시 조건:
-  // 1. 본인이 작성한 글인 경우
-  // 2. 게스트 글인 경우 (비회원이 작성한 글)
-  const showButton = isAuthor || isGuestPost;
+  // 1. 로그인한 사용자가 본인이 작성한 글인 경우
+  // 2. 비회원이 비회원이 작성한 글인 경우
+  const showButton = isAuthor || (isGuestUser && isGuestPost);
+
+  // 버튼 툴팁 메시지 생성
+  const getModifyTooltip = () => {
+    if (isAuthor) {
+      return "본인이 작성한 글을 수정합니다";
+    } else if (isGuestPost && isGuestUser) {
+      return "비회원이 작성한 글입니다. 비밀번호로 인증 후 수정 가능합니다";
+    }
+    return "수정";
+  };
+
+  const getDeleteTooltip = () => {
+    if (isAuthor) {
+      return "본인이 작성한 글을 삭제합니다";
+    } else if (isGuestPost && isGuestUser) {
+      return "비회원이 작성한 글입니다. 비밀번호로 인증 후 삭제 가능합니다";
+    }
+    return "삭제";
+  };
 
   // 디버깅을 위한 로그
   console.log('BaseDetail 권한 체크:', {
@@ -36,6 +56,7 @@ export default function BaseDetail(props) {
     isLoggedIn,
     isAuthor,
     isGuestPost,
+    isGuestUser,
     showButton,
     formData: form,
   });
@@ -56,14 +77,14 @@ export default function BaseDetail(props) {
               <button
                 className={styles.actionButton}
                 onClick={onModi}
-                title="수정"
+                title={getModifyTooltip()}
               >
                 <FontAwesomeIcon icon={faEdit} />
               </button>
               <button
                 className={styles.actionButton}
                 onClick={onDele}
-                title="삭제"
+                title={getDeleteTooltip()}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
@@ -76,14 +97,15 @@ export default function BaseDetail(props) {
           <div>작성자 : {form.id || ''}</div>
           <div>작성일 : {form.creation_timestamp || ''}</div>
           {/* 디버깅용 정보 (개발 중에만 표시) */}
-          {/* {process.env.NODE_ENV === 'development' && (
+          {process.env.NODE_ENV === 'development' && (
             <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
               로그인상태: {isLoggedIn ? '로그인됨' : '로그아웃'} | 
               권한: {isAuthor ? '작성자' : '일반사용자'} | 
               게스트글: {isGuestPost ? '예' : '아니오'} |
+              비회원사용자: {isGuestUser ? '예' : '아니오'} |
               버튼표시: {showButton ? '예' : '아니오'}
             </div>
-          )} */}
+          )}
         </div>
 
         <hr />

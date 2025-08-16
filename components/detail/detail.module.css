@@ -2,8 +2,18 @@
   height: 10vh;
 }
 .container {
-  max-width: 1000px;
+  max-width: 60%;
   margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 모바일에서는 꽉차게 */
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .header {
@@ -54,11 +64,23 @@
   justify-content: center;
   width: 100%;
   padding: 16px 0;
+  max-width: 60%;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+/* 모바일에서는 꽉차게 */
+@media (max-width: 768px) {
+  .replyContainer {
+    max-width: 100%;
+    margin: 0;
+    padding: 16px 0;
+  }
 }
 
 .replyBox {
   width: 100%;
-  max-width: 1000px;
+  max-width: 100%;
 }
 
 .replyHeader {

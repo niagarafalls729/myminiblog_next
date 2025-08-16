@@ -19,7 +19,11 @@ export default function BaseTableList(props) {
     disabledWrite, 
     pagination, 
     onPageChange, 
-    loading 
+    loading,
+    variant = 'default',
+    showRowNumbers = false,
+    hoverEffect = true,
+    striped = false
   } = props;
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -34,7 +38,11 @@ export default function BaseTableList(props) {
     pagination,
     currentPage,
     loading,
-    dataLoaded: rows?.length > 0
+    dataLoaded: rows?.length > 0,
+    variant,
+    showRowNumbers,
+    hoverEffect,
+    striped
   });
 
   useEffect(() => {
@@ -79,6 +87,10 @@ export default function BaseTableList(props) {
               onRowsPerPageChange={handleChangeRowsPerPage}
               totalRows={pagination?.total || 0}
               totalPages={pagination?.totalPages || 0}
+              variant={variant}
+              showRowNumbers={showRowNumbers}
+              hoverEffect={hoverEffect}
+              striped={striped}
             />
           </div>
         </Grid>

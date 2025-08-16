@@ -9,6 +9,7 @@
   width: 100%;
   border-collapse: collapse;
   background-color: var(--color-surface);
+  table-layout: fixed; /* 컬럼 너비 고정 */
 }
 
 .headerRow {
@@ -16,12 +17,14 @@
 }
 
 .headerCell {
-  padding: 16px;
   font-weight: 600;
   font-size: 0.875rem;
   color: var(--color-text-primary);
   border-bottom: 2px solid var(--color-border);
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .row {
@@ -29,23 +32,87 @@
   transition: background-color 0.2s ease;
 }
 
-.row:hover {
-  background-color: var(--color-surface-variant);
-}
-
 .row.clickable {
   cursor: pointer;
+}
+
+.row.hoverable:hover {
+  background-color: var(--color-surface-variant);
 }
 
 .row.clickable:hover {
   background-color: rgba(25, 118, 210, 0.1);
 }
 
+.row.striped:nth-child(even) {
+  background-color: var(--color-surface-variant);
+}
+
 .cell {
-  padding: 16px;
   font-size: 0.875rem;
   color: var(--color-text-primary);
   vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 제목 셀은 긴 텍스트를 허용 */
+.cell:first-child {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* 테이블 변형 스타일 */
+/* Compact 스타일 */
+.compact .table {
+  font-size: 0.8rem;
+}
+
+.compact .headerCell,
+.compact .cell {
+  padding: 8px 12px;
+}
+
+/* Wide 스타일 */
+.wide .table {
+  table-layout: auto;
+}
+
+.wide .headerCell,
+.wide .cell {
+  padding: 20px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* Bordered 스타일 */
+.bordered .table {
+  border: 1px solid var(--color-border);
+}
+
+.bordered .headerCell,
+.bordered .cell {
+  border: 1px solid var(--color-border);
+}
+
+/* Minimal 스타일 */
+.minimal .table {
+  box-shadow: none;
+  border: 1px solid var(--color-border);
+}
+
+.minimal .headerRow {
+  background-color: transparent;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.minimal .row {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.minimal .row:hover {
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 /* Pagination */
@@ -98,16 +165,23 @@
   background-color: rgba(33, 150, 243, 0.1);
 }
 
+[data-theme='dark'] .row.striped:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] .minimal .row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 [data-theme='dark'] .paginationButton:hover:not(:disabled) {
-  background-color: var(--color-surface);
-  border-color: var(--color-info);
+  background-color: var(--color-surface-variant);
+  border-color: var(--color-text-secondary);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .headerCell,
   .cell {
-    padding: 12px 8px;
     font-size: 0.8rem;
   }
   
