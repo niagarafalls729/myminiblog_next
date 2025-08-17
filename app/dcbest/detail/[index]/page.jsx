@@ -58,11 +58,24 @@ export default function DCBestDetail() {
     // 환경변수에서 API URL 가져오기
     const apiUrl = process.env.NEXT_PUBLIC_API_KEY || 'http://localhost:4000';
     
+    console.log('이미지 경로 수정 전:', content);
+    
     // /crawled_images/ 경로를 서버 URL로 변경
-    return content.replace(
+    let modifiedContent = content.replace(
       /src="\/crawled_images\//g, 
       `src="${apiUrl}/crawled_images/`
     );
+    
+    // onerror 이벤트 핸들러 제거 (reload_img 오류 방지)
+    modifiedContent = modifiedContent.replace(
+      /onerror="[^"]*"/g,
+      'onerror="this.style.display=\'none\';"'
+    );
+    
+    console.log('이미지 경로 수정 후:', modifiedContent);
+    console.log('API URL:', apiUrl);
+    
+    return modifiedContent;
   };
 
   const fetchPostDetail = async () => {
@@ -71,16 +84,17 @@ export default function DCBestDetail() {
     
     try {
       const response = await axiosGet(`/dcbest/${postId}`);
-             console.log('게시글 상세 응답:', response);
-       console.log('response.data:', response.data);
-       console.log('response.data.data:', response.data?.data);
-       console.log('CONTENT 타입:', typeof response.data?.data?.CONTENT);
-       console.log('CONTENT 값:', response.data?.data?.CONTENT);
-       console.log('전체 post 객체:', response.data?.data);
+      console.log('게시글 상세 응답:', response);
+      console.log('response.data:', response.data);
+      console.log('CONTENT 타입:', typeof response?.CONTENT);
+      console.log('CONTENT 값:', response?.CONTENT);
+      console.log('전체 post 객체:', response);
       
-             if (response.data) {
-         // API 응답 구조: { data: { POST_ID, TITLE, ... } }
-         const postData = response.data;
+      if (response) {
+        // API 응답 구조: { POST_ID, TITLE, ... }
+        const postData = response;
+        
+        console.log('✅ 데이터 받음:', postData);
          
          // CONTENT가 [object Object]인 경우 처리
          let content = postData.CONTENT;
