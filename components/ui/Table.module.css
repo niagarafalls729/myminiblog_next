@@ -9,7 +9,7 @@
   width: 100%;
   border-collapse: collapse;
   background-color: var(--color-surface);
-  table-layout: fixed; /* 컬럼 너비 고정 */
+  table-layout: auto; /* 반응형을 위해 auto로 변경 */
 }
 
 .headerRow {
@@ -55,12 +55,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 0; /* 텍스트 오버플로우를 위해 필요 */
 }
 
-/* 제목 셀은 긴 텍스트를 허용 */
+/* 제목 셀은 긴 텍스트를 허용하고 반응형으로 처리 */
 .cell:first-child {
   white-space: normal;
   word-wrap: break-word;
+  max-width: none;
+  min-width: 200px; /* 최소 너비 설정 */
 }
 
 /* 테이블 변형 스타일 */
@@ -152,7 +155,9 @@
 .searchInput:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 0 0 3px rgba(25, 118, 210, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
 
@@ -259,6 +264,8 @@
   border-radius: 12px;
   min-width: 16px;
   text-align: center;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .noData {
@@ -319,7 +326,9 @@
 
 [data-theme='dark'] .searchInput:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2), 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 0 3px rgba(33, 150, 243, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme='dark'] .searchInput:hover {
@@ -328,10 +337,22 @@
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .table {
+    font-size: 0.85rem;
+  }
+  
+  .headerCell,
+  .cell {
+    padding: 12px 8px !important;
+  }
+}
+
 @media (max-width: 768px) {
   .headerCell,
   .cell {
     font-size: 0.8rem;
+    padding: 10px 6px !important;
   }
   
   .pagination {
@@ -347,7 +368,6 @@
 
   .searchInput {
     width: 100%;
-    
     padding: 12px 16px;
     font-size: 1rem;
     border-radius: 12px;
@@ -370,3 +390,17 @@
   }
 }
 
+@media (max-width: 480px) {
+  .table {
+    font-size: 0.75rem;
+  }
+  
+  .headerCell,
+  .cell {
+    padding: 8px 4px !important;
+  }
+  
+  .cell:first-child {
+    min-width: 150px;
+  }
+}
