@@ -10,17 +10,17 @@ export default function DCBest() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
-  
+
   // URL에서 페이지 파라미터 읽기 (기본값: 1)
   const urlPage = parseInt(searchParams.get('page')) || 1;
   const urlSearch = searchParams.get('search') || '';
-  
+
   const [rows, setRows] = useState([]);
   const [pagination, setPagination] = useState({
     page: urlPage,
     limit: 10,
     total: 0,
-    totalPages: 0
+    totalPages: 0,
   });
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(urlSearch);
@@ -30,49 +30,67 @@ export default function DCBest() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const columns = [
     { id: 'TITLE', label: '제목', width: '70%', padding: '20px' },
-    { id: 'AUTHOR', label: '작성자', align: 'center', width: '15%', padding: '16px 8px' },
-    { id: 'VIEW_COUNT', label: '조회수', align: 'center', width: '8%', padding: '16px 8px' },
-    { id: 'POST_DATE', label: '작성일', align: 'center', width: '12%', padding: '16px 8px' }
+    {
+      id: 'AUTHOR',
+      label: '작성자',
+      align: 'center',
+      width: '15%',
+      padding: '16px 8px',
+    },
+    {
+      id: 'VIEW_COUNT',
+      label: '조회수',
+      align: 'center',
+      width: '8%',
+      padding: '16px 8px',
+    },
+    {
+      id: 'POST_DATE',
+      label: '작성일',
+      align: 'center',
+      width: '12%',
+      padding: '16px 8px',
+    },
   ];
 
-  // 날짜 형식을 YY-MM-DD HH:mm으로 변환하는 함수
-  const formatDate = (dateString) => {
+  // 날짜 형식을 MM-DD HH:mm으로 변환하는 함수
+  const formatDate = dateString => {
     if (!dateString) return '날짜 없음';
-    
+
     try {
       const date = new Date(dateString);
       if (isNaN(date.getTime())) {
         // 이미 한국 시간 형식인 경우 (예: "2025-08-16 21:56")
-        const match = dateString.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
+        const match = dateString.match(
+          /(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/
+        );
         if (match) {
-          const year = match[1].slice(-2); // 뒤의 2자리만
           const month = match[2];
           const day = match[3];
           const hour = match[4];
           const minute = match[5];
-          return `${year}-${month}-${day} ${hour}:${minute}`;
+          return `${month}-${day} ${hour}:${minute}`;
         }
         return dateString;
       }
-      
+
       // UTC 시간을 한국 시간으로 변환
-      const koreanTime = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-      const year = koreanTime.getFullYear().toString().slice(-2);
+      const koreanTime = new Date(date.getTime() + 9 * 60 * 60 * 1000);
       const month = String(koreanTime.getMonth() + 1).padStart(2, '0');
       const day = String(koreanTime.getDate()).padStart(2, '0');
       const hour = String(koreanTime.getHours()).padStart(2, '0');
       const minute = String(koreanTime.getMinutes()).padStart(2, '0');
-      
-      return `${year}-${month}-${day} ${hour}:${minute}`;
+
+      return `${month}-${day} ${hour}:${minute}`;
     } catch (error) {
       console.log('날짜 변환 오류:', error);
       return dateString;
@@ -87,7 +105,7 @@ export default function DCBest() {
       console.log('API 응답:', response);
       console.log('API 응답 데이터 길이:', response.data.length);
       console.log('API 응답 pagination:', response.pagination);
-      
+
       // 첫 번째 데이터의 구조 확인
       if (response.data && response.data.length > 0) {
         console.log('첫 번째 데이터 구조:', response.data[0]);
@@ -98,15 +116,15 @@ export default function DCBest() {
         const transformedData = response.data.map(item => {
           // 날짜 처리 개선 - YY-MM-DD HH:mm 형식으로 변환
           const formattedDate = formatDate(item.POST_DATE);
-          
+
           return {
             POST_ID: item.POST_ID || '', // 디테일 페이지 이동을 위해 필요
-            TITLE: item.TITLE || '',      // 제목
+            TITLE: item.TITLE || '', // 제목
             CONTENT: item.CONTENT || '', // 내용
             AUTHOR: item.AUTHOR || '',
             VIEW_COUNT: item.VIEW_COUNT || 0,
             POST_DATE: formattedDate,
-            POST_URL: item.POST_URL || ''
+            POST_URL: item.POST_URL || '',
           };
         });
 
@@ -115,7 +133,12 @@ export default function DCBest() {
 
         setRows(transformedData);
         setPagination(response.pagination);
-        console.log('상태 업데이트 완료 - rows:', transformedData.length, 'pagination:', response.pagination);
+        console.log(
+          '상태 업데이트 완료 - rows:',
+          transformedData.length,
+          'pagination:',
+          response.pagination
+        );
       }
     } catch (error) {
       console.error('데이터 가져오기 실패:', error);
@@ -128,7 +151,7 @@ export default function DCBest() {
     fetchData(urlPage, 10, urlSearch);
   }, [urlPage, urlSearch]);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     console.log('페이지 변경:', newPage);
     const nextPage = newPage + 1; // 0-based를 1-based로 변환
     const params = new URLSearchParams();
@@ -139,7 +162,7 @@ export default function DCBest() {
     router.push(`/dcbest?${params.toString()}`);
   };
 
-  const handleSearch = (searchValue) => {
+  const handleSearch = searchValue => {
     console.log('검색:', searchValue);
     setSearchTerm(searchValue);
     const params = new URLSearchParams();
@@ -150,7 +173,7 @@ export default function DCBest() {
     router.push(`/dcbest?${params.toString()}`);
   };
 
-  const handleRowClick = (rowData) => {
+  const handleRowClick = rowData => {
     console.log('행 클릭:', rowData);
     // 상세 페이지로 이동
     if (rowData && rowData.POST_ID) {
@@ -164,7 +187,7 @@ export default function DCBest() {
         <h1 className={styles.title}>실베</h1>
         <div className={styles.subtitle}>디시인사이드 실시간베스트 게시글</div>
       </div>
-      
+
       <div className={styles.tableWrapper}>
         <BaseTableList
           columns={columns}
