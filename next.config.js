@@ -12,6 +12,7 @@ module.exports = {
   },
   env: {
     BASE_URL: process.env.BASE_URL,
+    NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY || 'http://localhost:4000',
   },
   reactStrictMode: true,
   typescript: {
