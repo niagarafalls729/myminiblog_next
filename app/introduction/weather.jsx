@@ -7,7 +7,6 @@ import { setWeather } from '@/redux/features/weatherSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 export default function Weather() {
-  const [isMounted, setIsMounted] = useState(false);
   const dispatch = useAppDispatch();
   const [isWeather, setIsWeather] = useState('');
   const [isCity, setIsCity] = useState('');
@@ -17,23 +16,33 @@ export default function Weather() {
   const reduxDate = useAppSelector(state => state.weather.date);
   const formattedDate = dayjs().format('M월 D일');
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  useEffect(() => {
-    if (isMounted) {
-      if (
-        reduxDate !== formattedDate ||
-        (reduxWeather == '' && reduxCity == '')
-      ) {
-        console.log('getWeather');
-        getWeather();
-      } else {
-        console.log('noGetWeather, Reuse existing values');
-        setIsWeather(reduxWeather || '');
-        setIsCity(reduxCity);
-      }
+    console.log(
+      'Weather useEffect - reduxDate:',
+      reduxDate,
+      'formattedDate:',
+      formattedDate
+    );
+    const missingCity = !reduxCity || reduxCity === '';
+    const missingWeather =
+      !reduxWeather ||
+      (typeof reduxWeather === 'string' && reduxWeather === '') ||
+      (typeof reduxWeather === 'object' && !reduxWeather.description);
+
+    if (reduxDate !== formattedDate || missingCity || missingWeather) {
+      console.log('getWeather');
+      getWeather();
+    } else {
+      console.log('noGetWeather, Reuse existing values');
+      setIsWeather(reduxWeather || '');
+      setIsCity(reduxCity || '');
     }
-  }, [reduxDate, isMounted]);
+  }, [reduxDate, reduxCity, reduxWeather, formattedDate]);
+
+  // 스토어 값이 나중에 리하이드레이션되거나 갱신될 때도 로컬 상태 동기화
+  useEffect(() => {
+    setIsWeather(reduxWeather || '');
+    setIsCity(reduxCity || '');
+  }, [reduxWeather, reduxCity]);
   const getWeather = async () => {
     try {
       const token = { key: process.env.NEXT_PUBLIC_WEATHER };
@@ -47,19 +56,19 @@ export default function Weather() {
           date: formattedDate,
         })
       );
-    } catch (error) {}
+    } catch (error) {
+      console.error('getWeather error:', error);
+    }
   };
   return (
     <>
-      {isMounted && (
-        <>
-          지금 방문하신 {isCity}
-          <br />
-          {formattedDate} 날씨는 {isWeather.description} !
-          <br />
-          좋은 하루 되세요!
-        </>
-      )}
+      <>
+        지금 방문하신 {isCity}
+        <br />
+        {formattedDate} 날씨는 {isWeather?.description} !
+        <br />
+        좋은 하루 되세요!
+      </>
     </>
   );
 }

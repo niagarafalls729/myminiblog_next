@@ -2,11 +2,17 @@ import qs from 'qs';
 import axios from 'axios';
 
 const BASE_API_URL = `${process.env.NEXT_PUBLIC_API_KEY}`;
+const joinUrl = (base, path) => {
+  const normalizedBase = String(base || '').replace(/\/$/, '');
+  const normalizedPath = String(path || '').replace(/^\//, '');
+  return `${normalizedBase}/${normalizedPath}`;
+};
 
 export async function axiosGetMain(restUrl, payload = {}) {
   const params = new URLSearchParams(qs.stringify(payload));
   const cleaned = String(params);
-  const url = BASE_API_URL + restUrl + '?' + encodeURIComponent(cleaned);
+  const url =
+    joinUrl(BASE_API_URL, restUrl) + '?' + encodeURIComponent(cleaned);
   console.log('url', url);
   try {
     const response = await axios.get(url);
@@ -65,7 +71,7 @@ export async function axiosGet(restUrl, payload = {}) {
   if (restUrl.indexOf('/') === 0) {
     restUrl = restUrl.substr(1);
   }
-  const url = BASE_API_URL + restUrl + '?' + params.toString();
+  const url = joinUrl(BASE_API_URL, restUrl) + '?' + params.toString();
 
   try {
     console.log('url', url);
@@ -81,7 +87,7 @@ export async function savePost(restUrl, payload = {}) {
   if (restUrl.indexOf('/') === 0) {
     restUrl = restUrl.substr(1);
   }
-  const url = BASE_API_URL + restUrl;
+  const url = joinUrl(BASE_API_URL, restUrl);
 
   try {
     const response = await axios.post(url, JSON.stringify(payload), {
@@ -98,7 +104,7 @@ export async function getPost(restUrl, payload = {}) {
   if (restUrl.indexOf('/') === 0) {
     restUrl = restUrl.substr(1);
   }
-  const url = BASE_API_URL + restUrl;
+  const url = joinUrl(BASE_API_URL, restUrl);
 
   try {
     const response = await axios.post(url, JSON.stringify(payload), {
@@ -119,7 +125,7 @@ export async function saveBlob(restUrl, formData) {
   if (restUrl.indexOf('/') === 0) {
     restUrl = restUrl.substr(1);
   }
-  const url = BASE_API_URL + restUrl;
+  const url = joinUrl(BASE_API_URL, restUrl);
 
   try {
     const response = await axios.post(url, formData, {
