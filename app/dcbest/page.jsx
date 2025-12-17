@@ -24,18 +24,22 @@ export default function DCBest() {
   });
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(urlSearch);
+ 
+// 모바일 체크
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-  // 모바일 체크
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    // 컴포넌트 마운트 시 초기 실행
+    if (typeof window !== 'undefined') { // window 객체 존재 시에만 실행 보장
+      checkMobile(); 
+    }
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', checkMobile);
 
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const columns = [
     { id: 'TITLE', label: '제목', width: '70%', padding: '20px' },
