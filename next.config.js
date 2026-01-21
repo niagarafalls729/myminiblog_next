@@ -38,13 +38,13 @@ module.exports = {
       },
       {
         protocol: 'http',
-        hostname: '138.2.119.188',
+        hostname: '158.180.78.245',
         port: '4000',
         pathname: '/uploads/**',
       },
       {
         protocol: 'http',
-        hostname: '138.2.119.188',
+        hostname: '158.180.78.245',
         port: '4000',
         pathname: '/crawled_images/**',
       },
@@ -67,7 +67,7 @@ module.exports = {
 
   //     {
   //       source: "/:path*",
-  //       destination: "http://138.2.119.188:4000/:path*",
+  //       destination: "http://158.180.78.245:4000/:path*",
   //     },
 
   //   ];
