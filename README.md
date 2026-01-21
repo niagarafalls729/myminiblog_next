@@ -12,4 +12,4 @@ server : ubuntu , nginx
 dbms : oracle
 
 
-http://138.2.119.188/
+http://158.180.73.109/

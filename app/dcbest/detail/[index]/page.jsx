@@ -56,7 +56,7 @@ export default function DCBestDetail() {
     if (typeof content !== 'string') return content;
     
     // 환경변수에서 API URL 가져오기
-    const apiUrl = process.env.NEXT_PUBLIC_API_KEY || 'http://localhost:4000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_KEY;
     
     console.log('이미지 경로 수정 전:', content);
     
