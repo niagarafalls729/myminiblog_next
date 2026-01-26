@@ -36,13 +36,12 @@ export default function DCBestDetail() {
         return dateString;
       }
       
-      // UTC 시간을 한국 시간으로 변환
-      const koreanTime = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-      const year = koreanTime.getFullYear().toString().slice(-2);
-      const month = String(koreanTime.getMonth() + 1).padStart(2, '0');
-      const day = String(koreanTime.getDate()).padStart(2, '0');
-      const hour = String(koreanTime.getHours()).padStart(2, '0');
-      const minute = String(koreanTime.getMinutes()).padStart(2, '0');
+      // 브라우저 로컬 시간 기준으로 표시
+      const year = date.getFullYear().toString().slice(-2);
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hour = String(date.getHours()).padStart(2, '0');
+      const minute = String(date.getMinutes()).padStart(2, '0');
       
       return `${year}-${month}-${day} ${hour}:${minute}`;
     } catch (error) {
